@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap');
+@import url(reset.css);
+
+/* Estilos gerais */
+body {
+    width: 100%;
+    font-family: 'Luxurious Roman', serif;
+    font-size: 2rem;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+  }
+  
+  /* Estilos para o cabeçalho */
+  .header {
+    background-color: #7a7a7a;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header__logo img {
+    max-width: 6rem;
+    height: auto;
+  }
+  
+  .header__nav .nav__list {
+    list-style: none;
+    display: flex;
+  }
+  
+  .header__nav .nav__list li {
+    margin-right: 20px;
+  }
+  
+  .header__nav .nav__list li a {
+    text-decoration: none;
+    color: #555;
+  }
+  .slider {
+    display: flex;
+    width: 100%; /* Ajuste a largura conforme desejado */
+    margin: 0 auto; /* Centralizar o slider horizontalmente */
+    filter: drop-shadow(0 0 15px #000000);
+  }
+
+  .tilte__slider{
+    width: 100%;
+    padding: 1rem 0;
+    position: absolute;
+    z-index: 2;
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: .5rem;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  /* Estilos para as imagens no slider */
+  .slider img {
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto; /* Centralizar a imagem horizontalmente */
+  }
+
+  .slider__image{
+    height: 24rem;
+  }
+
+  .slick-dots li button:before{
+    line-height: 2rem;
+    font-size: .8rem;
+  }
+
+  /* Estilos para o banner */
+  .banner {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .car img{
+    width: 40rem;
+    height: 26rem;
+    object-fit: cover;
+  }
+  /* Estilos para a seção de carros em destaque */
+  .estoque {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .car{
+    width: 46rem;
+    position: relative;
+  }
+
+  .car__content{
+    display: flex;
+    width: 34rem;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    transform: perspective(300px) rotateX(10deg);
+  }
+
+  .car__content img{
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+
+   .car__text {
+    font-size: 1.2rem;
+    margin-left: 1rem;
+  } 
+
+  .car__text h3{
+    margin-bottom: .5rem;
+    font-size: 1.4rem;
+  }
+
+  .estoque h2{
+    width: 100%;
+    margin: 3rem 0;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Estilos para a seção de benefícios */
+  .beneficios {
+    background-color: #fff;
+    padding: 50px;
+  }
+  
+  /* Estilos para a seção Sobre */
+  .sobre {
+    padding: 50px;
+  }
+  
+  /* Estilos para a seção de Contato */
+  .contato {
+    background-color: #f9f9f9;
+    padding: 50px;
+  }
+  
+  /* Estilos para o rodapé */
+  .footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  

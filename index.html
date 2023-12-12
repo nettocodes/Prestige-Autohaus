@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <title>Prestige Autohaus</title>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header__logo">
+      <!-- Logo com carro -->
+      <img src="src/img/Untitled.png" alt="Logo Prestige Autohaus">
+    </div>
+    <nav class="header__nav">
+      <ul class="nav__list">
+        <li><a href="#estoque">Estoque</a></li>
+        <li><a href="#beneficios">Benefícios</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="banner">
+    <h2 class="tilte__slider">What your's next car?</h2>
+    <div class="slider">
+      <div><img class="slider__image" src="src/img/cars/porsche/porsche_1.jpg" alt="Imagem 1"></div>
+      <div><img class="slider__image" src="src/img/cars/mustang/mustang_1.jpg" alt="Imagem 2"></div>
+      <div><img class="slider__image" src="src/img/cars/lamborghini/lamborghini_1.jpg" alt="Imagem 3"></div>
+      <!-- Adicione mais imagens conforme necessário -->
+    </div>
+  </section>
+
+  <section class="estoque" id="estoque">
+    <h2>see the future</h2>
+    <!-- Lista de carros em destaque -->
+    <div class="car">
+      <img src="src/img/cars/bmw/bmw_1.jpg" alt="Carro 1">
+      <div class="car__content">
+        <img src="src/img/cars/bmw/logo_bmw.svg" alt="">
+        <div class="car__text">
+            <h3>BMW</h3>
+            <p>Fabricante alemã de carros e motos de luxo, famosa por design inovador e desempenho excepcional.</p>
+          </div>
+      </div>
+    </div>
+    <div class="car">
+      <img src="src/img/cars/aston martin/astonMartin_1.jpg" alt="Carro 2">
+      <div class="car__content">
+        <img src="src/img/cars/aston martin/aston-martin-logo.svg" alt="">
+        <div class="car__text">
+            <h3>Aston Martin</h3>
+            <p>Marca britânica de carros de luxo, conhecida por design elegante e desempenho excepcional.</p>
+          </div>
+      </div>
+    </div>
+    <!-- Adicionar mais carros conforme necessário -->
+  </section>
+
+  <section class="beneficios" id="beneficios">
+    <h2>Benefícios da Prestige Autohaus</h2>
+    <ul>
+      <li>Garantia estendida para todos os veículos.</li>
+      <li>Serviço premium de manutenção.</li>
+      <li>Assistência 24 horas em viagens.</li>
+      <!-- Adicionar mais benefícios conforme necessário -->
+    </ul>
+  </section>
+
+  <section class="sobre" id="sobre">
+    <h2>Sobre a Prestige Autohaus</h2>
+    <p>Somos uma empresa comprometida em oferecer os melhores carros de luxo do mercado, com mais de 20 anos de experiência no setor automotivo.</p>
+  </section>
+
+  <section class="contato" id="contato">
+    <h2>Entre em Contato</h2>
+    <p>Estamos sempre à disposição para ajudar. Entre em contato conosco:</p>
+    <div class="contact-details">
+      <p>Endereço: Av. Prestige, 123 - Luxville</p>
+      <p>Telefone: (11) 1234-5678</p>
+      <p>Email: contato@prestigeautohaus.com</p>
+    </div>
+    <!-- Formulário de Contato -->
+    <!-- Adicione aqui o formulário de contato se desejar -->
+  </section>
+
+  <footer class="footer">
+    <!-- Links e informações no rodapé -->
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <script src="seu_script.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('.slider').slick({
+        autoplay: true,
+        autoplaySpeed: 3000,
+        arrows: false,
+        dots: true,
+        fade: true,
+        speed: 1000
+        // Configurações adicionais podem ser ajustadas conforme necessário
+      });
+    });
+  </script>
+</body>
+
+</html>
