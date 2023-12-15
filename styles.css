@@ -8,42 +8,54 @@ body {
   font-size: 2rem;
   margin: 0;
   padding: 0;
-  background-color: #333;
+  background-color: #2c3e50;
 }
 
-/* Header styles */
 .header {
-  background-color: #7a7a7a;
+  background-color: #2c3e50; /* Nova cor de fundo */
   padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
 }
 
 .header__logo img {
-  max-width: 8rem;
+  max-width: 7.6rem; /* Aumentar um pouco o tamanho do logo */
   height: auto;
 }
 
 .header__nav .nav__list {
   list-style: none;
   display: flex;
+  gap: 30px; /* Espaçamento entre os itens do menu */
 }
 
 .header__nav .nav__list li {
-  margin-right: 20px;
+  margin-right: 0; /* Remover a margem individual dos itens do menu */
 }
 
 .header__nav .nav__list li a {
   text-decoration: none;
-  color: #555;
+  color: #ecf0f1; /* Nova cor do texto do menu */
+  font-size: 16px; /* Tamanho do texto ajustado */
+  transition: color 0.3s ease; /* Transição suave na mudança de cor */
+}
+
+.header__nav .nav__list li a:hover {
+  color: #f39c12; /* Nova cor ao passar o mouse */
+}
+
+.banner{
+  position: relative;
+  overflow: hidden;
 }
 
 .slider {
   display: flex;
   width: 100%; /* Adjust width as desired */
   margin: 0 auto; /* Center the slider horizontally */
-  filter: drop-shadow(0 0 15px #000000);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
 }
 
 .slider__title {
@@ -52,9 +64,9 @@ body {
   position: absolute;
   z-index: 2;
   color: #fff;
-  font-size: 1rem;
-  letter-spacing: .5rem;
-  background-color: rgba(0, 0, 0, 0.2);
+  font-size: 1.5rem; /* Aumente o tamanho do texto */
+  letter-spacing: .1rem; /* Reduza o espaçamento entre letras */
+  background-color: rgba(0, 0, 0, 0.5); /* Ajuste a opacidade do fundo */
   text-align: center;
 }
 
@@ -64,15 +76,22 @@ body {
   object-fit: cover;
   display: block;
   margin: 0 auto; /* Center the image horizontally */
+  
 }
 
 .slider__image {
   height: 24rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.slider__image:hover {
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5); /* Adicione uma sombra ao passar o mouse */
+  transform: scale(1.05); /* Efeito de zoom */
 }
 
 .slick-dots li button:before {
   line-height: 2rem;
-  font-size: .8rem;
+  font-size: 1rem;
 }
 
 /* Styles for the featured cars section */
@@ -88,9 +107,14 @@ body {
   margin: 3rem 0;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.2);
-  padding: 2rem 0;
-  text-decoration: underline;
-  letter-spacing: .3rem;
+  padding: 1.5rem 0; /* Reduzindo um pouco o preenchimento para melhor proporção */
+  text-transform: uppercase; /* Transforma o texto para maiúsculas */
+  letter-spacing: 2px; /* Aumenta o espaçamento entre letras */
+  font-size: 2.5rem; /* Tamanho maior para destacar */
+  color: #fff; /* Cor do texto mais escura para melhor legibilidade */
+  border-bottom: 3px solid #555; 
+  border-top: 3px solid #555;
+  box-shadow: 0 0 5px #000;
 }
 
 .car {
@@ -99,12 +123,25 @@ body {
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
+  padding: 1.4rem 0;
+  perspective: 1000px; /* Ajuste a perspectiva para o efeito 3D */
+  transition: transform 0.5s; /* Adicione uma transição para a animação */
+  transform-style: preserve-3d; /* Para preservar os efeitos 3D */
+  transform: perspective(1000px) rotateX(0) rotateY(0);
 }
 
 .car__image {
-  width: 56rem;
+  width: 100%;
+  max-width: 56rem;
   height: 32rem;
   object-fit: cover;
+  border-radius: 8px; /* Adicionando bordas arredondadas para a imagem */
+  transition: transform 0.3s ease-in-out; /* Efeito de transição suave */
+  box-shadow: 0 0 15px #000000;
+}
+
+.car__image:hover{
+  transform: scale(1.05);
 }
 
 .autos__content {
@@ -128,11 +165,20 @@ body {
   transform: perspective(300px) rotateX(10deg);
   top: 2rem;
   left: 0;
-  border: 2px solid #ccc;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+
+.car:hover .car__content {
+  transform: translateY(-15px) rotateX(10deg);
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.8);
+  z-index: 2;
 }
 
 .car__logo {
   width: 8rem;
+  margin: 0 1rem;
 }
 
 .car__text {
@@ -142,7 +188,9 @@ body {
 
 .car__text h3 {
   margin-bottom: .5rem;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+  text-align: center;
 }
 
 .benefits__logo-premium {
@@ -151,11 +199,21 @@ body {
 
 /* Styles for sections */
 .benefits,
-.about,
 .contact {
   padding: 80px 20px;
   text-align: center;
-  background-color: #a0a0a0;
+  box-shadow: inset 0 0 15px #000;
+}
+
+.about{
+  padding: 80px 20px;
+  text-align: center;
+}
+.about img{
+  width: 26rem;
+  object-fit: cover; /* Para ajustar o tamanho da imagem */
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 0 86px #ccc);
 }
 
 .benefits__content,
@@ -169,7 +227,7 @@ body {
 .title {
   font-size: 2.5rem;
   margin-bottom: 20px;
-  color: #333;
+  color: #fff;
 }
 
 /* Styles for text */
@@ -177,7 +235,7 @@ body {
   font-size: 1.6rem;
   line-height: 1.6;
   margin-bottom: 30px;
-  color: #555;
+  color: #999;
 }
 
 /* Styles for buttons */
@@ -199,7 +257,7 @@ body {
 .contact__details {
   text-align: left;
   margin-bottom: 40px;
-  color: #555;
+  color: #999;
 }
 
 .contact__address,
@@ -209,3 +267,16 @@ body {
   margin-bottom: 10px;
   text-align: center;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+                
