@@ -145,13 +145,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center; /* Alinha os slides horizontalmente */
-  align-items: center; /* Alinha os slides verticalmente */
-}
-
-.car-brand{
+  align-items: center; /* Alinha os slides verticalmente */  
   font-size: 2rem;
   margin-top: 4rem;
 }
+
 
 .slick-list,
 .draggable,
@@ -160,7 +158,8 @@ body {
 }
 
 .car__image {
-  height: 28rem;
+  width: 42rem;
+  height: 23rem;
   position: absolute;
   object-fit: cover;
   border-radius: 8px;
@@ -171,13 +170,13 @@ body {
 
 .car__text {
   flex: 1;
-  font-size: 1rem;
+  font-size: .8rem;
 }
 
 /* Estilos para a área do slider de cada marca */
 .slider-cars {
-  width: 48rem;
-  height: 28rem;
+  width: 100%;
+  height: 32rem;
   display: flex;
   justify-content: center;
   flex-wrap: nowrap; /* Impede que os carros quebrem para outra linha */
@@ -213,6 +212,7 @@ body {
 } */
 
 .car__logo {
+  width: 4rem;
   aspect-ratio: 3/2;
   object-fit: contain;
   margin: 0 1rem;
@@ -220,16 +220,29 @@ body {
 
 
 .car__text h3 {
-  margin-top: .5rem;
+  margin:.5rem 0;
   font-size: 1.4rem;
   font-weight: 400;
   text-align: center;
 }
+.slick-dotted.slick-slider{
+  margin-bottom: 2rem;
+}
+ .draggable{
+  display: flex;
+  padding-bottom: 4rem;
+}
 
+.slick-list, .draggable, .slick-track{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 
-
-
-
+.car .slick-slide .slick-current .slick-active{
+  align-items: center;
+  justify-content: center;
+}
 
 
 .benefits__logo-premium {
