@@ -109,6 +109,7 @@ body {
   position: absolute;
   box-shadow: 0 0 35px #000;
   gap: 1rem;
+  border-radius: 5px ;
 }
 
 .car__logo{
@@ -173,7 +174,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-color: #000;
-  filter: opacity(40%) saturate(0%);
+  filter: opacity(10%) saturate(0%);
 }
 
 .bmw_1{
