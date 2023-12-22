@@ -95,7 +95,7 @@ body {
   display: flex;
   flex-direction: row;
   z-index: 2;
-  margin-top: 10rem;
+  margin-top: 6rem;
   top: 0;
   background-color: rgba(0, 0, 0, 0.7);
   text-transform: uppercase;
@@ -107,7 +107,7 @@ body {
   text-align: center;
   padding: 1rem 1rem;
   position: absolute;
-  box-shadow: 0 0 25px #000;
+  box-shadow: 0 0 35px #000;
   gap: 1rem;
 }
 
@@ -167,9 +167,7 @@ body {
 
 }
 
-.bmw__back__1,
-.bmw__back__2,
-.bmw__back__3 {
+.back {
   width: 50%; /* Cada imagem ocupará metade da largura da div pai */
   height: 100vh; /* Altura ajustável conforme necessário */
   background-size: cover;
@@ -178,24 +176,35 @@ body {
   filter: opacity(40%) saturate(0%);
 }
 
-.bmw__back__1{
+.bmw_1{
+background-image: url(src/img/cars/bmw/bmw1/m8_4.jpg);
+}
+.bmw_2{
+background-image: url(src/img/cars/bmw/bmw1/m8_6.jpg);
+}
+
+.bmw_3{
+background-image: url(src/img/cars/bmw/bmw1/m8_12.jpg);
+}
+
+.audi_1{
 background-image: url(src/img/cars/audi/rs6_6.jpg);
 }
-.bmw__back__2{
+.audi_2{
   background-image: url(src/img/cars/audi/rs6_9.jpg);
 }
-.bmw__back__3{
+.audi_3{
   background-image: url(src/img/cars/audi/rs6_13.jpg);
 }
 
 .inventory__image{
   object-fit: cover;
-  width: 60rem;
+  width: 80rem;
   height: 38rem;
   display: block;
   margin: 0 auto; /* Center the image horizontally */
   box-shadow: 0 0 35px #000;
-  border-radius: .2rem;
+  border-radius: .3rem;
   margin-bottom: 2rem;
   margin-top: 2rem;
 }
@@ -219,7 +228,7 @@ background-image: url(src/img/cars/audi/rs6_6.jpg);
   width: 26rem;
   object-fit: cover; /* Para ajustar o tamanho da imagem */
   mix-blend-mode: normal;
-  filter: drop-shadow(0 0 86px #ccc);
+  filter: drop-shadow(0 0 90px #ccc);
 }
 
 .benefits__content,
