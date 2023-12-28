@@ -9,10 +9,15 @@ body {
   margin: 0;
   padding: 0;
   background-color: #222;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Oculta a barra de rolagem */
 }
 
 .header {
-  background-color: #2c3e50; /* Nova cor de fundo */
   padding: 20px;
   display: flex;
   justify-content: space-between;
@@ -138,13 +143,13 @@ body {
 .brand{
   display: flex;
   flex-direction: column;
-  margin: 4rem 0;
+  margin: .5rem 0;
   position: relative;
   overflow: hidden;
   display: flex;
   width: 100%;
   align-items: center;
-  padding: 2rem 0; 
+  padding: .5rem 0; 
   height: 46rem;
   justify-content: center;
 }
@@ -178,24 +183,46 @@ body {
 }
 
 .bmw_1{
-background-image: url(src/img/cars/bmw/bmw1/m8_4.jpg);
+background-image: url(src/img/cars/bmw/m8/m8_4.jpg);
 }
 .bmw_2{
-background-image: url(src/img/cars/bmw/bmw1/m8_6.jpg);
+background-image: url(src/img/cars/bmw/m8/m8_6.jpg);
 }
 
 .bmw_3{
-background-image: url(src/img/cars/bmw/bmw1/m8_12.jpg);
+background-image: url(src/img/cars/bmw/m8/m8_12.jpg);
 }
 
 .audi_1{
-background-image: url(src/img/cars/audi/rs6_6.jpg);
+background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 }
 .audi_2{
-  background-image: url(src/img/cars/audi/rs6_9.jpg);
+  background-image: url(src/img/cars/audi/rs6/rs6_9.jpg);
 }
 .audi_3{
-  background-image: url(src/img/cars/audi/rs6_13.jpg);
+  background-image: url(src/img/cars/audi/rs6/rs6_13.jpg);
+}
+
+.porsche_1{
+  background-image: url(src/img/cars/porsche/911/911_5.jpg);
+}
+
+.porsche_2{
+  background-image: url(src/img/cars/porsche/911/911_11.jpg);
+}
+
+.porsche_3{
+  background-image: url(src/img/cars/porsche/911/911_15.jpg);
+}
+
+.ferrari_1{
+  background-image: url(src/img/cars/ferrari/sf90/sf90_2.jpg);
+}
+.ferrari_2{
+  background-image: url(src/img/cars/ferrari/sf90/sf90_6.jpg);
+}
+.ferrari_3{
+  background-image: url(src/img/cars/ferrari/sf90/sf90_16.jpg);
 }
 
 .inventory__image{
@@ -287,6 +314,8 @@ background-image: url(src/img/cars/audi/rs6_6.jpg);
 /* Styles for the footer */
 
 .footer {
+  flex-direction: column;
+  display: flex;
   color: #fff;
   padding: 40px 20px;
 }
@@ -294,8 +323,6 @@ background-image: url(src/img/cars/audi/rs6_6.jpg);
 .footer__content {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
 }
 
 .footer__logo img {
@@ -304,8 +331,8 @@ background-image: url(src/img/cars/audi/rs6_6.jpg);
 
 .footer__links,
 .footer__contact {
-  flex: 1 1 300px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .footer__links h4,
