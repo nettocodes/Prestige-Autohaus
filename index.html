@@ -38,22 +38,47 @@
 
   <!-- ----------SECTION INVENTORY---------- -->
   <section class="inventory" id="inventory">
-      <!-- ----------SECTION BMW---------- -->
-    <div class="brand bmw">
-      <div class="background">
-        <div class="back bmw_1"></div>
-        <div class="back bmw_2"></div>
-        <div class="back bmw_3"></div>
-      </div>
-      <div class="car__content">
-        <img src="src/img/cars/bmw/logo_bmw.svg" alt="" class="car__logo">
-        <div class="car_description">
-          <h2 class="car__title">BMW M8</h2>
-          <p >4.4 V8 TWINPOWER GASOLINA XDRIVE GRAN COUPÉ M COMPETITION STEPTRONIC</p>
+    <!-- ----------SECTION BMW---------- -->
+    <div class="brand">
+        <!-- ----------SECTION M8---------- -->
+        <div class="m8 model-slider">
+          <div class="slider-inventory"></div>
+            <div class="background">
+                <div class="back bmw_1"></div>
+                <div class="back bmw_2"></div>
+                <div class="back bmw_3"></div>
+            </div>
+            <div class="car__content">
+                <img src="src/img/cars/bmw/logo_bmw.svg" alt="" class="car__logo">
+                <div class="car_description">
+                    <h2 class="car__title">BMW M8</h2>
+                    <p >4.4 V8 TWINPOWER GASOLINA XDRIVE GRAN COUPÉ M COMPETITION STEPTRONIC</p>
+                </div>
+            </div>
         </div>
+
+        <!-- ----------SECTION x1---------- -->
+        <div class="x1 model-slider">
+          <div class=" slider-inventory"></div>
+            <div class="background">
+                <div class="back bmw_1"></div>
+                <div class="back bmw_2"></div>
+                <div class="back bmw_3"></div>
+            </div>
+            <div class="car__content">
+                <img src="src/img/cars/bmw/logo_bmw.svg" alt="" class="car__logo">
+                <div class="car_description">
+                    <h2 class="car__title">BMW X1</h2>
+                    <p >Modelo e descrição do X1</p>
+                </div>
+            </div>
+        </div>
+        <div class="controls">
+          <div class="control-arrow prev">←</div>
+          <div class="control-arrow next">→</div>
       </div>
-      <div class="slider-inventory" id="bmw-slider"></div>
     </div>
+
 
     <!-- ----------SECTION AUDI---------- -->
     <div class="brand audi">
@@ -104,6 +129,23 @@
         </div>
       </div>
       <div class="slider-inventory" id="ferrari-slider"></div>
+    </div>
+
+    <!-- ----------SECTION lamborghini---------- -->
+    <div class="brand lamborghini">
+      <div class="background">
+        <div class="back lamborghini_1"></div>
+        <div class="back lamborghini_2"></div>
+        <div class="back lamborghini_3"></div>
+      </div>
+      <div class="car__content">
+        <img src="src/img/cars/lamborghini/Lamborghini-Logo.png" alt="" class="car__logo">
+        <div class="car_description">
+          <h2 class="car__title">LAMBORGHINI HURACÁN</h2>
+          <p >5.2 V10 GASOLINA LP 640 EVO LDF</p>
+        </div>
+      </div>
+      <div class="slider-inventory" id="lamborghini-slider"></div>
     </div>
   </section>
   
@@ -170,7 +212,6 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <script src="your_script.js"></script>
 
   <script>
     $(document).ready(function () {
@@ -191,13 +232,12 @@
         autoplaySpeed: 3000,
         arrows: false,
         dots: true,
-        fade: true,
+        fade: false,
         speed: 1000
         // Additional settings can be adjusted as needed
       });
     });
-    
-  </script>
+    </script>
   <script src="script.js"></script>
 </body>
 
