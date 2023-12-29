@@ -12,37 +12,21 @@ function populateSliderWithImages(brand, model, totalImages) {
   populateSliderWithImages('bmw', 'm8', 14); // Altere para o número total de imagens para o modelo BMW M8
   populateSliderWithImages('audi', 'rs6', 19); // Altere para o número total de imagens para o modelo Audi RS6
   populateSliderWithImages('porsche', '911', 15);
-  populateSliderWithImages('ferrari', 'sf90', 20)
-  populateSliderWithImages('lamborghini', 'huracan', 10)
+  populateSliderWithImages('ferrari', 'sf90', 20);
+  populateSliderWithImages('lamborghini', 'huracan', 10);
+  populateSliderWithImages('chevrolet','silverado', 11);
   
 
-  $(document).ready(function () {
-    // Configuração do slider para cada modelo
-    $('.model-slider').slick({
-        autoplay: false,
-        arrows: false,
-        dots: false,
-        // Outras configurações conforme necessário
-    });
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
 
-    // Ao clicar na seta anterior para o modelo M8
-    $('.m8-prev').on('click', function () {
-        $('.model-slider').slick('slickPrev');
-    });
+      const target = document.querySelector(this.getAttribute('href'));
 
-    // Ao clicar na próxima seta para o modelo M8
-    $('.m8-next').on('click', function () {
-        $('.model-slider').slick('slickNext');
-    });
-
-    // Ao clicar na seta anterior para o modelo X1
-    $('.x1-prev').on('click', function () {
-        $('.model-slider').slick('slickPrev');
-    });
-
-    // Ao clicar na próxima seta para o modelo X1
-    $('.x1-next').on('click', function () {
-        $('.model-slider').slick('slickNext');
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
     });
   });
-

@@ -9,7 +9,8 @@ body {
   padding: 0;
   background-color: #222;
   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  -ms-overflow-style: none; 
+  scroll-behavior: smooth; 
 }
 
 body::-webkit-scrollbar {
@@ -25,7 +26,7 @@ body::-webkit-scrollbar {
 }
 
 .header__logo img {
-  max-width: 7.6rem; /* Aumentar um pouco o tamanho do logo */
+  max-width: 10rem; /* Aumentar um pouco o tamanho do logo */
   height: auto;
 }
 
@@ -42,7 +43,7 @@ body::-webkit-scrollbar {
 .header__nav .nav__list li a {
   text-decoration: none;
   color: #ecf0f1; /* Nova cor do texto do menu */
-  font-size: 16px; /* Tamanho do texto ajustado */
+  font-size: 1.8rem; /* Tamanho do texto ajustado */
   transition: color 0.3s ease; /* Transição suave na mudança de cor */
 }
 
@@ -249,6 +250,17 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 }
 .lamborghini_3{
   background-image: url(src/img/cars/lamborghini/huracan/huracan_10.jpg);
+}
+
+
+.chevrolet_1{
+  background-image: url(src/img/cars/chevrolet/silverado/silverado_3.jpg);
+}
+.chevrolet_2{
+  background-image: url(src/img/cars/chevrolet/silverado/silverado_7.jpg);
+}
+.chevrolet_3{
+  background-image: url(src/img/cars/chevrolet/silverado/silverado_11.jpg);
 }
 
 .inventory__image{

@@ -39,44 +39,21 @@
   <!-- ----------SECTION INVENTORY---------- -->
   <section class="inventory" id="inventory">
     <!-- ----------SECTION BMW---------- -->
-    <div class="brand">
+    <div class="brand bmw">
         <!-- ----------SECTION M8---------- -->
-        <div class="m8 model-slider">
-          <div class="slider-inventory"></div>
-            <div class="background">
-                <div class="back bmw_1"></div>
-                <div class="back bmw_2"></div>
-                <div class="back bmw_3"></div>
-            </div>
-            <div class="car__content">
-                <img src="src/img/cars/bmw/logo_bmw.svg" alt="" class="car__logo">
-                <div class="car_description">
-                    <h2 class="car__title">BMW M8</h2>
-                    <p >4.4 V8 TWINPOWER GASOLINA XDRIVE GRAN COUPÉ M COMPETITION STEPTRONIC</p>
-                </div>
-            </div>
+        <div class="background">
+          <div class="back bmw_1"></div>
+          <div class="back bmw_2"></div>
+          <div class="back bmw_3"></div>
         </div>
-
-        <!-- ----------SECTION x1---------- -->
-        <div class="x1 model-slider">
-          <div class=" slider-inventory"></div>
-            <div class="background">
-                <div class="back bmw_1"></div>
-                <div class="back bmw_2"></div>
-                <div class="back bmw_3"></div>
-            </div>
-            <div class="car__content">
-                <img src="src/img/cars/bmw/logo_bmw.svg" alt="" class="car__logo">
-                <div class="car_description">
-                    <h2 class="car__title">BMW X1</h2>
-                    <p >Modelo e descrição do X1</p>
-                </div>
-            </div>
+        <div class="car__content">
+          <img src="src/img/cars/bmw/logo_bmw.svg" alt="" class="car__logo">
+          <div class="car_description">
+            <h2 class="car__title">BMW M8</h2>
+            <p >4.4 V8 TWINPOWER GASOLINA XDRIVE GRAN COUPÉ M COMPETITION STEPTRONIC</p>
+          </div>
         </div>
-        <div class="controls">
-          <div class="control-arrow prev">←</div>
-          <div class="control-arrow next">→</div>
-      </div>
+        <div class="slider-inventory" id="bmw-slider"></div>
     </div>
 
 
@@ -147,6 +124,23 @@
       </div>
       <div class="slider-inventory" id="lamborghini-slider"></div>
     </div>
+
+    <!-- ----------SECTION SILVERADO---------- -->
+    <div class="brand chevrolet">
+      <div class="background">
+        <div class="back chevrolet_1"></div>
+        <div class="back chevrolet_2"></div>
+        <div class="back chevrolet_3"></div>
+      </div>
+      <div class="car__content">
+        <img src="src/img/cars/chevrolet/logo-chevrolet.png" alt="" class="car__logo">
+        <div class="car_description">
+          <h2 class="car__title">CHEVROLET SILVERADO</h2>
+          <p >3.0 V6 DURAMAX DIESEL 1500 LTZ 4WD AUTOMÁTICO</p>
+        </div>
+      </div>
+      <div class="slider-inventory" id="chevrolet-slider"></div>
+    </div>
   </section>
   
 
@@ -212,6 +206,7 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <script src="script.js"></script>
 
   <script>
     $(document).ready(function () {
@@ -238,7 +233,6 @@
       });
     });
     </script>
-  <script src="script.js"></script>
 </body>
 
 </html>
