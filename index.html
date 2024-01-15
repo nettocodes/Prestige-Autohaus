@@ -88,7 +88,9 @@
           <p >3.8 24V H6 GASOLINA TURBO S PDK</p>
         </div>
       </div>
-      <div class="slider-inventory" id="porsche-slider"></div>
+      <div class="slider-inventory" id="porsche-slider">
+        
+      </div>
     </div>
 
     <!-- ----------SECTION FERRARI---------- -->
@@ -201,13 +203,8 @@
       <p>&copy; 2023 Prestige Autohaus - All rights reserved.</p>
     </div>
   </footer>
-  
-  
-
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <script src="script.js"></script>
-
   <script>
     $(document).ready(function () {
       $('.slider').slick({
@@ -219,20 +216,31 @@
         speed: 1000
         // Additional settings can be adjusted as needed
       });
-    });
-   
-    $(document).ready(function () {
+      // Inicialize o Slick para cada slider-inventory
       $('.slider-inventory').slick({
         autoplay: true,
         autoplaySpeed: 3000,
-        arrows: false,
-        dots: true,
+        arrows: true,
+        dots: false,
         fade: false,
-        speed: 1000
-        // Additional settings can be adjusted as needed
+        speed: 1000,
+        // Outras configurações adicionais conforme necessário
+      });
+
+      // Adicione este código para verificar se as setas são clicáveis
+      $('.slick-prev').on('click', function () {
+        var sliderId = $(this).parent().attr('id');
+        $(`#${sliderId}`).slick('slickPrev');
+      });
+
+      $('.slick-next').on('click', function () {
+        var sliderId = $(this).parent().attr('id');
+        $(`#${sliderId}`).slick('slickNext');
       });
     });
     </script>
+    
+    <script src="script.js"></script>
 </body>
 
 </html>

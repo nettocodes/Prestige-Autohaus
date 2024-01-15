@@ -3,14 +3,26 @@
 
 /* General styles */
 body {
+  position: relative;
   width: 100%;
   font-family: 'Luxurious Roman', serif;
   margin: 0;
   padding: 0;
-  background-color: #222;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; 
-  scroll-behavior: smooth; 
+  scroll-behavior: smooth;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url(src/img/Untitled.png);
+  background-size: 4rem;
+  opacity: 0.5; /* Ajuste a opacidade conforme necessário */
+  z-index: -1; /* Para colocar o pseudo-elemento atrás do conteúdo */
 }
 
 body::-webkit-scrollbar {
@@ -23,6 +35,7 @@ body::-webkit-scrollbar {
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+  background-color: rgba(36, 36, 36, 0.8);
 }
 
 .header__logo img {
@@ -180,6 +193,7 @@ body::-webkit-scrollbar {
   margin: 0 auto; /* Center the slider horizontally */
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .background{
@@ -196,7 +210,7 @@ body::-webkit-scrollbar {
   background-size: cover;
   background-repeat: no-repeat;
   background-color: #000;
-  filter: opacity(10%) saturate(0%);
+  filter: opacity(100%) saturate(0%);
 }
 
 .bmw_1{
@@ -264,16 +278,16 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 }
 
 .inventory__image{
-  object-fit: cover;
-  width: 80rem;
-  height: 38rem;
+  object-fit: contain;
+  width: 66rem;
+  height: 34rem;
   display: block;
   margin: 0 auto; /* Center the image horizontally */
-  box-shadow: 0 0 35px #000;
   border-radius: .3rem;
   margin-bottom: 2rem;
   margin-top: 2rem;
 }
+
 
 .benefits__logo-premium {
   width: 14rem;
@@ -289,6 +303,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 .about{
   padding: 80px 20px;
   text-align: center;
+  background-color: rgba(36, 36, 36, 0.6);
 }
 .about img{
   width: 26rem;
@@ -317,6 +332,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   line-height: 1.6;
   margin-bottom: 30px;
   color: #999;
+  
 }
 
 /* Styles for buttons */
@@ -356,6 +372,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   display: flex;
   color: #fff;
   padding: 40px 20px;
+  background-color: rgba(36, 36, 36, 0.6);
 }
 
 .footer__content {
@@ -435,8 +452,6 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 
 /* Estilos para telas menores */
 @media only screen and (max-width: 1200px) {
-  /* Exemplos de ajustes para telas de largura máxima de 1200px */
-  /* Pode ajustar os valores conforme necessário */
 
   .header__logo img {
     max-width: 80px; /* Reduzir o tamanho do logo para telas menores */
@@ -475,8 +490,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   }
 
   .nav__list {
-    display: flex; /* Exibir o menu como lista para telas menores */
-    flex-direction: column;
+    display: flex;
     align-items: center;
     gap: 10px; /* Espaçamento entre os itens do menu */
   }
@@ -494,25 +508,66 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 
 /* Estilos para telas muito pequenas, como smartphones */
 @media only screen and (max-width: 480px) {
-  /* Exemplos de ajustes para telas de largura máxima de 480px */
-  /* Pode ajustar os valores conforme necessário */
+
+  .header__nav .nav__list{
+    gap: 10px;
+  }
+
+  .header__nav .nav__list li a{
+    font-size: .8rem;
+  }
 
   .header__logo img {
-    max-width: 50px; /* Reduzir ainda mais o tamanho do logo para telas menores */
+    max-width: 5rem; /* Reduzir ainda mais o tamanho do logo para telas menores */
   }
 
   .banner {
-    height: 200px; /* Ajustar a altura do banner para telas menores */
+    height: 14rem; /* Ajustar a altura do banner para telas menores */
   }
 
   .slider__image {
-    height: 120px; /* Ajustar a altura das imagens do slider */
+    height: 13rem; /* Ajustar a altura das imagens do slider */
   }
 
+  .slider__title{
+    padding: .5rem 0;
+    font-size: 1rem;
+  }
+
+  .inventory{
+    margin: 0;
+  }
+
+  .inventory__image{
+    width: 22rem;
+    height: 18rem;
+  }
+
+  .brand{
+    height: 32rem;
+  }
+
+  .car__content{
+    padding: .5rem;
+    margin-left: .5rem;
+    margin-right: .5rem;
+  }
+
+  .car_description p{
+    font-size: .6rem;
+    margin-top: .8rem;
+  }
+
+  .car__logo{
+    width: 2rem;
+  }
   /* Mais ajustes para outras seções e elementos conforme necessário */
 }
 
 
+
+
+/* 
 .slick-dots {
   justify-content: space-evenly;
   list-style: none;
@@ -562,5 +617,37 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   color: #000;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+} */
+
+
+
+/* Adicione este CSS ao seu arquivo de estilo ou na seção de estilo do seu HTML */
+
+/* Estilizando as setas do Slick */
+.slick-prev,
+.slick-next {
+  font-size: 0; /* Tamanho da fonte das setas */
+  color: #fff; /* Cor das setas */
+  background-color: #333; /* Cor de fundo das setas */
+  border-radius: 50%; /* Borda circular para as setas */
+  width: 40px; /* Largura das setas */
+  height: 40px; /* Altura das setas */
+  line-height: 40px; /* Centraliza o ícone verticalmente */
+}
+.slick-next, .slick-prev{
+  z-index: 1;
+}
+/* Ajustando a posição das setas */
+.slick-prev {
+  left: 10px; /* Posição à esquerda */
 }
 
+.slick-next {
+  right: 10px; /* Posição à direita */
+}
+
+/* Estilizando as setas quando hover */
+.slick-prev:hover,
+.slick-next:hover {
+  background-color: #555; /* Cor de fundo alterada no hover */
+}
