@@ -279,13 +279,13 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 
 .inventory__image{
   object-fit: contain;
-  width: 66rem;
-  height: 34rem;
+  width: 60rem;
   display: block;
   margin: 0 auto; /* Center the image horizontally */
   border-radius: .3rem;
   margin-bottom: 2rem;
   margin-top: 2rem;
+  
 }
 
 
@@ -298,12 +298,13 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 .contact {
   padding: 80px 20px;
   text-align: center;
+  background-color: rgba(36, 36, 36, 0.4);
 }
 
 .about{
   padding: 80px 20px;
   text-align: center;
-  background-color: rgba(36, 36, 36, 0.6);
+  background-color: rgba(36, 36, 36, 0.8);
 }
 .about img{
   width: 26rem;
@@ -372,7 +373,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   display: flex;
   color: #fff;
   padding: 40px 20px;
-  background-color: rgba(36, 36, 36, 0.6);
+  background-color: rgba(36, 36, 36, 0.8);
 }
 
 .footer__content {
@@ -449,6 +450,33 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   text-align: center;
 }
 
+.slick-prev,
+.slick-next {
+  font-size: 0; /* Tamanho da fonte das setas */
+  border-radius: 50%; /* Borda circular para as setas */
+  line-height: 40px; /* Centraliza o ícone verticalmente */
+  margin: 0 auto;
+  
+}
+
+.slick-next:before, .slick-prev:before{
+  font-size: 2rem;
+  color: #f39c12;
+}
+
+.slick-next, .slick-prev{
+  z-index: 1;
+}
+/* Ajustando a posição das setas */
+.slick-prev {
+  left: 6rem; /* Posição à esquerda */
+}
+
+.slick-next {
+  right: 6rem; /* Posição à direita */
+}
+
+
 
 /* Estilos para telas menores */
 @media only screen and (max-width: 1200px) {
@@ -472,8 +500,6 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   .slider__image {
     height: 200px; /* Ajustar a altura das imagens do slider */
   }
-
-  /* Mais ajustes para outras seções e elementos conforme necessário */
 }
 
 /* Estilos para telas ainda menores */
@@ -499,10 +525,10 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
     height: 250px; /* Ajustar a altura do banner para telas menores */
   }
 
+
   .slider__image {
     height: 150px; /* Ajustar a altura das imagens do slider */
   }
-
   /* Mais ajustes para outras seções e elementos conforme necessário */
 }
 
@@ -538,11 +564,6 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
     margin: 0;
   }
 
-  .inventory__image{
-    width: 22rem;
-    height: 18rem;
-  }
-
   .brand{
     height: 32rem;
   }
@@ -551,15 +572,44 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
     padding: .5rem;
     margin-left: .5rem;
     margin-right: .5rem;
+    font-size: .8rem;
+    font-weight: 400;
+    gap: .6rem;
   }
+
 
   .car_description p{
     font-size: .6rem;
-    margin-top: .8rem;
+    margin-top: .4rem;
+  }
+
+  .inventory__image{
+    width: 24rem;
   }
 
   .car__logo{
     width: 2rem;
+  }
+
+  .slick-prev {
+    left: .85rem; /* Posição à esquerda */
+  }
+  
+  .slick-next {
+    right: 1.15rem; /* Posição à direita */
+  }
+  .slick-prev,
+  .slick-next {
+    font-size: 0; /* Tamanho da fonte das setas */
+    border-radius: 50%; /* Borda circular para as setas */
+    line-height: 40px; /* Centraliza o ícone verticalmente */
+    margin: 0 auto;
+    
+  }
+
+  .slick-next:before, .slick-prev:before{
+    font-size: 1rem;
+    color: rgba(243, 156, 18, 0.8);
   }
   /* Mais ajustes para outras seções e elementos conforme necessário */
 }
@@ -567,7 +617,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 
 
 
-/* 
+
 .slick-dots {
   justify-content: space-evenly;
   list-style: none;
@@ -617,37 +667,11 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   color: #000;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-} */
+}
 
 
 
 /* Adicione este CSS ao seu arquivo de estilo ou na seção de estilo do seu HTML */
 
 /* Estilizando as setas do Slick */
-.slick-prev,
-.slick-next {
-  font-size: 0; /* Tamanho da fonte das setas */
-  color: #fff; /* Cor das setas */
-  background-color: #333; /* Cor de fundo das setas */
-  border-radius: 50%; /* Borda circular para as setas */
-  width: 40px; /* Largura das setas */
-  height: 40px; /* Altura das setas */
-  line-height: 40px; /* Centraliza o ícone verticalmente */
-}
-.slick-next, .slick-prev{
-  z-index: 1;
-}
-/* Ajustando a posição das setas */
-.slick-prev {
-  left: 10px; /* Posição à esquerda */
-}
 
-.slick-next {
-  right: 10px; /* Posição à direita */
-}
-
-/* Estilizando as setas quando hover */
-.slick-prev:hover,
-.slick-next:hover {
-  background-color: #555; /* Cor de fundo alterada no hover */
-}
