@@ -113,21 +113,23 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: row;
   z-index: 2;
-  margin-top: 6rem;
+  margin-top: 3rem;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
   text-transform: uppercase;
   letter-spacing: 2px;
   color: #fff;
-  display: flex;
-  font-size: 1.2rem;
+  position: absolute;
+  font-size: 1rem;
   font-weight: 600;
   text-align: center;
   padding: 1rem 1rem;
-  position: absolute;
-  box-shadow: 0 0 35px #000;
+  box-shadow: 0 0 25px rgba(139, 139, 139, 0.6);
   gap: 1rem;
   border-radius: 5px ;
+  width: 38rem;
+  height: 2rem;
+  justify-content: center;
 }
 
 .car__logo{
@@ -137,8 +139,8 @@ body::-webkit-scrollbar {
 }
 
 .car_description p{
-  margin-top: .6rem;
-  font-size: .8rem;
+  margin-top: .4rem;
+  font-size: .6rem;
 }
 
 .inventory{
@@ -163,7 +165,6 @@ body::-webkit-scrollbar {
   width: 100%;
   align-items: center;
   padding: .5rem 0; 
-  height: 46rem;
   justify-content: center;
 }
 
@@ -279,14 +280,14 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 
 .inventory__image{
   object-fit: contain;
-  width: 60rem;
   display: block;
-  margin: 0 auto; /* Center the image horizontally */
+  width: 46rem;
+  margin: 2rem auto; /* Center the image horizontally */
   border-radius: .3rem;
-  margin-bottom: 2rem;
-  margin-top: 2rem;
+  box-shadow: 0 0 20px #000000;
   
 }
+
 
 
 .benefits__logo-premium {
@@ -334,6 +335,12 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   margin-bottom: 30px;
   color: #999;
   
+}
+
+.disclaimer{
+  color: #fff;
+  font-size: .8rem;
+  line-height: 1rem;
 }
 
 /* Styles for buttons */
@@ -461,7 +468,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 
 .slick-next:before, .slick-prev:before{
   font-size: 2rem;
-  color: #f39c12;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .slick-next, .slick-prev{
@@ -609,7 +616,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 
   .slick-next:before, .slick-prev:before{
     font-size: 1rem;
-    color: rgba(243, 156, 18, 0.8);
+    color: rgba(255, 255, 255, 0.8);
   }
   /* Mais ajustes para outras seções e elementos conforme necessário */
 }
