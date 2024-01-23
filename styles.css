@@ -9,7 +9,7 @@ body {
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, .9);
 }
 
 body::before {
@@ -21,12 +21,12 @@ body::before {
   left: 0;
   background-image: url(src/img/Untitled.png);
   background-size: 4rem;
-  opacity: 0.5; /* Ajuste a opacidade conforme necessário */
-  z-index: -1; /* Para colocar o pseudo-elemento atrás do conteúdo */
+  opacity: 0.5; 
+  z-index: -1; 
 }
 
 body::-webkit-scrollbar {
-  display: none; /* Oculta a barra de rolagem */
+  display: none; 
 }
 
 .header {
@@ -34,34 +34,34 @@ body::-webkit-scrollbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
-  background-color: rgba(36, 36, 36, 0.8);
+  background-color: rgba(0, 0, 0, 1);
 }
 
 .header__logo img {
-  max-width: 10rem; /* Aumentar um pouco o tamanho do logo */
+  max-width: 10rem;
   height: auto;
+  filter:invert(100%);
 }
 
 .header__nav .nav__list {
   list-style: none;
   display: flex;
-  gap: 30px; /* Espaçamento entre os itens do menu */
+  gap: 30px;
 }
 
 .header__nav .nav__list li {
-  margin-right: 0; /* Remover a margem individual dos itens do menu */
+  margin-right: 0;
 }
 
 .header__nav .nav__list li a {
   text-decoration: none;
-  color: #ecf0f1; /* Nova cor do texto do menu */
-  font-size: 1.8rem; /* Tamanho do texto ajustado */
-  transition: color 0.3s ease; /* Transição suave na mudança de cor */
+  color: #ecf0f1;
+  font-size: 1.8rem; 
+  transition: color 0.3s ease; 
 }
 
 .header__nav .nav__list li a:hover {
-  color: #f39c12; /* Nova cor ao passar o mouse */
+  color: #f39c12; 
 }
 
 .banner{
@@ -69,12 +69,18 @@ body::-webkit-scrollbar {
   overflow: hidden;
 }
 
-.slider {
-  display: flex;
-  width: 100%; /* Adjust width as desired */
-  margin: 0 auto; /* Center the slider horizontally */
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+.video__banner{
+  object-fit: cover;
+  width: 100%;
+  max-height: 32rem;
 }
+
+/* .slider {
+  display: flex;
+  width: 100%; 
+  margin: 0 auto;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+} */
 
 .slider__title {
   width: 100%;
@@ -82,32 +88,30 @@ body::-webkit-scrollbar {
   position: absolute;
   z-index: 2;
   color: #fff;
-  font-size: 1.5rem; /* Aumente o tamanho do texto */
-  letter-spacing: .1rem; /* Reduza o espaçamento entre letras */
-  background-color: rgba(0, 0, 0, 0.5); /* Ajuste a opacidade do fundo */
+  font-size: 1.5rem; 
+  letter-spacing: .1rem; 
+  background-color: rgba(0, 0, 0, 0.5); 
   text-align: center;
 }
-
-/* Styles for images in the slider */
+/* 
 .slider img {
   width: 100%;
   object-fit: cover;
   display: block;
-  margin: 0 auto; /* Center the image horizontally */
+  margin: 0 auto;
   
 }
 
 .slider__image {
   height: 32rem;
   transition: transform 0.3s ease-in-out;
-}
+} */
 
 .slick-dots li button:before {
   line-height: 2rem;
   font-size: 1rem;
 }
 
-/* Styles for the featured cars section */
 
 .car__content{
   display: flex;
@@ -158,7 +162,7 @@ body::-webkit-scrollbar {
 .brand{
   display: flex;
   flex-direction: column;
-  margin: .5rem 0;
+  margin: 2rem 0;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -182,7 +186,6 @@ body::-webkit-scrollbar {
 
 .control-arrow {
   cursor: pointer;
-  /* Estilize suas setas conforme necessário */
 }
 
 .slider-inventory{
@@ -190,8 +193,8 @@ body::-webkit-scrollbar {
   background-size: cover;
   display: flex;
   position: relative;
-  width: 100%; /* Adjust width as desired */
-  margin: 0 auto; /* Center the slider horizontally */
+  width: 100%; 
+  margin: 0 auto; 
   align-items: center;
   justify-content: center;
   z-index: 1;
@@ -204,85 +207,24 @@ body::-webkit-scrollbar {
   flex-direction: row;
 
 }
-
 .back {
-  width: 50%; /* Cada imagem ocupará metade da largura da div pai */
-  height: 100vh; /* Altura ajustável conforme necessário */
+  width: 33.33%;
+  height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
   background-color: #000;
   filter: opacity(100%) saturate(0%);
 }
 
-.bmw_1{
-background-image: url(src/img/cars/bmw/m8/m8_4.jpg);
-}
-.bmw_2{
-background-image: url(src/img/cars/bmw/m8/m8_6.jpg);
-}
-
-.bmw_3{
-background-image: url(src/img/cars/bmw/m8/m8_12.jpg);
-}
-
-.audi_1{
-background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
-}
-.audi_2{
-  background-image: url(src/img/cars/audi/rs6/rs6_9.jpg);
-}
-.audi_3{
-  background-image: url(src/img/cars/audi/rs6/rs6_13.jpg);
-}
-
-.porsche_1{
-  background-image: url(src/img/cars/porsche/911/911_5.jpg);
-}
-
-.porsche_2{
-  background-image: url(src/img/cars/porsche/911/911_11.jpg);
-}
-
-.porsche_3{
-  background-image: url(src/img/cars/porsche/911/911_15.jpg);
-}
-
-.ferrari_1{
-  background-image: url(src/img/cars/ferrari/sf90/sf90_2.jpg);
-}
-.ferrari_2{
-  background-image: url(src/img/cars/ferrari/sf90/sf90_6.jpg);
-}
-.ferrari_3{
-  background-image: url(src/img/cars/ferrari/sf90/sf90_16.jpg);
-}
-
-.lamborghini_1{
-  background-image: url(src/img/cars/lamborghini/huracan/huracan_1.jpg);
-}
-.lamborghini_2{
-  background-image: url(src/img/cars/lamborghini/huracan/huracan_5.jpg);
-}
-.lamborghini_3{
-  background-image: url(src/img/cars/lamborghini/huracan/huracan_10.jpg);
-}
-
-
-.chevrolet_1{
-  background-image: url(src/img/cars/chevrolet/silverado/silverado_3.jpg);
-}
-.chevrolet_2{
-  background-image: url(src/img/cars/chevrolet/silverado/silverado_7.jpg);
-}
-.chevrolet_3{
-  background-image: url(src/img/cars/chevrolet/silverado/silverado_11.jpg);
+.brand .background {
+  display: flex;
 }
 
 .inventory__image{
   object-fit: contain;
   display: block;
   width: 46rem;
-  margin: 2rem auto; /* Center the image horizontally */
+  margin: 2rem auto; 
   border-radius: .3rem;
   box-shadow: 0 0 20px #000000;
   
@@ -294,7 +236,6 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   width: 14rem;
 }
 
-/* Styles for sections */
 .benefits,
 .contact {
   padding: 80px 20px;
@@ -305,11 +246,12 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 .about{
   padding: 80px 20px;
   text-align: center;
-  background-color: rgba(36, 36, 36, 0.8);
+  background-color: rgba(0, 0, 0, .8);
 }
+
 .about img{
   width: 26rem;
-  object-fit: cover; /* Para ajustar o tamanho da imagem */
+  object-fit: cover; 
   mix-blend-mode: normal;
   filter: drop-shadow(0 0 90px #ccc);
 }
@@ -321,14 +263,14 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   margin: 0 auto;
 }
 
-/* Styles for titles */
+
 .title {
   font-size: 2.5rem;
   margin-bottom: 20px;
   color: #fff;
 }
 
-/* Styles for text */
+
 .description {
   font-size: 1.6rem;
   line-height: 1.6;
@@ -343,7 +285,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   line-height: 1rem;
 }
 
-/* Styles for buttons */
+
 .btn-read-more {
   display: inline-block;
   padding: 12px 24px;
@@ -358,7 +300,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   background-color: #e67700;
 }
 
-/* Styles for contact details */
+
 .contact__details {
   text-align: left;
   margin-bottom: 40px;
@@ -373,14 +315,15 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   text-align: center;
 }
 
-/* Styles for the footer */
-
 .footer {
   flex-direction: column;
   display: flex;
   color: #fff;
   padding: 40px 20px;
-  background-color: rgba(36, 36, 36, 0.8);
+  background-image: url(src/img/header/prestige.jpg);
+  background-size: cover;
+  background-position: center;
+  
 }
 
 .footer__content {
@@ -389,7 +332,8 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 }
 
 .footer__logo img {
-  width: 10rem; /* Adjust logo size as needed */
+  width: 10rem;
+  filter:invert(100%);
 }
 
 .footer__links,
@@ -428,6 +372,10 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   margin-bottom: 1rem;
 }
 
+.fa-twitter{
+  filter: invert(100%);
+}
+
 .footer__links a:hover {
   color: #f39c12;
 }
@@ -439,7 +387,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 .social-icons {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 4rem 0 0 0;
 }
 
 .social-icons li {
@@ -459,9 +407,9 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 
 .slick-prev,
 .slick-next {
-  font-size: 0; /* Tamanho da fonte das setas */
-  border-radius: 50%; /* Borda circular para as setas */
-  line-height: 40px; /* Centraliza o ícone verticalmente */
+  font-size: 0;
+  border-radius: 50%;
+  line-height: 40px; 
   margin: 0 auto;
   
 }
@@ -474,72 +422,67 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
 .slick-next, .slick-prev{
   z-index: 1;
 }
-/* Ajustando a posição das setas */
+
 .slick-prev {
-  left: 6rem; /* Posição à esquerda */
+  left: 6rem; 
 }
 
 .slick-next {
-  right: 6rem; /* Posição à direita */
+  right: 6rem;
 }
 
 
-
-/* Estilos para telas menores */
 @media only screen and (max-width: 1200px) {
 
   .header__logo img {
-    max-width: 80px; /* Reduzir o tamanho do logo para telas menores */
+    max-width: 80px; 
   }
 
   .nav__list {
-    display: none; /* Esconder o menu para telas menores */
+    display: none; 
   }
 
   .header {
-    justify-content: center; /* Centralizar elementos no cabeçalho */
+    justify-content: center; 
   }
 
   .banner {
-    height: 300px; /* Ajustar a altura do banner para telas menores */
+    height: 300px; 
   }
 
   .slider__image {
-    height: 200px; /* Ajustar a altura das imagens do slider */
+    height: 200px; 
   }
 }
 
-/* Estilos para telas ainda menores */
+
 @media only screen and (max-width: 768px) {
-  /* Exemplos de ajustes para telas de largura máxima de 768px */
-  /* Pode ajustar os valores conforme necessário */
 
   .header__logo img {
-    max-width: 60px; /* Reduzir ainda mais o tamanho do logo */
+    max-width: 60px; 
   }
 
   .header {
-    padding: 10px; /* Reduzir o preenchimento do cabeçalho */
+    padding: 10px;
   }
 
   .nav__list {
     display: flex;
     align-items: center;
-    gap: 10px; /* Espaçamento entre os itens do menu */
+    gap: 10px;
   }
 
   .banner {
-    height: 250px; /* Ajustar a altura do banner para telas menores */
+    height: 250px;
   }
 
 
   .slider__image {
-    height: 150px; /* Ajustar a altura das imagens do slider */
+    height: 150px;
   }
-  /* Mais ajustes para outras seções e elementos conforme necessário */
+  
 }
 
-/* Estilos para telas muito pequenas, como smartphones */
 @media only screen and (max-width: 480px) {
 
   .header__nav .nav__list{
@@ -551,15 +494,15 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   }
 
   .header__logo img {
-    max-width: 5rem; /* Reduzir ainda mais o tamanho do logo para telas menores */
+    max-width: 5rem; 
   }
 
   .banner {
-    height: 14rem; /* Ajustar a altura do banner para telas menores */
+    height: 14rem; 
   }
 
   .slider__image {
-    height: 13rem; /* Ajustar a altura das imagens do slider */
+    height: 13rem; 
   }
 
   .slider__title{
@@ -582,6 +525,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
     font-size: .8rem;
     font-weight: 400;
     gap: .6rem;
+    width: 24rem;
   }
 
 
@@ -598,18 +542,22 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
     width: 2rem;
   }
 
+  .about img{
+    width: 16rem;
+  }
+
   .slick-prev {
-    left: .85rem; /* Posição à esquerda */
+    left: .85rem; 
   }
   
   .slick-next {
-    right: 1.15rem; /* Posição à direita */
+    right: 1.15rem; 
   }
   .slick-prev,
   .slick-next {
-    font-size: 0; /* Tamanho da fonte das setas */
-    border-radius: 50%; /* Borda circular para as setas */
-    line-height: 40px; /* Centraliza o ícone verticalmente */
+    font-size: 0; 
+    border-radius: 50%; 
+    line-height: 40px; 
     margin: 0 auto;
     
   }
@@ -618,7 +566,7 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.8);
   }
-  /* Mais ajustes para outras seções e elementos conforme necessário */
+  
 }
 
 
@@ -675,10 +623,4 @@ background-image: url(src/img/cars/audi/rs6/rs6_6.jpg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-
-
-/* Adicione este CSS ao seu arquivo de estilo ou na seção de estilo do seu HTML */
-
-/* Estilizando as setas do Slick */
 
