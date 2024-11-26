@@ -1,0 +1,65 @@
+backend/
+├── src/
+│   ├── controllers/       # Controladores para lidar com a lógica do negócio
+│   │   ├── adminController.js
+│   │   ├── vehicleController.js
+│   │
+│   ├── routes/            # Rotas do sistema
+│   │   ├── adminRoutes.js
+│   │   ├── publicRoutes.js
+│   │
+│   ├── models/            # Modelos para MySQL (ORM ou queries SQL)
+│   │   ├── vehicleModel.js
+│   │
+│   ├── middlewares/       # Middlewares personalizados (ex.: autenticação)
+│   │   ├── authMiddleware.js
+│   │
+│   ├── config/            # Configurações (ex.: conexão com banco)
+│   │   ├── db.js          # Configuração do MySQL
+│   │   ├── jwtConfig.js   # Configuração do JWT
+│   │
+│   ├── app.js             # Configuração principal do Express
+│   ├── server.js          # Arquivo principal para iniciar o servidor
+│
+├── .env                   # Variáveis de ambiente (porta, credenciais do DB)
+├── package.json           # Dependências e scripts do back-end
+├── package-lock.json      # Controle de versões exatas das dependências
+
+===============================================================================
+
+frontend/
+├── public/
+│   ├── index.html         # Ponto de entrada do aplicativo
+│
+├── src/
+│   ├── assets/            # Recursos estáticos (imagens, fontes, etc.)
+│   │   ├── logo.png
+│   │
+│   ├── components/        # Componentes reutilizáveis
+│   │   ├── VehicleCard.vue
+│   │   ├── Header.vue
+│   │   ├── Footer.vue
+│   │
+│   ├── pages/             # Páginas principais
+│   │   ├── Home.vue       # Página pública de listagem de veículos
+│   │   ├── VehicleDetails.vue # Página com detalhes de um veículo
+│   │   ├── AdminDashboard.vue # Painel administrativo
+│   │   ├── AdminLogin.vue # Página de login para administrador
+│   │
+│   ├── router/            # Configuração de rotas do Vue Router
+│   │   ├── index.js
+│   │
+│   ├── store/             # Gerenciamento de estado (Pinia ou Vuex)
+│   │   ├── vehicleStore.js
+│   │   ├── authStore.js
+│   │
+│   ├── styles/            # Estilos globais e variáveis
+│   │   ├── global.scss
+│   │
+│   ├── App.vue            # Componente raiz
+│   ├── main.js            # Arquivo principal para inicializar o Vue
+│
+├── .env                   # Configuração de variáveis do ambiente front-end
+├── vite.config.js         # Configuração do Vite (ou Webpack, se preferir)
+├── package.json           # Dependências e scripts do front-end
+├── package-lock.json      # Controle de versões exatas das dependências
