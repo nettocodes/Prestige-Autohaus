@@ -1,6 +1,7 @@
 import { createApp } from 'vue'; // Corrigido para Vue 3
 import App from './App.vue';
-import { createRouter, createWebHistory } from 'vue-router'; // Corrigido para Vue Router 4
+import { createRouter, createWebHistory } from 'vue-router';
+import Favorites from './components/FavoriteVehicles.vue';
 
 import AddVehicle from './components/AddVehicle.vue';
 import ViewVehicles from './components/ViewVehicles.vue';
@@ -9,6 +10,7 @@ import ViewVehicles from './components/ViewVehicles.vue';
 const routes = [
     { path: '/add', component: AddVehicle },
     { path: '/view', component: ViewVehicles },
+    { path: '/favorites', component: Favorites },
 ];
 
 const router = createRouter({
