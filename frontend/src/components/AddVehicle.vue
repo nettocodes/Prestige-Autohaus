@@ -33,6 +33,10 @@
         <label>Preço (Tabela FIPE):</label>
         <input v-model="preco" type="text" readonly />
   
+        <!-- Preço Definido pelo Usuário -->
+        <label>Preço (Definido pelo Usuário):</label>
+        <input v-model.number="preco" type="number" step="0.01" placeholder="Digite o preço" required />
+
         <!-- Cor -->
         <label>Cor:</label>
         <input v-model="cor" placeholder="Cor" required />
@@ -132,8 +136,11 @@ export default {
     },
     async addVehicle() {
       const formData = new FormData();
-      formData.append("marca", this.selectedMarca);
-      formData.append("modelo", this.selectedModelo);
+      const marcaSelecionada = this.marcas.find((marca) => marca.codigo === this.selectedMarca);
+      const modeloSelecionado = this.modelos.find((modelo) => modelo.codigo === this.selectedModelo);
+
+      formData.append("marca", marcaSelecionada.nome);
+      formData.append("modelo", modeloSelecionado.nome);
       formData.append("ano", this.selectedAno);
       formData.append("preco", this.preco);
       formData.append("cor", this.cor);

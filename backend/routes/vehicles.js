@@ -44,9 +44,8 @@ router.post('/add', upload.array('fotos', 9), (req, res) => {
     // Processar fotos
     const fotos = req.files.map(file => file.filename);
 
-    // Tratar o preço
-    const precoProcessado = parseFloat(preco.replace(/[^\d.]/g, '')); // Remove caracteres não numéricos e converte para número
-
+    // Validar e processar o preço informado pelo usuário
+    const precoProcessado = parseFloat(preco);
     if (isNaN(precoProcessado) || precoProcessado <= 0) {
         return res.status(400).json({ error: 'Preço inválido.' });
     }
@@ -57,15 +56,15 @@ router.post('/add', upload.array('fotos', 9), (req, res) => {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     db.query(query, [
-        marca, 
-        modelo, 
+        marca, // Nome da marca enviado pelo frontend
+        modelo, // Nome do modelo enviado pelo frontend
         anoProcessado, 
         carroceria, 
         combustivelTexto, 
         quilometragem, 
         transmissao, 
         opcionais, 
-        precoProcessado, // Usando o preço processado
+        precoProcessado.toFixed(2), // Salva com duas casas decimais
         cor, 
         descricao, 
         JSON.stringify(fotos)
@@ -77,6 +76,8 @@ router.post('/add', upload.array('fotos', 9), (req, res) => {
         res.status(201).json({ message: 'Vehicle added successfully!' });
     });
 });
+
+
 
 // Obter veículos
 router.get('/', (req, res) => {
@@ -96,5 +97,25 @@ router.get('/', (req, res) => {
         res.status(200).json(results);
     });
 });
+
+// Rota para buscar detalhes de um veículo específico
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'SELECT * FROM vehicles WHERE id = ?';
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Erro ao buscar veículo.' });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'Veículo não encontrado.' });
+        }
+        const vehicle = results[0];
+        vehicle.fotos = JSON.parse(vehicle.fotos);
+        vehicle.opcionais = vehicle.opcionais ? vehicle.opcionais.split(',') : [];
+        res.status(200).json(vehicle);
+    });
+});
+
 
 module.exports = router;
