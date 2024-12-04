@@ -1,15 +1,6 @@
 <template>
     <div>
-      <!-- Header -->
-      <header class="header">
-        <nav class="navbar">
-          <h1>Vehicle Details</h1>
-          <ul class="nav-links">
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/view-vehicles">Veículos</router-link></li>
-          </ul>
-        </nav>
-      </header>
+      <AppHeader />
   
       <!-- Conteúdo Principal -->
       <div class="details-container">
@@ -38,10 +29,7 @@
         </div>
       </div>
   
-      <!-- Footer -->
-      <footer class="footer">
-        <p>© 2024 WebMotors Clone - Todos os direitos reservados</p>
-      </footer>
+      <AppFooter />
     </div>
   </template>
   
@@ -49,11 +37,17 @@
   import axios from "axios";
   import "@splidejs/vue-splide/css";
   import { Splide, SplideSlide } from "@splidejs/vue-splide";
-  
+
+  import AppHeader from "../common/AppHeader.vue";
+  import AppFooter from "../common/AppFooter.vue";
+    
   export default {
+    name: "VehicleDetails",
     components: {
       Splide,
       SplideSlide,
+      AppHeader,
+      AppFooter,
     },
     data() {
       return {

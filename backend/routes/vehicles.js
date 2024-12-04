@@ -22,7 +22,6 @@ const combustivelMap = {
     '3': 'Diesel',
 };
 
-// Adicionar veículo
 router.post('/add', upload.array('fotos', 9), (req, res) => {
     const { 
         marca, 
@@ -37,17 +36,19 @@ router.post('/add', upload.array('fotos', 9), (req, res) => {
         descricao 
     } = req.body;
 
-    // Processar o campo ano e combustível
-    const [anoProcessado, combustivelCode] = ano.split('-');
-    const combustivelTexto = combustivelMap[combustivelCode] || 'Não especificado';
+    // Extrair ano e tipo de combustível do campo `ano`
+    const [anoProcessado, combustivelCodigo] = ano.split('-');
+    const combustivelTexto = combustivelMap[combustivelCodigo] || 'Não especificado';
 
     // Processar fotos
     const fotos = req.files.map(file => file.filename);
 
-    // Validar e processar o preço informado pelo usuário
+    // Validar quilometragem e preço
+    const quilometragemProcessada = parseInt(quilometragem, 10);
     const precoProcessado = parseFloat(preco);
-    if (isNaN(precoProcessado) || precoProcessado <= 0) {
-        return res.status(400).json({ error: 'Preço inválido.' });
+
+    if (isNaN(anoProcessado) || isNaN(precoProcessado) || isNaN(quilometragemProcessada)) {
+        return res.status(400).json({ error: 'Valores inválidos fornecidos.' });
     }
 
     const query = `
@@ -56,39 +57,36 @@ router.post('/add', upload.array('fotos', 9), (req, res) => {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     db.query(query, [
-        marca, // Nome da marca enviado pelo frontend
-        modelo, // Nome do modelo enviado pelo frontend
-        anoProcessado, 
+        marca, 
+        modelo, 
+        anoProcessado, // Ano numérico
         carroceria, 
-        combustivelTexto, 
-        quilometragem, 
+        combustivelTexto, // Combustível processado
+        quilometragemProcessada, 
         transmissao, 
         opcionais, 
-        precoProcessado.toFixed(2), // Salva com duas casas decimais
+        precoProcessado.toFixed(2), // Salvar com duas casas decimais
         cor, 
         descricao, 
         JSON.stringify(fotos)
     ], (err, result) => {
         if (err) {
-            console.error(err); // Log do erro no console para debug
+            console.error(err);
             return res.status(500).json({ error: 'Failed to add vehicle.' });
         }
         res.status(201).json({ message: 'Vehicle added successfully!' });
     });
 });
 
-
-
 // Obter veículos
 router.get('/', (req, res) => {
     const query = 'SELECT * FROM vehicles';
     db.query(query, (err, results) => {
         if (err) {
-            console.error(err); // Log do erro no console para debug
+            console.error(err);
             return res.status(500).json({ error: 'Failed to fetch vehicles.' });
         }
 
-        // Parse dos dados de fotos e opcionais para JSON
         results.forEach(vehicle => {
             vehicle.fotos = JSON.parse(vehicle.fotos);
             vehicle.opcionais = vehicle.opcionais ? vehicle.opcionais.split(',') : [];
@@ -116,6 +114,5 @@ router.get('/:id', (req, res) => {
         res.status(200).json(vehicle);
     });
 });
-
 
 module.exports = router;
