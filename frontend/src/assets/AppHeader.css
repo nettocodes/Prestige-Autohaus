@@ -14,7 +14,6 @@
     background: rgba(0, 0, 0, 0.453); /* Fundo semitransparente */
     backdrop-filter: blur(10px); /* Aplica o efeito de desfoque */
     -webkit-backdrop-filter: blur(10px); /* Suporte para Safari */
-    border-radius: 0 0 10px 10px; /* Bordas arredondadas na parte inferior */
   }
   
   
