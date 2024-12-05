@@ -34,7 +34,7 @@
       </aside>
 
       <!-- Grid de Veículos -->
-      <main class="vehicle-grid">
+      <div class="vehicle-grid">
         <div v-for="vehicle in filteredVehicles" :key="vehicle.id" class="vehicle-card">
           <div class="vehicle-image">
             <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
@@ -69,10 +69,9 @@
             <button class="btn" @click="viewDetails(vehicle.id)">Ver Detalhes</button>
           </div>
         </div>
-      </main>
+      </div>
 
     </div>
-
   </div>
 </template>
 
@@ -152,7 +151,7 @@ export default {
       });
     },
     viewDetails(id) {
-      this.$router.push(`/vehicles/${id}`);
+      this.$router.push(`/details/${id}`);
     },
   },
   created() {

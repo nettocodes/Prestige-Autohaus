@@ -29,9 +29,9 @@ export default {
 <style>
 #app {
   width: 100%;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'DM Sans', sans-serif;
   text-align: center;
   color: #2c3e50;
-  background-color: #fff;
+  background-color: #000;
 }
 </style>

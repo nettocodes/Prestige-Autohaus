@@ -23,58 +23,85 @@ const combustivelMap = {
 };
 
 router.post('/add', upload.array('fotos', 9), (req, res) => {
-    const { 
-        marca, 
-        modelo, 
-        ano, 
-        carroceria, 
-        quilometragem, 
-        transmissao, 
-        opcionais, 
-        preco, 
-        cor, 
-        descricao 
+    const {
+        marca,
+        modelo,
+        ano,
+        carroceria,
+        quilometragem,
+        transmissao,
+        opcionais,
+        preco,
+        cor,
+        descricao,
+        condicao,
+        portas,
+        driveType,
+        cilindros
     } = req.body;
 
-    // Extrair ano e tipo de combustível do campo `ano`
+    console.log("Dados recebidos:", req.body);
+    console.log("Arquivos recebidos:", req.files);
+
+    // Validação de campos obrigatórios
+    if (!marca || !modelo || !ano || !carroceria || !transmissao || !preco || !quilometragem || !condicao || !portas || !driveType || !cilindros) {
+        return res.status(400).json({ error: 'Todos os campos obrigatórios devem ser preenchidos.' });
+    }
+
+    // Conversão do campo ano para extrair ano e tipo de combustível
     const [anoProcessado, combustivelCodigo] = ano.split('-');
     const combustivelTexto = combustivelMap[combustivelCodigo] || 'Não especificado';
 
-    // Processar fotos
-    const fotos = req.files.map(file => file.filename);
+    if (!anoProcessado || isNaN(parseInt(anoProcessado))) {
+        return res.status(400).json({ error: 'Ano inválido fornecido.' });
+    }
 
-    // Validar quilometragem e preço
+    // Conversão de valores numéricos
     const quilometragemProcessada = parseInt(quilometragem, 10);
     const precoProcessado = parseFloat(preco);
+    const portasProcessadas = parseInt(portas, 10);
+    const cilindrosProcessados = parseInt(cilindros, 10);
 
-    if (isNaN(anoProcessado) || isNaN(precoProcessado) || isNaN(quilometragemProcessada)) {
-        return res.status(400).json({ error: 'Valores inválidos fornecidos.' });
+    if (
+        isNaN(quilometragemProcessada) ||
+        isNaN(precoProcessado) ||
+        isNaN(portasProcessadas) ||
+        isNaN(cilindrosProcessados)
+    ) {
+        return res.status(400).json({ error: 'Valores numéricos inválidos fornecidos.' });
     }
+
+    // Processamento das fotos
+    const fotos = req.files.map(file => file.filename);
 
     const query = `
         INSERT INTO vehicles 
-        (marca, modelo, ano, carroceria, combustivel, quilometragem, transmissao, opcionais, preco, cor, descricao, fotos)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (marca, modelo, ano, carroceria, combustivel, quilometragem, transmissao, opcionais, preco, cor, descricao, fotos, condicao, portas, drive_type, cilindros)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     db.query(query, [
-        marca, 
-        modelo, 
-        anoProcessado, // Ano numérico
-        carroceria, 
-        combustivelTexto, // Combustível processado
-        quilometragemProcessada, 
-        transmissao, 
-        opcionais, 
-        precoProcessado.toFixed(2), // Salvar com duas casas decimais
-        cor, 
-        descricao, 
-        JSON.stringify(fotos)
-    ], (err, result) => {
+        marca,
+        modelo,
+        anoProcessado,
+        carroceria,
+        combustivelTexto,
+        quilometragemProcessada,
+        transmissao,
+        opcionais || "",
+        precoProcessado.toFixed(2),
+        cor || "Não especificado",
+        descricao || "Sem descrição",
+        JSON.stringify(fotos),
+        condicao,
+        portasProcessadas,
+        driveType,
+        cilindrosProcessados
+    ], (err) => {
         if (err) {
             console.error(err);
-            return res.status(500).json({ error: 'Failed to add vehicle.' });
+            return res.status(500).json({ error: 'Erro ao adicionar veículo.' });
         }
-        res.status(201).json({ message: 'Vehicle added successfully!' });
+        res.status(201).json({ message: 'Veículo adicionado com sucesso!' });
     });
 });
 

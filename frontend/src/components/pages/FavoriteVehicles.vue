@@ -1,6 +1,5 @@
 <template>
   <div class="vehicle-container">
-    <AppHeader />
     <h2>Favoritos</h2>
     <div v-if="favorites.length === 0">
       <p>Você ainda não adicionou veículos aos favoritos.</p>
@@ -29,14 +28,11 @@
         </div>
       </div>
     </div>
-    <AppFooter />
   </div>
 </template>
 
 <script>
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
-import AppHeader from "@/components/common/AppHeader.vue";
-import AppFooter from "@/components/common/AppFooter.vue";
 import "@/assets/VehicleFavorites.css";
 
 export default {
@@ -44,8 +40,6 @@ export default {
   components: {
     Splide,
     SplideSlide,
-    AppHeader,
-    AppFooter,
   },
   data() {
     return {
