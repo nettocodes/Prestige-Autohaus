@@ -130,7 +130,9 @@
 
 .dynamic-carousel {
     width: 100%; /* Faz o carrossel ocupar a largura disponível */
-    max-width: 1200px; /* Limita a largura máxima */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.597); 
+    padding: 1rem;
+    border-radius: 18px;
 }
 
 .vehicle-card {
@@ -256,6 +258,192 @@
     margin-top: 2rem;
 }
 
+/* Section Principal */
+.highlight-section {
+    font-family: "Arial", sans-serif;
+    color: #2c3e50;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  .highlight-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    background: #f9fafc;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .highlight-image {
+    flex: 1;
+    max-width: 50%;
+    position: relative;
+  }
+  
+  .highlight-image video {
+    width: 100%;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  
+  
+  .highlight-text {
+    flex: 1;
+    max-width: 50%;
+    text-align: left;
+    padding: 2rem;
+  }
+  
+  .highlight-text h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .highlight-text p {
+    font-size: 1rem;
+    margin: 1rem 0;
+    line-height: 1.5;
+    color: #555;
+  }
+  
+  .highlight-text ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  
+  .highlight-text ul li {
+    font-size: 1rem;
+    color: #333;
+    margin: 0.5rem 0;
+  }
+  
+  .cta-button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background: #0056b3;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .highlight-content {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .highlight-image,
+    .highlight-text {
+      max-width: 100%;
+    }
+  }
+  
+  .brand-filter-carousel {
+    padding: 3rem 1.5rem;
+    background-color: #111827;
+    color: white;
+    border-radius: 16px;
+  }
+  
+  .brand-filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .brand-filter-header h2 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .view-all-link {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .brand-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .brand-tabs button {
+    background: none;
+    border: 2px solid #555;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .brand-tabs button.active {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .brand-tabs button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  
+  .brand-vehicle-card {
+    background: #1f2937;
+    border-radius: 12px;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .brand-vehicle-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .brand-vehicle-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .vehicle-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+  
+  .vehicle-detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .brand-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00d9ff;
+    margin: 1rem 0;
+  }
+  
 /* Responsiveness */
 @media (max-width: 768px) {
     .dynamic-carousel-header h2 {

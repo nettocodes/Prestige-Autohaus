@@ -114,6 +114,80 @@
           </SplideSlide>
         </Splide>
       </section>
+      <section class="highlight-section">
+        <div class="highlight-content">
+          <!-- Vídeo com botão de play -->
+          <div class="highlight-image">
+            <video id="highlight-video" poster="assets/images/car-highlight.jpg" preload="none" class="video" muted autoplay>
+              <source src="@/assets/videos/back.webm" type="video/webm" />
+              Seu navegador não suporta vídeos.
+            </video>
+          </div>
+          <!-- Texto lateral -->
+          <div class="highlight-text">
+            <h2>Get A Fair Price For Your Car</h2>
+            <p>Sell To Us Today</p>
+            <p>
+              We are committed to providing our customers with exceptional service, competitive pricing, and a wide range of benefits:
+            </p>
+            <ul>
+              <li>✔ We are the UK's largest provider, with more patrols in more places</li>
+              <li>✔ You get 24/7 roadside assistance</li>
+              <li>✔ We fix 4 out of 5 cars at the roadside</li>
+            </ul>
+            <button class="cta-button">Get Started &rarr;</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="brand-filter-carousel">
+        <div class="brand-filter-header">
+          <h2>Popular Makes</h2>
+          <router-link to="/view" class="view-all-link">View All &rarr;</router-link>
+        </div>
+        
+        <div class="brand-tabs">
+          <button 
+            v-for="brand in uniqueBrands" 
+            :key="brand" 
+            @click="filterByBrand(brand)" 
+            :class="{ active: selectedBrand === brand }"
+          >
+            {{ brand }}
+          </button>
+        </div>
+
+        <Splide :options="splideOptions" class="brand-carousel">
+          <SplideSlide v-for="vehicle in filteredVehicles" :key="vehicle.id">
+            <div class="brand-vehicle-card">
+              <div class="brand-vehicle-image">
+                <img :src="`http://localhost:5000/uploads/${vehicle.fotos[0]}`" alt="Vehicle photo" />
+              </div>
+              <div class="brand-vehicle-info">
+                <h3>{{ vehicle.marca || "Não informado" }}</h3>
+                <p>{{ vehicle.modelo || "Não informado" }}</p>
+                <div class="vehicle-details">
+                  <div class="vehicle-detail-item">
+                    <img src="@/assets/images/icons/odometro.svg" alt="Odometer" />
+                    <p>{{ vehicle.quilometragem ? vehicle.quilometragem.toLocaleString() + " Km" : "Não informado" }}</p>
+                  </div>
+                  <div class="vehicle-detail-item">
+                    <img src="@/assets/images/icons/fuel.svg" alt="Fuel" />
+                    <p>{{ vehicle.combustivel || "Não informado" }}</p>
+                  </div>
+                  <div class="vehicle-detail-item">
+                    <img src="@/assets/images/icons/transmission.svg" alt="Transmission" />
+                    <p>{{ vehicle.transmissao || "Não informado" }}</p>
+                  </div>
+                </div>
+                <p class="brand-price">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</p>
+                <button class="details-btn" @click="viewDetails(vehicle.id)">View Details</button>
+              </div>
+            </div>
+          </SplideSlide>
+        </Splide>
+      </section>
+
 
     </div>
   </div>
@@ -134,7 +208,10 @@ export default {
   },
   data() {
     return {
-      filteredVehicles: [], // Veículos carregados dinamicamente
+      vehicles: [], // Todos os veículos
+      filteredVehicles: [], // Veículos filtrados pela marca
+      selectedBrand: "", // Marca selecionada
+      uniqueBrands: [], // Lista de marcas únicas
       splideOptions: {
         type: "loop",
         perPage: 3,
@@ -152,7 +229,16 @@ export default {
     async fetchVehicles() {
       try {
         const response = await axios.get("http://localhost:5000/api/vehicles");
-        this.filteredVehicles = response.data;
+        this.vehicles = response.data;
+
+        // Extraindo marcas únicas
+        this.uniqueBrands = [...new Set(this.vehicles.map(vehicle => vehicle.marca))];
+
+        // Define a primeira marca como padrão e filtra os veículos
+        if (this.uniqueBrands.length > 0) {
+          this.selectedBrand = this.uniqueBrands[0];
+          this.filterByBrand(this.selectedBrand);
+        }
       } catch (error) {
         console.error("Error fetching vehicles:", error);
       }
@@ -173,12 +259,29 @@ export default {
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
       return favorites.some((fav) => fav.id === vehicleId);
     },
+    filterByBrand(brand) {
+      this.selectedBrand = brand;
+      this.filteredVehicles = this.vehicles.filter(vehicle => vehicle.marca === brand);
+    },
     viewDetails(vehicleId) {
       this.$router.push(`/details/${vehicleId}`);
     },
   },
   mounted() {
     this.fetchVehicles();
+    const playButton = document.getElementById("play-button");
+    const video = document.getElementById("highlight-video");
+
+    if (playButton && video) {
+      playButton.addEventListener("click", function () {
+        if (video.paused) {
+          video.play();
+          playButton.style.display = "none"; // Esconde o botão de play quando o vídeo começa
+        }
+      });
+    } else {
+      console.error("Play button or video element not found!");
+    }
   },
 };
 </script>
