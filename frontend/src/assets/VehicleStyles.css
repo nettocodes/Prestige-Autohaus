@@ -74,9 +74,7 @@
 }
 
 .brand-filter-splide {
-  background: #f7f9fc;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 12px;
   display: flex;
   align-items: center;
@@ -87,7 +85,7 @@
 
 .brand-filter-splide:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  filter: drop-shadow(0 4px 8px rgba(57, 57, 57, 0.275));
 }
 
 .brand-logo {
