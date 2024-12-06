@@ -13,58 +13,23 @@
           </div>
           <div class="list-brand">
             <ul>
-              <li>
-                <a href="/">
+              <li v-for="brand in uniqueBrands" :key="brand">
+                <router-link
+                  :to="{ path: '/view', query: { brand: brand } }"
+                  class="brand-card-link"
+                >
                   <div class="brand-card">
-                    <img class="logo-brand" src="@/assets/images/logos/audi.png" alt="Audi">
-                    <p>Audi</p>
+                    <img :src="require(`@/assets/images/logos/${brand.toLowerCase().replace(/\s+/g, '-')}.png`)" :alt="brand" class="logo-brand" />
+
+                    <p>{{ brand }}</p>
                   </div>
-                </a>
-              </li>
-              <li>
-                <a href="/">
-                  <div class="brand-card">
-                    <img class="logo-brand" src="@/assets/images/logos/bmw.png" alt="BMW">
-                    <p>BMW</p>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/">
-                  <div class="brand-card">
-                    <img class="logo-brand" src="@/assets/images/logos/ferrari.png" alt="Ferrari">
-                    <p>Ferrari</p>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/">
-                  <div class="brand-card">
-                    <img class="logo-brand" src="@/assets/images/logos/mercedes.png" alt="Mercedes Benz">
-                    <p>Mercedes Benz</p>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/">
-                  <div class="brand-card">
-                    <img class="logo-brand" src="@/assets/images/logos/lamborghini.png" alt="Lamborghini">
-                    <p>Lamborghini</p>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/">
-                  <div class="brand-card">
-                    <img class="logo-brand" src="@/assets/images/logos/porsche.png" alt="Porsche">
-                    <p>Porsche</p>
-                  </div>
-                </a>
+                </router-link>
               </li>
             </ul>
           </div>
         </div>
       </section>
+
 
       <!-- Dynamic Vehicle Carousel -->
       <section class="custom-carousel-section">
@@ -74,7 +39,7 @@
         </div>
 
         <Splide :options="splideOptionsVehicles" class="custom-carousel">
-          <SplideSlide v-for="vehicle in filteredVehicles" :key="vehicle.id">
+          <SplideSlide v-for="vehicle in filteredVehiclesForAll" :key="vehicle.id">
             <div class="custom-vehicle-card">
               <div class="custom-vehicle-image">
                 <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
@@ -117,6 +82,7 @@
         </Splide>
       </section>
 
+
       <section class="highlight-section">
         <div class="highlight-content">
           <!-- Vídeo com botão de play -->
@@ -155,7 +121,7 @@
             <button
               v-for="brand in uniqueBrands"
               :key="brand"
-              @click="filterByBrand(brand)"
+              @click="filterByBrandForBrands(brand)"
               :class="{ 'unique-active-tab': selectedBrand === brand }"
               class="unique-brand-tab"
             >
@@ -165,7 +131,7 @@
 
           <!-- Carousel de Veículos -->
           <Splide :options="splideOptionsBrands" class="unique-brand-carousel">
-            <SplideSlide v-for="vehicle in filteredVehicles" :key="vehicle.id">
+            <SplideSlide v-for="vehicle in filteredVehiclesForBrands" :key="vehicle.id">
               <div class="unique-brand-vehicle-card">
                 <div class="unique-brand-vehicle-image">
                   <img :src="`http://localhost:5000/uploads/${vehicle.fotos[0]}`" alt="Vehicle photo" />
@@ -199,6 +165,7 @@
           </Splide>
         </div>
       </section>
+
       <section class="browse-by-type-section">
         <h2 class="browse-by-type-title">Browse by Type</h2>
         <div class="browse-by-type-container">
@@ -232,8 +199,9 @@ export default {
   data() {
     return {
       vehicles: [], // Todos os veículos
-      filteredVehicles: [], // Veículos filtrados dinamicamente
-      selectedBrand: "", // Marca selecionada para filtro
+      filteredVehiclesForBrands: [], // Veículos filtrados para o carrossel de marcas
+      filteredVehiclesForAll: [], // Veículos filtrados para o carrossel geral
+      selectedBrand: "", // Marca selecionada para filtro no carrossel de marcas
       uniqueBrands: [], // Lista de marcas únicas
       carBodyTypes: [
         { name: "SUV", value: "SUV", icon: require("@/assets/images/icons/suv.png") },
@@ -273,25 +241,40 @@ export default {
     };
   },
   methods: {
-    // Busca todos os veículos do backend
     async fetchVehicles() {
       try {
         const response = await axios.get("http://localhost:5000/api/vehicles");
         this.vehicles = response.data;
 
-        // Gerar lista única de marcas
-        this.uniqueBrands = [...new Set(this.vehicles.map((vehicle) => vehicle.marca))];
+        // Inicializa veículos filtrados para ambos os carrosséis
+        this.filteredVehiclesForBrands = [...this.vehicles];
+        this.filteredVehiclesForAll = [...this.vehicles];
 
-        // Inicialmente mostrar todos os veículos
-        this.filteredVehicles = [...this.vehicles];
+        // Lista única de marcas
+        this.uniqueBrands = [...new Set(this.vehicles.map((vehicle) => vehicle.marca))];
       } catch (error) {
         console.error("Erro ao buscar veículos:", error);
       }
     },
 
-    // Filtro por tipo de carroceria
+    // Filtro para o carrossel de marcas
+    filterByBrandForBrands(brand) {
+      this.selectedBrand = brand;
+      if (brand) {
+        this.filteredVehiclesForBrands = this.vehicles.filter((vehicle) => vehicle.marca === brand);
+      } else {
+        this.filteredVehiclesForBrands = [...this.vehicles]; // Reseta o filtro
+      }
+    },
+
+    // Reset para o carrossel geral
+    resetFiltersForAll() {
+      this.filteredVehiclesForAll = [...this.vehicles];
+    },
+
+    // Filtro por tipo de carroceria para o carrossel geral
     filterByCarBody(carBody) {
-      this.filteredVehicles = this.vehicles.filter((vehicle) => vehicle.carroceria === carBody);
+      this.filteredVehiclesForAll = this.vehicles.filter((vehicle) => vehicle.carroceria === carBody);
     },
 
     // Alterna o estado de favorito
@@ -312,16 +295,6 @@ export default {
       return this.favorites.some((fav) => fav.id === vehicleId);
     },
 
-    // Filtra veículos por marca
-    filterByBrand(brand) {
-      this.selectedBrand = brand;
-      if (brand) {
-        this.filteredVehicles = this.vehicles.filter((vehicle) => vehicle.marca === brand);
-      } else {
-        this.filteredVehicles = [...this.vehicles]; // Reseta o filtro
-      }
-    },
-
     // Exibe detalhes do veículo
     viewDetails(vehicleId) {
       this.$router.push(`/details/${vehicleId}`);
@@ -329,21 +302,6 @@ export default {
   },
   mounted() {
     this.fetchVehicles(); // Busca veículos ao montar o componente
-
-    // Configuração do vídeo em destaque
-    const playButton = document.getElementById("play-button");
-    const video = document.getElementById("highlight-video");
-
-    if (playButton && video) {
-      playButton.addEventListener("click", function () {
-        if (video.paused) {
-          video.play();
-          playButton.style.display = "none"; // Esconde o botão de play quando o vídeo começa
-        }
-      });
-    } else {
-      console.error("Play button or video element não encontrado!");
-    }
   },
 };
 </script>

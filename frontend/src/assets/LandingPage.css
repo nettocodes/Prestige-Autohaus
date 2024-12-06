@@ -12,93 +12,99 @@
 
 /* Brand Section */
 .brand-section {
-    padding: 3rem 1.5rem;
-    background-color: #f9fafc;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  padding: 3rem 1.5rem;
+  background-color: #f9fafc;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.brand-content{
+
+.brand-content {
   max-width: 1400px;
 }
 
 .header-brand {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 2rem;
 }
 
 .header-brand h2 {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #333;
-    margin: 0;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
 }
 
 .header-brand .show-all-brands {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #007aff;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s ease;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #007aff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
 }
 
 .header-brand .show-all-brands:hover {
-    color: #0056b3;
-    text-decoration: underline;
+  color: #0056b3;
+  text-decoration: underline;
 }
 
 .list-brand ul {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .brand-card {
-    background: linear-gradient(145deg, #ffffff, #f0f0f0);
-    border-radius: 20px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    padding: 1.8rem;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    width: 160px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .brand-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .logo-brand {
-    max-width: 100px;
-    margin-bottom: 1rem;
-    transition: transform 0.3s ease;
+  width: 100px; /* Largura fixa para todas as imagens */
+  height: 100px; /* Altura fixa para manter o formato quadrado */
+  object-fit: contain; /* Garante que a imagem seja redimensionada sem cortar */
+  transition: transform 0.3s ease;
+  margin-bottom: .5rem;
 }
 
 .brand-card:hover .logo-brand {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .brand-card p {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #444;
-    margin: 0;
+  font-size: .8rem;
+  font-weight: bold;
+  color: #444;
+  margin: 0;
+  text-align: center;
 }
+
 
 /* Custom Vehicle Carousel Section */
 .custom-carousel-section {
@@ -107,6 +113,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: grab;
 }
 
 .custom-carousel-header {
@@ -116,6 +123,9 @@
   width: 100%;
   max-width: 1400px;
   margin-bottom: 1.5rem;
+}
+.unique-brand-carousel{
+  cursor: grab;
 }
 
 .custom-carousel-header h2 {
