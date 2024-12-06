@@ -110,7 +110,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="vehicle-form-group">
           <label class="vehicle-form-label">Descrição:</label>
           <textarea v-model="descricao" placeholder="Digite a descrição" class="vehicle-form-textarea"></textarea>
@@ -160,6 +160,8 @@ export default {
       cilindros: 0,
       fotos: [],
       previewFotos: [],
+      cor: "", // Adicionando o campo 'cor'
+      descricao: "", // Adicionando o campo 'descricao'
       opcionais: [],
       opcionaisDisponiveis: ["Airbag", "Alarme", "Ar condicionado", "Bancos de couro"],
       carroceriaOptions: ["Hatch", "Sedan", "SUV"],
@@ -202,8 +204,8 @@ export default {
       formData.append("carroceria", this.carroceria);
       formData.append("transmissao", this.transmissao);
       formData.append("portas", this.portas);
-      formData.append("cor", this.cor); // Incluindo a cor
-      formData.append("descricao", this.descricao || ""); // Incluindo a descrição
+      formData.append("cor", this.cor); // Adicionando a cor
+      formData.append("descricao", this.descricao || ""); // Adicionando a descrição
       formData.append("driveType", this.driveType);
       formData.append("condicao", this.condicao);
       formData.append("cilindros", this.cilindros);
