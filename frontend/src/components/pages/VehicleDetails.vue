@@ -39,17 +39,15 @@
   
       <!-- Resumo do Veículo -->
       <div v-if="vehicle" class="vehicle-overview">
-        <h2>Car Overview</h2>
+        <h2>Visão geral</h2>
         <div class="details-grid">
-          <div><strong>Body:</strong> {{ vehicle.carroceria || "Não informado" }}</div>
-          <div><strong>Condition:</strong> {{ vehicle.condicao || "Usado" }}</div>
-          <div><strong>Mileage:</strong> {{ vehicle.quilometragem?.toLocaleString() || "0" }} Km</div>
-          <div><strong>Engine Size:</strong> {{ vehicle.motor || "Não informado" }}</div>
-          <div><strong>Fuel Type:</strong> {{ vehicle.combustivel || "Não informado" }}</div>
-          <div><strong>Doors:</strong> {{ vehicle.portas || "4" }}</div>
-          <div><strong>Transmission:</strong> {{ vehicle.transmissao || "Não informado" }}</div>
-          <div><strong>Color:</strong> {{ vehicle.cor || "Não informado" }}</div>
-          <div><strong>VIN:</strong> {{ vehicle.vin || "Não informado" }}</div>
+          <div><strong>Carroceria:</strong> {{ vehicle.carroceria || "Não informado" }}</div>
+          <div><strong>Condicao:</strong> {{ vehicle.condicao || "Usado" }}</div>
+          <div><strong>Quilometragem:</strong> {{ vehicle.quilometragem?.toLocaleString() || "0" }} Km</div>
+          <div><strong>Combustivel:</strong> {{ vehicle.combustivel || "Não informado" }}</div>
+          <div><strong>Portas:</strong> {{ vehicle.portas || "4" }}</div>
+          <div><strong>Transmissao:</strong> {{ vehicle.transmissao || "Não informado" }}</div>
+          <div><strong>Cor:</strong> {{ vehicle.cor || "Não informado" }}</div>
         </div>
       </div>
   

@@ -3,7 +3,6 @@
     <div class="main-container">
       <!-- Filtros -->
       <aside class="filter-container">
-        <h3 class="filter-title">Filtros</h3>
 
         <div class="filter-container-inner">
           <h4 class="filter-subtitle">Marcas</h4>
