@@ -7,7 +7,19 @@
         <div class="filter-container-inner">
           <h4 class="filter-subtitle">Marcas</h4>
           <Splide
-            :options="{ perPage: 4, gap: '1rem', pagination: false, breakpoints: { 768: { perPage: 2 } } }"
+            :options="{
+              type: 'loop', // Define o carrossel como loop
+              perPage: 6, // Quantos slides serão exibidos ao mesmo tempo
+              gap: '0rem', // Espaçamento entre os slides
+              pagination: false, // Remove a paginação
+              arrows: false, // Exibe as setas de navegação
+              fixedWidth: '50px', // Largura fixa dos slides
+              focus: 'center', // Centraliza o slide ativo
+              breakpoints: {
+                768: { perPage: 3, fixedWidth: '60px' }, // Ajusta para telas menores
+                480: { perPage: 2, fixedWidth: '50px' }, // Ajusta para telas muito pequenas
+              }
+            }"
             class="brand-splide"
           >
             <SplideSlide v-for="marca in uniqueBrands" :key="marca">
@@ -274,7 +286,7 @@ export default {
     getBrandImage(brand) {
       const normalizedBrand = brand.toLowerCase().replace(/\s+/g, "-");
       try {
-        return require(`@/assets/images/logos/${normalizedBrand}.png`);
+        return require(`@/assets/images/logos/${normalizedBrand}.webp`);
       } catch {
         return "/src/assets/images/logos/default.png"; // Caminho para uma imagem padrão
       }

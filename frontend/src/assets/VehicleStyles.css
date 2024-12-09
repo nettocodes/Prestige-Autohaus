@@ -65,32 +65,52 @@
   font-size: .75rem;
   font-weight: 600;
   color: #2d3748;
-  margin-top: 10px;
+  margin: 10px 0 5px 0;
   text-align: start;
   width: 100%;
 }
-
-/* Splide */
+/* Contêiner do Splide */
 .brand-splide {
-  margin-bottom: 25px;
+  margin-bottom: 0;
+  padding: 0;
+  overflow: hidden;
+  max-width: 100%; /* Garante que o Splide ocupe o espaço disponível */
 }
 
+/* Card do Splide */
 .brand-filter-splide {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 .brand-filter-splide:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px); /* Elevação sutil ao passar o mouse */
 }
 
+/* Imagem da Marca */
 .brand-logo {
-  width: 5rem;
+  width: 100%; /* Tamanho da imagem ajustável */
   height: auto;
-  object-fit: contain;
+  object-fit: contain; /* Mantém a proporção da imagem */
+}
+
+/* Ajustes de Responsividade */
+@media (max-width: 768px) {
+  .brand-logo {
+    width: 60%; /* Reduz o tamanho em telas menores */
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-logo {
+    width: 50%; /* Reduz ainda mais em telas pequenas */
+  }
 }
 
 /* Inputs e Selects */
@@ -212,7 +232,7 @@
   overflow-y: auto; /* Permite rolagem vertical */
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   align-content: flex-start; /* Mantém os itens alinhados ao topo */
   justify-content: space-evenly; /* Distribui os cards de forma uniforme */
 }
@@ -273,7 +293,7 @@
 .vehicle-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Mantém a proporção da imagem sem distorcer */
+  object-fit: contain;
   border-bottom: 1px solid #ddd;
 }
 
