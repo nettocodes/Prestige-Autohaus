@@ -90,7 +90,7 @@
   height: 100px; /* Altura fixa para manter o formato quadrado */
   object-fit: contain; /* Garante que a imagem seja redimensionada sem cortar */
   transition: transform 0.3s ease;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .brand-card:hover .logo-brand {
@@ -98,11 +98,100 @@
 }
 
 .brand-card p {
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: bold;
   color: #444;
   margin: 0;
   text-align: center;
+}
+
+.brand-card-link {
+  text-decoration: none;
+}
+
+/* Responsividade */
+
+/* Ajustes para telas médias */
+@media (max-width: 1024px) {
+  .header-brand h2 {
+    font-size: 1.8rem;
+  }
+
+  .header-brand .show-all-brands {
+    font-size: 1rem;
+  }
+
+  .brand-card {
+    width: 140px;
+    padding: 0.8rem;
+  }
+
+  .logo-brand {
+    width: 80px;
+    height: 80px;
+  }
+
+  .brand-card p {
+    font-size: 0.75rem;
+  }
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width: 768px) {
+  .header-brand {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .list-brand ul{
+    gap: .5rem;
+  }
+  .header-brand h2 {
+    font-size: 1.6rem;
+  }
+
+  .brand-card {
+    width: 110px;
+    padding: 0.7rem;
+  }
+
+  .logo-brand {
+    width: 50px;
+    height: 50px;
+  }
+
+  .brand-card p {
+    font-size: 12px;
+  }
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 480px) {
+  .brand-section {
+    padding: 2rem 1rem;
+  }
+
+  .header-brand h2 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .header-brand .show-all-brands {
+    font-size: 0.9rem;
+  }
+
+  .brand-card {
+    width: 100px;
+    padding: 0.6rem;
+  }
+
+  .logo-brand {
+    width: 60px;
+    height: 60px;
+  }
+
+  .brand-card p {
+    font-size: 0.65rem;
+  }
 }
 
 
@@ -113,7 +202,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: grab;
+  max-width: 1440px;
 }
 
 .custom-carousel-header {
@@ -121,11 +210,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1400px;
   margin-bottom: 1.5rem;
-}
-.unique-brand-carousel{
-  cursor: grab;
 }
 
 .custom-carousel-header h2 {
@@ -147,13 +232,16 @@
 }
 
 .custom-carousel {
+  margin: 0 auto;
+  overflow: hidden;
   width: 100%;
-  max-width: 1400px;
-  padding: 1rem 0;
 }
 
+/* Vehicle Card Styles */
 .custom-vehicle-card {
-  width: 300px;
+  width: 100%;
+  max-width: 300px; /* Largura máxima */
+  height: 400px; /* Altura padrão */
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -161,6 +249,9 @@
   text-align: left;
   margin: 1rem auto;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .custom-vehicle-card:hover {
@@ -168,36 +259,43 @@
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
+/* Imagem com ajuste proporcional */
 .custom-vehicle-image {
-  position: relative;
-  height: 180px;
+  width: 100%;
+  height: 60%; /* Proporção definida */
   overflow: hidden;
+  position: relative;
 }
 
 .custom-vehicle-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Ajusta a imagem sem distorção */
+  display: block;
 }
 
+/* Informações do veículo */
 .custom-vehicle-info {
   padding: 1rem;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  justify-content: space-between;
 }
 
 .custom-vehicle-info h3 {
   font-size: 1.2rem;
   font-weight: bold;
   color: #333;
+  margin-bottom: 0.5rem;
 }
 
 .custom-vehicle-info p {
-  font-size: 1rem;
+  font-size: .85rem;
   color: #666;
 }
 
+/* Botão de favorito */
 .custom-favorite-btn {
   align-self: flex-start;
   background: none;
@@ -212,6 +310,7 @@
   color: red;
 }
 
+/* Detalhes do veículo */
 .custom-vehicle-details {
   display: flex;
   justify-content: space-between;
@@ -233,22 +332,24 @@
   height: 24px;
 }
 
+.custom-price {
+  font-weight: bold;
+}
 .custom-vehicle-detail-item p {
   font-size: 0.85rem;
   color: #555;
 }
 
+/* Rodapé do cartão */
 .custom-vehicle-bottom-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: .5rem;
+  border-top: 1px solid #ddd;
 }
 
-.custom-price {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #000;
-}
+
 
 .custom-details-btn {
   color: #007bff;
@@ -263,6 +364,64 @@
   text-decoration: underline;
 }
 
+/* Responsividade */
+
+/* Ajusta a largura e altura dos cartões com base no tamanho da tela */
+@media (max-width: 1280px) {
+  .custom-vehicle-card {
+    max-width: 280px;
+    height: 380px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .custom-vehicle-card {
+    max-width: 260px;
+    height: 360px;
+  }
+
+  .custom-vehicle-info h3 {
+    font-size: 1.1rem;
+  }
+
+  .custom-price {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-vehicle-card {
+    max-width: 220px;
+    height: 320px;
+  }
+
+  .custom-vehicle-info h3 {
+    font-size: 1rem;
+  }
+
+  .custom-price {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-vehicle-card {
+    max-width: 180px;
+    height: 280px;
+  }
+
+  .custom-vehicle-info h3 {
+    font-size: 0.9rem;
+  }
+
+  .custom-price {
+    font-size: 0.8rem;
+  }
+
+  .custom-details-btn {
+    font-size: 0.7rem;
+  }
+}
 
 /* Section Principal */
 .highlight-section {
@@ -362,7 +521,7 @@
   }
 /* Section Container */
 .unique-brand-filter-carousel {
-  padding: 3rem 2rem;
+  padding: 2rem 1rem;
   background-color: #0f172a;
   color: #ffffff;
   margin: 0 auto;
@@ -385,7 +544,7 @@
 }
 
 .unique-brand-filter-header h2 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
 }
 
@@ -401,25 +560,19 @@
   color: #ffffff;
 }
 
-/* Tabs Styles */
-.unique-brand-tabs {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
 .unique-brand-tab {
-  background-color: transparent;
-  border: none;
+  background-color: transparent; /* Cor de fundo */
+  color: #9ca3af; /* Cor do texto */
   font-size: 1rem;
   font-weight: bold;
-  color: #9ca3af;
+  border: none;
   cursor: pointer;
-  position: relative;
-  padding: 0.5rem 1rem;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  white-space: nowrap; /* Evita quebra de texto */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Adiciona uma sombra */
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 .unique-brand-tab.unique-active-tab {
@@ -441,18 +594,12 @@
   color: #ffffff;
 }
 
-/* Vehicle Cards Container */
-.unique-brand-vehicle-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
-}
 
-/* Vehicle Card Styles */
+/* Vehicle Cards */
 .unique-brand-vehicle-card {
   display: flex;
   flex-direction: row;
+  align-items: center;
   background-color: #1e293b;
   border-radius: 12px;
   overflow: hidden;
@@ -460,43 +607,48 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
-  max-width: 36rem;
-  flex: 1 1 calc(33.333% - 1.5rem); /* 3 cards por linha */
+  max-width: 450px;
+  height: 200px;
+  margin: 1rem auto;
+  box-sizing: border-box;
 }
 
 .unique-brand-vehicle-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
+/* Imagem do Veículo */
 .unique-brand-vehicle-image {
-  width: 40%;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
 }
 
 .unique-brand-vehicle-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-/* Vehicle Info Styles */
+/* Informações do Veículo */
 .unique-brand-vehicle-info {
-  padding: 1.5rem;
-  text-align: left;
   flex: 1;
+  padding: .5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .unique-brand-title {
-  font-size: 1.3rem;
-  font-weight: 400;
+  font-size: 1rem;
+  font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
 .unique-brand-model {
-  font-size: 1rem;
+  font-size: 0.85rem;
   color: #9ca3af;
   margin-bottom: 1rem;
 }
@@ -514,18 +666,22 @@
 }
 
 .unique-vehicle-brand-item img {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   filter: invert(100%);
 }
 
 .unique-vehicle-brand-item p {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #9ca3af;
   margin: 0;
 }
 
-/* Price and Button Section */
+.splide__pagination {
+  bottom: -1.5em;
+}
+
+/* Rodapé do Cartão */
 .unique-vehicle-brand-bottom {
   display: flex;
   justify-content: space-between;
@@ -534,17 +690,16 @@
 }
 
 .unique-brand-price {
-  font-family: var(--font-primary);
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #fff;
 }
 
 .unique-details-btn {
-  color: #fff;
-  border: none;
+  color: #4db8ff;
   background: none;
-  font-size: 0.9rem;
+  border: none;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: color 0.3s ease;
 }
@@ -552,6 +707,74 @@
 .unique-details-btn:hover {
   color: #3a9be7;
 }
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .unique-brand-vehicle-card {
+    max-width: 400px;
+  }
+
+  .unique-brand-title {
+    font-size: 0.9rem;
+  }
+
+  .unique-brand-price {
+    font-size: 0.8rem;
+  }
+
+  .unique-details-btn {
+    font-size: 0.75rem;
+  }
+  .unique-brand-model{
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .unique-brand-vehicle-card {
+    max-width: 95%;
+    margin: 0 auto;
+    flex-direction: column;
+    height: 100%;
+  }
+  .unique-brand-vehicle-info{
+    flex: 0;
+  }
+
+  .unique-brand-title {
+    font-size: 0.85rem;
+  }
+
+  .unique-brand-price {
+    font-size: 0.85rem;
+  }
+
+  .unique-details-btn {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .unique-brand-vehicle-card {
+    max-width: 300px;
+    height: 100px;
+    flex-direction: column;
+  }
+
+  .unique-brand-title {
+    font-size: 0.75rem;
+  }
+
+  .unique-brand-price {
+    font-size: 0.75rem;
+  }
+
+  .unique-details-btn {
+    font-size: 0.65rem;
+  }
+}
+
+
 
 /* Section Container */
 .browse-by-type-section {
@@ -574,7 +797,7 @@
 .browse-by-type-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: .5rem;
   justify-content: center;
 }
 
@@ -614,63 +837,6 @@
 }
 
 
-/* Tablets */
-@media (max-width: 1024px) {
-  .unique-brand-filter-header h2 {
-    font-size: 2rem;
-  }
-
-  .unique-brand-vehicle-card {
-    flex: 1 1 calc(50% - 1rem); /* 2 cards por linha */
-  }
-
-  .unique-brand-tabs {
-    justify-content: center;
-  }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .unique-brand-vehicle-card {
-    flex: 1 1 100%; /* 1 card por linha */
-  }
-
-  .unique-brand-vehicle-image {
-    width: 100%;
-    height: 200px;
-  }
-
-  .unique-brand-title {
-    font-size: 1.2rem;
-  }
-}
-
-/* Small Mobile */
-@media (max-width: 480px) {
-  .unique-brand-filter-header h2 {
-    font-size: 1.5rem;
-  }
-
-  .unique-brand-tabs {
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-  }
-
-  .unique-brand-vehicle-card {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .unique-brand-title {
-    font-size: 1rem;
-  }
-
-  .unique-brand-price {
-    font-size: 1rem;
-  }
-}
-
 /* Responsiveness */
 @media (max-width: 768px) {
     .dynamic-carousel-header h2 {
@@ -692,5 +858,12 @@
 
     .vehicle-info .price {
         font-size: 1.4rem;
+    }
+    .browse-by-type-button{
+      width: 80px;
+      height: 80px;
+    }
+    .browse-by-type-button span{
+      font-size: 0.8rem;
     }
 }

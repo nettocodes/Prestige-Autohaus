@@ -3,116 +3,127 @@
     <div class="main-container">
       <!-- Filtros -->
       <aside class="filter-container">
+        <div class="row-container">
 
-        <div class="filter-container-inner">
-          <h4 class="filter-subtitle">Marcas</h4>
-          <Splide
-            :options="{
-              type: 'loop', // Define o carrossel como loop
-              perPage: 6, // Quantos slides serão exibidos ao mesmo tempo
-              gap: '0rem', // Espaçamento entre os slides
-              pagination: false, // Remove a paginação
-              arrows: false, // Exibe as setas de navegação
-              fixedWidth: '50px', // Largura fixa dos slides
-              focus: 'center', // Centraliza o slide ativo
-              breakpoints: {
-                768: { perPage: 3, fixedWidth: '60px' }, // Ajusta para telas menores
-                480: { perPage: 2, fixedWidth: '50px' }, // Ajusta para telas muito pequenas
-              }
-            }"
-            class="brand-splide"
-          >
-            <SplideSlide v-for="marca in uniqueBrands" :key="marca">
-              <div class="brand-filter-splide" @click="filterByBrand(marca)">
-                <img :src="getBrandImage(marca)" :alt="marca" class="brand-logo" />
-              </div>
-            </SplideSlide>
-          </Splide>
-
-          <h4 class="filter-subtitle">Selecione a Marca</h4>
-          <select v-model="selectedMarca" @change="applyFilters" class="filter-select">
-            <option value="" disabled selected>Selecione uma marca</option>
-            <option v-for="marca in uniqueBrands" :key="marca" :value="marca">{{ marca }}</option>
-          </select>
-
-          <h4 class="filter-subtitle">Faixa de Preço</h4>
-          <div class="filter-range-group">
-            <input
-              type="number"
-              v-model="priceFilter.min"
-              placeholder="Mínimo"
-              @input="applyFilters"
-              class="filter-input"
-            />
-            <input
-              type="number"
-              v-model="priceFilter.max"
-              placeholder="Máximo"
-              @input="applyFilters"
-              class="filter-input"
-            />
+          <div class="splide-brand-container">
+  
+            <h4 class="filter-subtitle">Marcas</h4>
+            <div class="splide-brand-filter">
+              <Splide
+                :options="{
+                  type: 'carousel', // Tipo de carrossel
+                  gap: '1rem', // Espaçamento entre os slides
+                  pagination: false, // Remove a paginação
+                  arrows: false, // Remove as setas
+                  perPage: 6, // Exibe 6 slides visíveis por padrão
+                  fixedHeight: '80px', // Altura padrão para os slides
+                  breakpoints: {
+                    768: {
+                      perPage: 1, // Apenas 1 slide visível em telas menores
+                      direction: 'ttb', // Direção vertical para telas <= 768px
+                      fixedHeight: '50px', // Ajusta a altura dos slides para telas menores
+                      height: '100%', // Garante que ocupe toda a altura disponível
+                      gap: '.5rem', // Remove o espaçamento entre os slides
+                    },
+                  },
+                }"
+                class="brand-splide"
+              >
+                <SplideSlide v-for="marca in uniqueBrands" :key="marca">
+                  <div class="brand-filter-splide" @click="filterByBrand(marca)">
+                    <img :src="getBrandImage(marca)" :alt="marca" class="brand-logo" />
+                  </div>
+                </SplideSlide>
+              </Splide>
+    
+            </div>
           </div>
-
-          <h4 class="filter-subtitle">Quilometragem</h4>
-          <select v-model="kmFilter.maxRange" @change="applyFilters" class="filter-select">
-            <option value="">Todas</option>
-            <option value="0">0km</option>
-            <option value="0-10">0-10mil km</option>
-            <option value="10-50">10-50mil km</option>
-            <option value="50-100">50-100mil km</option>
-            <option value="100-200">100-200mil km</option>
-            <option value="200+">200+ mil km</option>
-          </select>
-
-          <h4 class="filter-subtitle">Condição</h4>
-          <select v-model="conditionFilter" @change="applyFilters" class="filter-select">
-            <option value="">Todas</option>
-            <option value="Novo">Novo</option>
-            <option value="Usado">Usado</option>
-          </select>
-
-          <h4 class="filter-subtitle">Portas</h4>
-          <select v-model="portasFilter" @change="applyFilters" class="filter-select">
-            <option value="">Todas</option>
-            <option value="2">2 Portas</option>
-            <option value="4">4 Portas</option>
-          </select>
-
-          <h4 class="filter-subtitle">Tração</h4>
-          <select v-model="tractionFilter" @change="applyFilters" class="filter-select">
-            <option value="">Todas</option>
-            <option value="4x2">4x2</option>
-            <option value="4x4">4x4</option>
-            <option value="AWD">AWD</option>
-          </select>
-
-          <h4 class="filter-subtitle">Transmissão</h4>
-          <select v-model="transmissionFilter" @change="applyFilters" class="filter-select">
-            <option value="">Todas</option>
-            <option value="Manual">Manual</option>
-            <option value="Automática">Automática</option>
-          </select>
-
-          <h4 class="filter-subtitle">Carroceria</h4>
-          <select v-model="carBodyFilter" @change="applyFilters" class="filter-select">
-            <option value="">Todas</option>
-            <option value="Hatch">Hatch</option>
-            <option value="Sedan">Sedan</option>
-            <option value="SUV">SUV</option>
-          </select>
-
-          <h4 class="filter-subtitle">Opcionais</h4>
-          <div v-for="opcional in opcionaisDisponiveis" :key="opcional" class="filter-checkbox-group">
-            <label>
+          <div class="filter-container-inner">
+            <h4 class="filter-subtitle">Selecione a Marca</h4>
+            <select v-model="selectedMarca" @change="applyFilters" class="filter-select">
+              <option value="" disabled selected>Selecione uma marca</option>
+              <option v-for="marca in uniqueBrands" :key="marca" :value="marca">{{ marca }}</option>
+            </select>
+  
+            <h4 class="filter-subtitle">Faixa de Preço</h4>
+            <div class="filter-range-group">
               <input
-                type="checkbox"
-                :value="opcional"
-                v-model="filters.opcionais"
-                @change="applyFilters"
-                class="filter-checkbox"
+                type="number"
+                v-model="priceFilter.min"
+                placeholder="Mínimo"
+                @input="applyFilters"
+                class="filter-input"
               />
-              {{ opcional }}
-            </label>
+              <input
+                type="number"
+                v-model="priceFilter.max"
+                placeholder="Máximo"
+                @input="applyFilters"
+                class="filter-input"
+              />
+            </div>
+  
+            <h4 class="filter-subtitle">Quilometragem</h4>
+            <select v-model="kmFilter.maxRange" @change="applyFilters" class="filter-select">
+              <option value="">Todas</option>
+              <option value="0">0km</option>
+              <option value="0-10">0-10mil km</option>
+              <option value="10-50">10-50mil km</option>
+              <option value="50-100">50-100mil km</option>
+              <option value="100-200">100-200mil km</option>
+              <option value="200+">200+ mil km</option>
+            </select>
+  
+            <h4 class="filter-subtitle">Condição</h4>
+            <select v-model="conditionFilter" @change="applyFilters" class="filter-select">
+              <option value="">Todas</option>
+              <option value="Novo">Novo</option>
+              <option value="Usado">Usado</option>
+            </select>
+  
+            <h4 class="filter-subtitle">Portas</h4>
+            <select v-model="portasFilter" @change="applyFilters" class="filter-select">
+              <option value="">Todas</option>
+              <option value="2">2 Portas</option>
+              <option value="4">4 Portas</option>
+            </select>
+  
+            <h4 class="filter-subtitle">Tração</h4>
+            <select v-model="tractionFilter" @change="applyFilters" class="filter-select">
+              <option value="">Todas</option>
+              <option value="4x2">4x2</option>
+              <option value="4x4">4x4</option>
+              <option value="AWD">AWD</option>
+            </select>
+  
+            <h4 class="filter-subtitle">Transmissão</h4>
+            <select v-model="transmissionFilter" @change="applyFilters" class="filter-select">
+              <option value="">Todas</option>
+              <option value="Manual">Manual</option>
+              <option value="Automática">Automática</option>
+            </select>
+  
+            <h4 class="filter-subtitle">Carroceria</h4>
+            <select v-model="carBodyFilter" @change="applyFilters" class="filter-select">
+              <option value="">Todas</option>
+              <option value="Hatch">Hatch</option>
+              <option value="Sedan">Sedan</option>
+              <option value="SUV">SUV</option>
+            </select>
+  
+            <h4 class="filter-subtitle">Opcionais</h4>
+            <div v-for="opcional in opcionaisDisponiveis" :key="opcional" class="filter-checkbox-group">
+              <label>
+                <input
+                  type="checkbox"
+                  :value="opcional"
+                  v-model="filters.opcionais"
+                  @change="applyFilters"
+                  class="filter-checkbox"
+                />
+                {{ opcional }}
+              </label>
+            </div>
           </div>
         </div>
         <button class="filter-btn-clear" @click="clearFilters">Limpar</button>
@@ -122,7 +133,7 @@
       <div class="vehicle-grid">
         <div v-for="vehicle in filteredVehicles" :key="vehicle.id" class="vehicle-card">
           <div class="vehicle-image">
-            <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
+            <Splide :options="{ type: 'loop', autoplay: true, interval: 3000, }">
               <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
                 <img :src="`http://localhost:5000/uploads/${foto}`" alt="Vehicle photo" />
               </SplideSlide>
@@ -288,7 +299,7 @@ export default {
       try {
         return require(`@/assets/images/logos/${normalizedBrand}.webp`);
       } catch {
-        return "/src/assets/images/logos/default.png"; // Caminho para uma imagem padrão
+        return "/src/assets/images/logos/default.webp"; // Caminho para uma imagem padrão
       }
     },
     clearFilters() {
@@ -307,14 +318,18 @@ export default {
     },
   },
   watch: {
-    "$route.query.brand": function (newBrand) {
-      if (newBrand) {
-        this.filterByBrand(newBrand);
-      } else {
-        this.filteredVehicles = [...this.vehicles];
-      }
-    },
+  vehicles() {
+    this.$nextTick(() => {
+      const splides = document.querySelectorAll(".splide");
+      splides.forEach((splide) => {
+        const instance = splide.splide;
+        if (instance) {
+          instance.refresh();
+        }
+      });
+    });
   },
+},
   created() {
     this.fetchVehicles();
   },

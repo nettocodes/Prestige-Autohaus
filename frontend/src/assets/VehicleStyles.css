@@ -7,15 +7,7 @@
   position: relative; /* Garante que os elementos respeitem os limites */
   z-index: 1; /* Evita sobreposição */
   height: calc(100vh - 80px); /* Altura total menos o header */
-  overflow: hidden; /* Evita rolagem no layout principal */
-}
-
-@media (max-width: 768px) {
-  .main-container {
-    grid-template-columns: 1fr; /* Coluna única em telas menores */
-    gap: 15px;
-    padding: 15px;
-  }
+  overflow: hidden; 
 }
 
 /* Estilo Geral do Container de Filtros */
@@ -25,7 +17,7 @@
   display: flex;
   flex-direction: column;
   max-width: 280px;
-  width: 100%;
+  padding: 1rem;
   position: fixed;
   height: calc(100vh - 80px); /* Ocupa o restante da altura da tela */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -41,8 +33,7 @@
 .filter-container-inner {
   max-height: calc(93% - 45px); /* Reduzido para acomodar o botão "Limpar" */
   overflow-y: auto;
-  overflow-x: hidden; /* Remove o scroll horizontal */
-  padding: 10px;
+  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: #bbbbbb #f0f4f8;
 }
@@ -70,11 +61,18 @@
   width: 100%;
 }
 /* Contêiner do Splide */
+.splide-brand-filter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Carrossel do Splide */
 .brand-splide {
-  margin-bottom: 0;
+  max-width: 100%; /* Garante que o carrossel ocupe toda a largura disponível */
   padding: 0;
-  overflow: hidden;
-  max-width: 100%; /* Garante que o Splide ocupe o espaço disponível */
+  margin: 0 auto; /* Centraliza horizontalmente */
+  overflow: hidden; /* Remove excesso de conteúdo */
 }
 
 /* Card do Splide */
@@ -83,35 +81,41 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  max-width: 100px; /* Largura máxima */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  transition: transform 0.3s ease;
 }
 
 .brand-filter-splide:hover {
-  transform: translateY(-2px); /* Elevação sutil ao passar o mouse */
+  transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
 }
 
 /* Imagem da Marca */
 .brand-logo {
-  width: 100%; /* Tamanho da imagem ajustável */
+  width: 65%; /* Ajusta proporcionalmente ao card */
   height: auto;
-  object-fit: contain; /* Mantém a proporção da imagem */
+  object-fit: contain; /* Garante que a imagem não fique distorcida */
+  transition: transform 0.3s ease;
+}
+
+.brand-filter-splide:hover .brand-logo {
+  transform: scale(1.1); /* Leve zoom na imagem ao passar o mouse */
 }
 
 /* Ajustes de Responsividade */
-@media (max-width: 768px) {
-  .brand-logo {
-    width: 60%; /* Reduz o tamanho em telas menores */
+/* @media (max-width: 1024px) {
+  .brand-filter-splide {
+    max-width: 80px;
+    height: 80px; 
   }
-}
 
-@media (max-width: 480px) {
   .brand-logo {
-    width: 50%; /* Reduz ainda mais em telas pequenas */
+    width: 60%;
   }
-}
+} */
+
+
+
 
 /* Inputs e Selects */
 .filter-select, .filter-input{
@@ -193,26 +197,7 @@
   transform: translateY(-2px);
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .filter-container {
-    max-width: 100%;
-  }
 
-  .brand-logo {
-    width: 70px;
-  }
-
-  .filter-select,
-  .filter-input {
-    font-size: 0.9rem;
-  }
-
-  .filter-btn-clear {
-    font-size: 1rem;
-    padding: 12px;
-  }
-}
 
 /* Centralização e Espaçamento */
 .filter-container-inner,
@@ -220,7 +205,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 
@@ -237,12 +221,7 @@
   justify-content: space-evenly; /* Distribui os cards de forma uniforme */
 }
 
-@media (max-width: 1024px) {
-  .vehicle-grid {
-    padding: 10px;
-    gap: 15px; /* Reduz o espaçamento entre os cards */
-  }
-}
+
 
 /* Card do Veículo */
 .vehicle-card {
@@ -265,19 +244,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-@media (max-width: 768px) {
-  .vehicle-card {
-    flex: 1 1 calc(50% - 20px); /* Cards ocupam 50% da largura em tablets */
-    max-width: 100%; /* Permite que os cards cresçam dinamicamente */
-  }
-}
 
-@media (max-width: 480px) {
-  .vehicle-card {
-    flex: 1 1 100%; /* Cada card ocupa a largura total em dispositivos pequenos */
-    max-width: 100%;
-  }
-}
 
 /* Imagem do Veículo */
 .vehicle-image {
@@ -361,23 +328,207 @@
 .vehicle-info .btn:hover {
   background: #0056b3;
 }
+/* Telas menores que 1024px */
+@media (max-width: 1024px) {
+  .vehicle-grid {
+    padding: 10px;
+    gap: 15px; /* Reduz o espaçamento entre os cards */
+  }
+}
 
-/* Responsividade */
+/* Telas menores que 768px */
 @media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+  }
+  .filter-container {
+    flex-direction: column; 
+    position: relative;
+    max-width: 100%;
+    padding: 15px;
+    box-shadow: none; /* Remove sombra em telas menores */
+    border: 1px solid #e5e7eb; /* Adiciona uma borda sutil */
+    background: #ffffff; /* Fundo branco para contraste */
+  }
+
+  .filter-subtitle {
+    font-size: .75rem; /* Tamanho maior para subtítulos */
+    font-weight: bold;
+    color: #2c3e50;
+  }
+
+  .filter-container-inner {
+    max-height: calc(100% - 0px);
+    padding: 0;
+  }
+  .splide-brand-container {
+    margin-bottom: 1rem;
+  }
+
+  .splide-brand-filter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinha à esquerda */
+    overflow-x: auto; /* Permite scroll horizontal */
+    gap: 0.5rem;
+    padding: 0.5rem 0; /* Espaçamento interno */
+    border-bottom: 1px solid #e5e7eb; /* Linha separadora */
+  }
+
+  .brand-filter-splide {
+    display: inline-flex; /* Organiza em linha */
+    align-items: center;
+    justify-content: center;
+    max-width: 60px;
+    height: 60px;
+    margin-right: 0.5rem;
+    border-radius: 8px; /* Cantos arredondados */
+    background-color: #f3f4f6; /* Fundo sutil */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .brand-filter-splide:hover {
+    transform: scale(1.1); /* Zoom ao passar o mouse */
+  }
+
+  .brand-logo {
+    width: 70%; /* Ajusta o tamanho da imagem */
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Inputs e Selects */
+  .filter-select,
+  .filter-input {
+    width: 100%;
+    font-size: .75rem;
+    color: #4a5568;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #f9fafb;
+    padding: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .filter-select:focus,
+  .filter-input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+  }
+
+  .filter-range-group {
+    display: flex;
+    gap: 0.5rem; /* Espaçamento entre os inputs */
+  }
+
+  .filter-range-group .filter-input {
+    flex: 1;
+  }
+
+  /* Botão Limpar */
+  .filter-btn-clear {
+    width: 100%;
+    padding: 10px;
+    font-size: .85rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #2563eb;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 1rem;
+  }
+
+  .filter-btn-clear:hover {
+    background-color: #1e40af;
+    transform: translateY(-2px);
+  }
+
+  /* Centralização e Organização */
+  .row-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-evenly;
+    overflow: hidden;
+  }
+
+  .filter-checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .filter-checkbox {
+    transform: scale(1.2);
+    margin-right: 0.5rem;
+  }
+
+  .filter-checkbox-label {
+    font-size: 1rem;
+    color: #4a5568;
+  }
   .vehicle-grid {
     justify-content: center; /* Alinha os itens ao centro */
+    margin-left: 0;
+    gap: 15px; /* Reduz o espaçamento entre os cards */
+  }
+
+  .vehicle-card {
+    flex: 1 1 calc(50% - 20px); /* Cards ocupam 50% da largura em tablets */
+    max-width: 100%; /* Permite que os cards cresçam dinamicamente */
   }
 
   .vehicle-image {
     aspect-ratio: 16 / 9; /* Mantém proporção fixa */
   }
 
-  .filter-select,
-  .filter-input {
-    font-size: 0.9rem;
+  .splide-brand-container {
+    overflow: hidden;
   }
 
+  .splide-brand-filter {
+    width: 100%;
+  }
+
+  .brand-filter-splide {
+    max-width: 50px;
+    height: 50px;
+  }
+
+  .brand-logo {
+    width: 50px;
+  }
+}
+
+/* Telas menores que 480px */
+@media (max-width: 480px) {
   .filter-container {
-    padding: 15px;
+    padding: 10px;
+  }
+
+  .vehicle-card {
+    flex: 1 1 100%; /* Cada card ocupa a largura total */
+    max-width: 100%;
+  }
+
+  .brand-filter-splide {
+    max-width: 60px;
+    height: 60px;
+    margin: 0.3rem;
+  }
+
+  .brand-logo {
+    width: 45%; /* Ajusta o tamanho proporcional da imagem */
+  }
+
+  .filter-select,
+  .filter-input {
+    font-size: 0.8rem; /* Ajusta tamanho da fonte para telas menores */
   }
 }

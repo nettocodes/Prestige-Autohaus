@@ -19,7 +19,7 @@
                   class="brand-card-link"
                 >
                   <div class="brand-card">
-                    <img :src="require(`@/assets/images/logos/${brand.toLowerCase().replace(/\s+/g, '-')}.png`)" :alt="brand" class="logo-brand" />
+                    <img :src="require(`@/assets/images/logos/${brand.toLowerCase().replace(/\s+/g, '-')}.webp`)" :alt="brand" class="logo-brand" />
 
                     <p>{{ brand }}</p>
                   </div>
@@ -33,54 +33,54 @@
 
       <!-- Dynamic Vehicle Carousel -->
       <section class="custom-carousel-section">
-        <div class="custom-carousel-header">
-          <h2>Explore All Vehicles</h2>
-          <router-link to="/view" class="custom-view-all-link">View All &rarr;</router-link>
-        </div>
+      <div class="custom-carousel-header">
+        <h2>Explore All Vehicles</h2>
+        <router-link to="/view" class="custom-view-all-link">View All &rarr;</router-link>
+      </div>
 
-        <Splide :options="splideOptionsVehicles" class="custom-carousel">
-          <SplideSlide v-for="vehicle in filteredVehiclesForAll" :key="vehicle.id">
-            <div class="custom-vehicle-card">
-              <div class="custom-vehicle-image">
-                <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
-                  <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
-                    <img :src="`http://localhost:5000/uploads/${foto}`" alt="Vehicle photo" />
-                  </SplideSlide>
-                </Splide>
+      <Splide v-if="filteredVehiclesForAll.length > 0" :options="splideOptionsVehicles" class="custom-carousel">
+        <SplideSlide v-for="vehicle in filteredVehiclesForAll" :key="vehicle.id">
+          <div class="custom-vehicle-card">
+            <div class="custom-vehicle-image">
+              <Splide :options="splideOptionsInner">
+                <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
+                  <img :src="`http://localhost:5000/uploads/${foto}`" alt="Vehicle photo" />
+                </SplideSlide>
+              </Splide>
+            </div>
+            <div class="custom-vehicle-info">
+              <button
+                class="custom-favorite-btn"
+                @click="toggleFavorite(vehicle)"
+                :class="{ active: isFavorite(vehicle.id) }"
+              >
+                ❤
+              </button>
+              <h3>{{ vehicle.marca || "Não informado" }}</h3>
+              <p>{{ vehicle.modelo || "Não informado" }}</p>
+              <div class="custom-vehicle-details">
+                <div class="custom-vehicle-detail-item">
+                  <img src="@/assets/images/icons/odometro.svg" alt="Quilometragem" />
+                  <p>{{ vehicle.quilometragem ? vehicle.quilometragem.toLocaleString() + " Km" : "Não informado" }}</p>
+                </div>
+                <div class="custom-vehicle-detail-item">
+                  <img src="@/assets/images/icons/fuel.svg" alt="Combustível" />
+                  <p>{{ vehicle.combustivel || "Não informado" }}</p>
+                </div>
+                <div class="custom-vehicle-detail-item">
+                  <img src="@/assets/images/icons/transmission.svg" alt="Transmissão" />
+                  <p>{{ vehicle.transmissao || "Não informado" }}</p>
+                </div>
               </div>
-              <div class="custom-vehicle-info">
-                <button
-                  class="custom-favorite-btn"
-                  @click="toggleFavorite(vehicle)"
-                  :class="{ active: isFavorite(vehicle.id) }"
-                >
-                  ❤
-                </button>
-                <h3>{{ vehicle.marca || "Não informado" }}</h3>
-                <p>{{ vehicle.modelo || "Não informado" }}</p>
-                <div class="custom-vehicle-details">
-                  <div class="custom-vehicle-detail-item">
-                    <img src="@/assets/images/icons/odometro.svg" alt="Quilometragem" class="custom-info-icon" />
-                    <p>{{ vehicle.quilometragem ? vehicle.quilometragem.toLocaleString() + " Km" : "Não informado" }}</p>
-                  </div>
-                  <div class="custom-vehicle-detail-item">
-                    <img src="@/assets/images/icons/fuel.svg" alt="Combustível" class="custom-info-icon" />
-                    <p>{{ vehicle.combustivel || "Não informado" }}</p>
-                  </div>
-                  <div class="custom-vehicle-detail-item">
-                    <img src="@/assets/images/icons/transmission.svg" alt="Transmissão" class="custom-info-icon" />
-                    <p>{{ vehicle.transmissao || "Não informado" }}</p>
-                  </div>
-                </div>
-                <div class="custom-vehicle-bottom-item">
-                  <p class="custom-price">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</p>
-                  <button class="custom-details-btn" @click="viewDetails(vehicle.id)">View Details</button>
-                </div>
+              <div class="custom-vehicle-bottom-item">
+                <p class="custom-price">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</p>
+                <button class="custom-details-btn" @click="viewDetails(vehicle.id)">View Details</button>
               </div>
             </div>
-          </SplideSlide>
-        </Splide>
-      </section>
+          </div>
+        </SplideSlide>
+      </Splide>
+    </section>
 
 
       <section class="highlight-section">
@@ -118,19 +118,21 @@
 
           <!-- Tabs de Marcas -->
           <div class="unique-brand-tabs">
-            <button
-              v-for="brand in uniqueBrands"
-              :key="brand"
-              @click="filterByBrandForBrands(brand)"
-              :class="{ 'unique-active-tab': selectedBrand === brand }"
-              class="unique-brand-tab"
-            >
-              {{ brand }}
-            </button>
+            <Splide :options="splideOptionsTabs" class="tabs-carousel">
+              <SplideSlide v-for="brand in uniqueBrands" :key="brand">
+                <button
+                  @click="filterByBrandForBrands(brand)"
+                  :class="{ 'unique-active-tab': selectedBrand === brand }"
+                  class="unique-brand-tab"
+                >
+                  {{ brand }}
+                </button>
+              </SplideSlide>
+            </Splide>
           </div>
 
           <!-- Carousel de Veículos -->
-          <Splide :options="splideOptionsBrands" class="unique-brand-carousel">
+          <Splide v-if="filteredVehiclesForBrands.length > 0" :options="splideOptionsBrands" class="unique-brand-carousel">
             <SplideSlide v-for="vehicle in filteredVehiclesForBrands" :key="vehicle.id">
               <div class="unique-brand-vehicle-card">
                 <div class="unique-brand-vehicle-image">
@@ -182,9 +184,11 @@
       </section>
     </div>
   </div>
+  <AppFooter />
 </template>
 <script>
 import AppHero from "@/components/common/AppHero.vue";
+import AppFooter from "@/components/common/AppFooter.vue";
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import axios from "axios";
 import "@/assets/LandingPage.css";
@@ -193,6 +197,7 @@ export default {
   name: "LandingPage",
   components: {
     AppHero,
+    AppFooter,
     Splide,
     SplideSlide,
   },
@@ -220,25 +225,54 @@ export default {
         perPage: 4,
         gap: ".5rem",
         pagination: false,
-        autoplay: true,
+        focus: "center",
+        autoplay: false,
+        lazyLoad: "nearby",
+        trimSpace: false,
         breakpoints: {
-          768: { perPage: 1 },
-          1024: { perPage: 2 },
-          1400: { perPage: 3 },
+          768: { perPage: 2 },
+          480: { perPage: 1 },
         },
       },
       splideOptionsBrands: {
         type: "loop",
         perPage: 3,
-        gap: "1rem",
+        gap: "1rem", // Espaço entre slides
         pagination: true,
-        autoplay: false,
+        focus: "center",
+        autoplay: true,
+        lazyLoad: "nearby",
+        trimSpace: true,
+        arrows: true, // Garante setas de navegação
         breakpoints: {
-          768: { perPage: 1 },
-          1024: { perPage: 2 },
+          1024: { perPage: 3, gap: "0.5rem" }, // Tablets
+          768: { perPage: 3, gap: "0.5rem" }, // Telas menores
         },
       },
+
+      splideOptionsInner: {
+        type: "loop",
+        autoplay: true,
+        interval: 3000,
+        focus: "center",
+      },
+      splideOptionsTabs: {
+        type: "carousel",
+        perPage: 8, // Exibe o máximo possível por página
+        gap: "0rem", // Espaçamento entre os itens
+        pagination: false, // Remove os indicadores de página
+        arrows: false, // Exibe setas de navegação
+        autoplay: false, // Evita rotação automática
+        breakpoints: {
+          1200: { perPage: 6 }, // Em telas menores, exibe menos tabs
+          1024: { perPage: 5 },
+          768: { perPage: 3 },
+          480: { perPage: 2 },
+        },
+      },
+
     };
+
   },
   methods: {
     async fetchVehicles() {
