@@ -2,7 +2,7 @@
 .main-container {
   display: flex;
   grid-template-columns: 280px 1fr; /* Filtros e grade de veículos */
-  gap: 60px;
+  gap: 2rem;
   background-color: #f7f9fc;
   position: relative; /* Garante que os elementos respeitem os limites */
   z-index: 1; /* Evita sobreposição */
@@ -63,6 +63,8 @@
 /* Contêiner do Splide */
 .splide-brand-filter {
   display: flex;
+  width: 100%;
+  justify-items: center;
   align-items: center;
   justify-content: center;
 }
@@ -92,7 +94,7 @@
 
 /* Imagem da Marca */
 .brand-logo {
-  width: 65%; /* Ajusta proporcionalmente ao card */
+  width: 95%; /* Ajusta proporcionalmente ao card */
   height: auto;
   object-fit: contain; /* Garante que a imagem não fique distorcida */
   transition: transform 0.3s ease;
@@ -113,9 +115,6 @@
     width: 60%;
   }
 } */
-
-
-
 
 /* Inputs e Selects */
 .filter-select, .filter-input{
@@ -360,9 +359,7 @@
   .filter-container-inner {
     max-height: calc(100% - 0px);
     padding: 0;
-  }
-  .splide-brand-container {
-    margin-bottom: 1rem;
+    width: 100%;
   }
 
   .splide-brand-filter {
@@ -371,8 +368,13 @@
     justify-content: flex-start; /* Alinha à esquerda */
     overflow-x: auto; /* Permite scroll horizontal */
     gap: 0.5rem;
-    padding: 0.5rem 0; /* Espaçamento interno */
     border-bottom: 1px solid #e5e7eb; /* Linha separadora */
+  }
+  .splide-brand-container{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow-x: none;
   }
 
   .brand-filter-splide {
@@ -382,9 +384,6 @@
     max-width: 60px;
     height: 60px;
     margin-right: 0.5rem;
-    border-radius: 8px; /* Cantos arredondados */
-    background-color: #f3f4f6; /* Fundo sutil */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
     cursor: pointer;
     transition: transform 0.2s ease;
   }
@@ -421,7 +420,8 @@
 
   .filter-range-group {
     display: flex;
-    gap: 0.5rem; /* Espaçamento entre os inputs */
+    gap: 0.5rem;
+    width: 100%;
   }
 
   .filter-range-group .filter-input {
@@ -453,8 +453,8 @@
   /* Centralização e Organização */
   .row-container {
     display: flex;
-    gap: 1rem;
     justify-content: space-evenly;
+    gap: 1rem;
     overflow: hidden;
   }
 
@@ -492,10 +492,6 @@
     overflow: hidden;
   }
 
-  .splide-brand-filter {
-    width: 100%;
-  }
-
   .brand-filter-splide {
     max-width: 50px;
     height: 50px;
@@ -510,6 +506,7 @@
 @media (max-width: 480px) {
   .filter-container {
     padding: 10px;
+    height: calc(50vh - 0px);
   }
 
   .vehicle-card {
@@ -518,17 +515,21 @@
   }
 
   .brand-filter-splide {
-    max-width: 60px;
-    height: 60px;
-    margin: 0.3rem;
+    max-width: 40px;
+    height: 40px;
+    margin: 0rem;
   }
 
   .brand-logo {
-    width: 45%; /* Ajusta o tamanho proporcional da imagem */
+    width: 75%; /* Ajusta o tamanho proporcional da imagem */
   }
 
   .filter-select,
   .filter-input {
     font-size: 0.8rem; /* Ajusta tamanho da fonte para telas menores */
+  }
+  .filter-btn-clear{
+    font-size: .75rem;
+    margin-top: .5rem;
   }
 }

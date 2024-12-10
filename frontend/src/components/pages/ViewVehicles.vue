@@ -4,7 +4,6 @@
       <!-- Filtros -->
       <aside class="filter-container">
         <div class="row-container">
-
           <div class="splide-brand-container">
   
             <h4 class="filter-subtitle">Marcas</h4>
@@ -12,7 +11,7 @@
               <Splide
                 :options="{
                   type: 'carousel', // Tipo de carrossel
-                  gap: '1rem', // Espaçamento entre os slides
+                  gap: '0rem', // Espaçamento entre os slides
                   pagination: false, // Remove a paginação
                   arrows: false, // Remove as setas
                   perPage: 6, // Exibe 6 slides visíveis por padrão
@@ -24,6 +23,13 @@
                       fixedHeight: '50px', // Ajusta a altura dos slides para telas menores
                       height: '100%', // Garante que ocupe toda a altura disponível
                       gap: '.5rem', // Remove o espaçamento entre os slides
+                    },
+                    480: {
+                      perPage: 1, // Apenas 1 slide visível em telas menores
+                      direction: 'ttb', // Direção vertical para telas <= 768px
+                      fixedHeight: '40px', // Ajusta a altura dos slides para telas menores
+                      height: '100%', // Garante que ocupe toda a altura disponível
+                      gap: '0rem', // Remove o espaçamento entre os slides
                     },
                   },
                 }"
@@ -38,6 +44,7 @@
     
             </div>
           </div>
+
           <div class="filter-container-inner">
             <h4 class="filter-subtitle">Selecione a Marca</h4>
             <select v-model="selectedMarca" @change="applyFilters" class="filter-select">
