@@ -228,7 +228,6 @@
 
 /* Card do Veículo */
 .vehicle-card {
-  flex: 1 1 calc(25% - 20px); /* Cards ocupam 25% da largura com espaçamento */
   max-width: 300px; /* Limita a largura máxima dos cards */
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -327,21 +326,35 @@
 }
 
 .vehicle-info .btn {
-  padding: 12px;
-  font-size: .75rem;
-  color: #fff;
-  background: rgb(19,250,209);
-background: linear-gradient(162deg, rgba(19,250,209,1) 0%, rgba(94,70,252,1) 100%);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  border-radius: .25rem;
   text-transform: uppercase;
-  transition: background-color 0.3s ease;
+  font-style: normal;
+  font-weight: 400;
+  padding-left: 25px;
+  padding-right: 25px;
+  color: #fff;
+  -webkit-clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
+  clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
+  height: 40px;
+  font-size: 0.7rem;
+  line-height: 14px;
+  letter-spacing: 1.2px;
+  transition: all .3s ease;
+  background-image: linear-gradient(90deg, #1c1c1c, #6220fb);
+  background-size: 200%;
+  background-position: left;
+  border: 0 solid;
+  overflow: hidden;
 }
 
 .vehicle-info .btn:hover {
-  background: #0056b3;
+  background-position: right;
+  cursor: pointer;
+  transition: all .5s ease-in-out;
+  padding-right: 30px;
+  padding-left: 30px;
 }
+
 /* Telas menores que 1024px */
 @media (max-width: 1024px) {
   .vehicle-grid {

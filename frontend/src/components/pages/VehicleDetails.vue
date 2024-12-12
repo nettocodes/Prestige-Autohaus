@@ -56,13 +56,13 @@
   </div>
 </template>
 
-  <script>
-  import axios from "axios";
-  import "@splidejs/vue-splide/css";
-  import { Splide, SplideSlide } from "@splidejs/vue-splide";
-  import "@/assets/VehicleDetails.css";
-    
-  export default {
+<script>
+import axios from "axios";
+import "@splidejs/vue-splide/css";
+import { Splide, SplideSlide } from "@splidejs/vue-splide";
+import "@/assets/VehicleDetails.css";
+
+export default {
   name: "VehicleDetails",
   components: {
     Splide,
@@ -72,33 +72,64 @@
     return {
       vehicle: null,
       mainOptions: {
-        type: "loop", // Permite rotação contínua das imagens
-        heightRatio: 0.6, // Ajusta a proporção de altura
-        pagination: true, // Adiciona botões de paginação
-        arrows: true, // Adiciona setas para navegação
-        autoplay: true, // Ativa autoplay
-        interval: 4000, // Intervalo entre trocas de imagens
-        cover: true, // Garante que as imagens cubram o slide
+        type: "loop",
+        heightRatio: 0.6,
+        pagination: true,
+        arrows: true,
+        autoplay: true,
+        interval: 4000,
+        cover: true,
       },
     };
   },
-
   methods: {
     async fetchVehicleDetails() {
       const vehicleId = this.$route.params.id;
+      const sessionId = localStorage.getItem("sessionId") || this.createSessionId();
+
       try {
+        console.log(`Buscando detalhes do veículo ID: ${vehicleId}`);
+
+        // Obter detalhes do veículo
         const response = await axios.get(`http://localhost:5000/api/vehicles/${vehicleId}`);
-        this.vehicle = response.data || {}; // Garante que o veículo seja sempre um objeto
+        this.vehicle = response.data;
+        console.log(`Detalhes do veículo recebidos:`, this.vehicle);
+
+        // Registrar visualização
+        await axios.post("http://localhost:5000/api/statistics/views", { vehicleId, sessionId });
+        console.log(`Visualização registrada para o veículo ID: ${vehicleId}`);
       } catch (err) {
-        console.error("Erro ao buscar detalhes do veículo:", err);
-        alert("Erro ao buscar detalhes do veículo. Tente novamente mais tarde.");
+        console.error("Erro ao buscar detalhes do veículo:", err.message);
+        if (err.response) {
+          console.error("Detalhes do erro:", err.response.data);
+        }
       }
+    },
+
+    async handleContactClick() {
+      const sessionId = localStorage.getItem("sessionId") || this.createSessionId();
+
+      try {
+        console.log("Registrando clique em contato...");
+        await axios.post("http://localhost:5000/api/statistics/contact-clicks", { sessionId });
+        console.log("Clique em contato registrado com sucesso.");
+      } catch (err) {
+        console.error("Erro ao registrar clique em contato:", err.message);
+        if (err.response) {
+          console.error("Detalhes do erro:", err.response.data);
+        }
+      }
+    },
+
+    createSessionId() {
+      const id = Math.random().toString(36).substring(2);
+      localStorage.setItem("sessionId", id);
+      return id;
     },
   },
   mounted() {
+    console.log("Componente VehicleDetails montado.");
     this.fetchVehicleDetails();
   },
 };
 </script>
-
-  

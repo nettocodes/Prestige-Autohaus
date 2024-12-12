@@ -335,7 +335,10 @@ export default {
     },
   },
   mounted() {
-    this.fetchVehicles(); // Busca veículos ao montar o componente
+    this.fetchVehicles(); 
+    axios.post("http://localhost:5000/api/statistics/accesses")
+        .then(() => console.log("Acesso registrado na landing page"))
+        .catch((err) => console.error("Erro ao registrar acesso:", err));
   },
 };
 </script>

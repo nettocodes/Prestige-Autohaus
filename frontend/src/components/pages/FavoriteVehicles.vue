@@ -34,6 +34,7 @@
 <script>
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import "@/assets/VehicleFavorites.css";
+import axios from "axios";
 
 export default {
   name: "FavoriteVehicles",
@@ -47,11 +48,22 @@ export default {
     };
   },
   methods: {
-    toggleFavorite(vehicle) {
+    async toggleFavorite(vehicle) {
       const index = this.favorites.findIndex((fav) => fav.id === vehicle.id);
       if (index > -1) {
         this.favorites.splice(index, 1);
         localStorage.setItem("favorites", JSON.stringify(this.favorites));
+      } else {
+        this.favorites.push(vehicle);
+        localStorage.setItem("favorites", JSON.stringify(this.favorites));
+      }
+
+      // Registra o favorito
+      try {
+        await axios.post("http://localhost:5000/api/statistics/favorites", { vehicleId: vehicle.id });
+        console.log("Favorito registrado com sucesso");
+      } catch (error) {
+        console.error("Erro ao registrar favorito:", error);
       }
     },
     isFavorite(id) {
@@ -60,3 +72,4 @@ export default {
   },
 };
 </script>
+

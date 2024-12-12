@@ -8,14 +8,17 @@ import ViewVehicles from "@/components/pages/ViewVehicles.vue";
 import FavoriteVehicles from "@/components/pages/FavoriteVehicles.vue";
 import VehicleDetails from "@/components/pages/VehicleDetails.vue";
 import LandingPage from "@/components/pages/LandingPage.vue";
+import StatisticsPanel from "@/components/pages/StatisticsPanel.vue"; // Nova importação
 
 // Configuração de rotas
 const routes = [
   { path: "/", component: LandingPage }, // Rota inicial renderiza a LandingPage
   { path: "/add", component: AddVehicle },
+  { path: "/edit/:id", component: AddVehicle, props: true }, // Rota para editar veículos
   { path: "/view", component: ViewVehicles },
   { path: "/favorites", component: FavoriteVehicles },
   { path: "/details/:id", component: VehicleDetails, props: true },
+  { path: "/statistics", component: StatisticsPanel }, // Nova rota para o painel de estatísticas
   { path: "/:pathMatch(.*)*", redirect: "/" }, // Redireciona URLs inválidas para a landing page
 ];
 

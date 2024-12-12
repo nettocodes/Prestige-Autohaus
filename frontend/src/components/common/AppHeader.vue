@@ -13,6 +13,7 @@
           <li><router-link to="/add">Add Vehicle</router-link></li>
           <li><router-link to="/view">View Vehicles</router-link></li>
           <li><router-link to="/favorites">Favorites</router-link></li>
+          <li><router-link to="/statistics">Statistics</router-link></li> <!-- Nova rota -->
         </ul>
       </nav>
     </div>

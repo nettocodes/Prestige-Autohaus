@@ -154,5 +154,30 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'DELETE FROM vehicles WHERE id = ?';
+    db.query(query, [id], (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Erro ao excluir veículo.' });
+      }
+      res.status(200).json({ message: 'Veículo excluído com sucesso!' });
+    });
+});
+
+router.put('/:id', upload.array('fotos', 9), (req, res) => {
+    const { id } = req.params;
+    const { marca, modelo, ano, preco, descricao } = req.body;
+    const query = `UPDATE vehicles SET marca = ?, modelo = ?, ano = ?, preco = ?, descricao = ? WHERE id = ?`;
+    db.query(query, [marca, modelo, ano, preco, descricao, id], (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Erro ao editar veículo.' });
+      }
+      res.status(200).json({ message: 'Veículo editado com sucesso!' });
+    });
+});
+  
 
 module.exports = router;

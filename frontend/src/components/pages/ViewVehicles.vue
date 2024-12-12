@@ -177,7 +177,9 @@
               <p>{{ vehicle.quilometragem ? vehicle.quilometragem.toLocaleString() + " Km" : "Não informado" }}</p>
               <p>{{ vehicle.transmissao || "Não informado" }}</p>
             </div>
+
             <button class="btn" @click="viewDetails(vehicle.id)">Ver Detalhes</button>
+            
           </div>
         </div>
       </div>
@@ -224,119 +226,136 @@ export default {
     };
   },
   methods: {
-    async fetchVehicles() {
-      try {
-        const response = await axios.get("http://localhost:5000/api/vehicles");
-        this.vehicles = response.data.map((vehicle) => ({
-          ...vehicle,
-          quilometragem: vehicle.quilometragem || 0,
-          preco: vehicle.preco || 0,
-          opcionais: vehicle.opcionais || [],
-          fotos: vehicle.fotos || [],
-        }));
-        this.uniqueBrands = [...new Set(this.vehicles.map((v) => v.marca))];
-        this.applyInitialFilter();
-      } catch (err) {
-        alert("Erro ao buscar veículos.");
-      }
-    },
-    matchKilometragem(quilometragem) {
-      if (this.kmFilter.maxRange === "0") {
-        return quilometragem === 0;
-      } else if (this.kmFilter.maxRange === "0-10") {
-        return quilometragem > 0 && quilometragem <= 10000;
-      } else if (this.kmFilter.maxRange === "10-50") {
-        return quilometragem > 10000 && quilometragem <= 50000;
-      } else if (this.kmFilter.maxRange === "50-100") {
-        return quilometragem > 50000 && quilometragem <= 100000;
-      } else if (this.kmFilter.maxRange === "100-200") {
-        return quilometragem > 100000 && quilometragem <= 200000;
-      } else if (this.kmFilter.maxRange === "200+") {
-        return quilometragem > 200000;
-      }
-      return true; // Retorna true para casos onde não há filtro aplicado
-    },
-    toggleFavorite(vehicle) {
-      const index = this.favorites.findIndex((fav) => fav.id === vehicle.id);
-      if (index > -1) {
-        this.favorites.splice(index, 1);
-      } else {
-        this.favorites.push(vehicle);
-      }
-      localStorage.setItem("favorites", JSON.stringify(this.favorites));
-    },
-    isFavorite(id) {
-      return this.favorites.some((fav) => fav.id === id);
-    },
-    filterByBrand(brand) {
-      this.filteredVehicles = this.vehicles.filter((vehicle) => vehicle.marca === brand);
-    },
-    applyFilters() {
-      this.filteredVehicles = this.vehicles.filter((vehicle) => {
-        const searchMatch = `${vehicle.marca} ${vehicle.modelo}`.toLowerCase().includes(this.searchQuery.toLowerCase());
-        const priceMatch =
-          (!this.priceFilter.min || vehicle.preco >= this.priceFilter.min) &&
-          (!this.priceFilter.max || vehicle.preco <= this.priceFilter.max);
-        const kmMatch = !this.kmFilter.maxRange || this.matchKilometragem(vehicle.quilometragem);
-        const conditionMatch = !this.conditionFilter || vehicle.condicao === this.conditionFilter;
-        const portasMatch = !this.portasFilter || vehicle.portas === parseInt(this.portasFilter);
-        const tractionMatch = !this.tractionFilter || vehicle.driveType === this.tractionFilter;
-        const transmissionMatch = !this.transmissionFilter || vehicle.transmissao === this.transmissionFilter;
-        const carBodyMatch = !this.carBodyFilter || vehicle.carroceria === this.carBodyFilter;
-        const colorMatch = !this.colorFilter || vehicle.cor.toLowerCase().includes(this.colorFilter.toLowerCase());
-        const opcionaisMatch =
-          this.filters.opcionais.length === 0 ||
-          this.filters.opcionais.every((opcional) => vehicle.opcionais.includes(opcional));
-        return (
-          searchMatch &&
-          priceMatch &&
-          kmMatch &&
-          conditionMatch &&
-          portasMatch &&
-          tractionMatch &&
-          transmissionMatch &&
-          carBodyMatch &&
-          colorMatch &&
-          opcionaisMatch
-        );
-      });
-    },
-
-    applyInitialFilter() {
-      const brand = this.$route.query.brand;
-      if (brand) {
-        this.filterByBrand(brand);
-      } else {
-        this.filteredVehicles = [...this.vehicles];
-      }
-    },
-    viewDetails(id) {
-      this.$router.push(`/details/${id}`);
-    },
-    getBrandImage(brand) {
-      const normalizedBrand = brand.toLowerCase().replace(/\s+/g, "-");
-      try {
-        return require(`@/assets/images/logos/${normalizedBrand}.webp`);
-      } catch {
-        return "/src/assets/images/logos/default.webp"; // Caminho para uma imagem padrão
-      }
-    },
-    clearFilters() {
-      this.selectedMarca = "";
-      this.priceFilter.min = null;
-      this.priceFilter.max = null;
-      this.kmFilter.max = null;
-      this.conditionFilter = "";
-      this.portasFilter = "";
-      this.tractionFilter = "";
-      this.transmissionFilter = "";
-      this.carBodyFilter = "";
-      this.colorFilter = "";
-      this.filters.opcionais = [];
-      this.applyFilters();
-    },
+  async fetchVehicles() {
+    try {
+      const response = await axios.get("http://localhost:5000/api/vehicles");
+      this.vehicles = response.data.map((vehicle) => ({
+        ...vehicle,
+        quilometragem: vehicle.quilometragem || 0,
+        preco: vehicle.preco || 0,
+        opcionais: vehicle.opcionais || [],
+        fotos: vehicle.fotos || [],
+      }));
+      this.uniqueBrands = [...new Set(this.vehicles.map((v) => v.marca))];
+      this.applyInitialFilter();
+    } catch (err) {
+      console.error("Erro ao buscar veículos:", err);
+      alert("Erro ao buscar veículos.");
+    }
   },
-  watch: {
+  matchKilometragem(quilometragem) {
+    if (this.kmFilter.maxRange === "0") {
+      return quilometragem === 0;
+    } else if (this.kmFilter.maxRange === "0-10") {
+      return quilometragem > 0 && quilometragem <= 10000;
+    } else if (this.kmFilter.maxRange === "10-50") {
+      return quilometragem > 10000 && quilometragem <= 50000;
+    } else if (this.kmFilter.maxRange === "50-100") {
+      return quilometragem > 50000 && quilometragem <= 100000;
+    } else if (this.kmFilter.maxRange === "100-200") {
+      return quilometragem > 100000 && quilometragem <= 200000;
+    } else if (this.kmFilter.maxRange === "200+") {
+      return quilometragem > 200000;
+    }
+    return true; // Retorna true para casos onde não há filtro aplicado
+  },
+  async toggleFavorite(vehicle) {
+    try {
+        console.log(`Registrando favorito para o veículo ID: ${vehicle.id}`);
+        await axios.post('http://localhost:5000/api/statistics/favorites', { vehicleId: vehicle.id });
+        console.log(`Favorito registrado para o veículo ID: ${vehicle.id}`);
+        const index = this.favorites.findIndex((fav) => fav.id === vehicle.id);
+        if (index > -1) {
+            this.favorites.splice(index, 1);
+        } else {
+            this.favorites.push(vehicle);
+        }
+        localStorage.setItem('favorites', JSON.stringify(this.favorites));
+    } catch (err) {
+        console.error('Erro ao registrar favorito:', err.message);
+        if (err.response) {
+            console.error('Detalhes do erro:', err.response.data);
+        }
+    }
+  },
+
+  isFavorite(id) {
+    return this.favorites.some((fav) => fav.id === id);
+  },
+  filterByBrand(brand) {
+    this.filteredVehicles = this.vehicles.filter((vehicle) => vehicle.marca === brand);
+  },
+  applyFilters() {
+    this.filteredVehicles = this.vehicles.filter((vehicle) => {
+      const searchMatch = `${vehicle.marca} ${vehicle.modelo}`.toLowerCase().includes(this.searchQuery.toLowerCase());
+      const priceMatch =
+        (!this.priceFilter.min || vehicle.preco >= this.priceFilter.min) &&
+        (!this.priceFilter.max || vehicle.preco <= this.priceFilter.max);
+      const kmMatch = !this.kmFilter.maxRange || this.matchKilometragem(vehicle.quilometragem);
+      const conditionMatch = !this.conditionFilter || vehicle.condicao === this.conditionFilter;
+      const portasMatch = !this.portasFilter || vehicle.portas === parseInt(this.portasFilter);
+      const tractionMatch = !this.tractionFilter || vehicle.driveType === this.tractionFilter;
+      const transmissionMatch = !this.transmissionFilter || vehicle.transmissao === this.transmissionFilter;
+      const carBodyMatch = !this.carBodyFilter || vehicle.carroceria === this.carBodyFilter;
+      const colorMatch = !this.colorFilter || vehicle.cor.toLowerCase().includes(this.colorFilter.toLowerCase());
+      const opcionaisMatch =
+        this.filters.opcionais.length === 0 ||
+        this.filters.opcionais.every((opcional) => vehicle.opcionais.includes(opcional));
+      return (
+        searchMatch &&
+        priceMatch &&
+        kmMatch &&
+        conditionMatch &&
+        portasMatch &&
+        tractionMatch &&
+        transmissionMatch &&
+        carBodyMatch &&
+        colorMatch &&
+        opcionaisMatch
+      );
+    });
+  },
+  applyInitialFilter() {
+    const brand = this.$route.query.brand;
+    if (brand) {
+      this.filterByBrand(brand);
+    } else {
+      this.filteredVehicles = [...this.vehicles];
+    }
+  },
+  async viewDetails(id) {
+    try {
+      await axios.post("http://localhost:5000/api/statistics/views", { vehicleId: id });
+      console.log("Visualização registrada com sucesso");
+    } catch (error) {
+      console.error("Erro ao registrar visualização:", error);
+    }
+    this.$router.push(`/details/${id}`);
+  },
+  getBrandImage(brand) {
+    const normalizedBrand = brand.toLowerCase().replace(/\s+/g, "-");
+    try {
+      return require(`@/assets/images/logos/${normalizedBrand}.webp`);
+    } catch {
+      return "/src/assets/images/logos/default.webp"; // Caminho para uma imagem padrão
+    }
+  },
+  clearFilters() {
+    this.selectedMarca = "";
+    this.priceFilter.min = null;
+    this.priceFilter.max = null;
+    this.kmFilter.max = null;
+    this.conditionFilter = "";
+    this.portasFilter = "";
+    this.tractionFilter = "";
+    this.transmissionFilter = "";
+    this.carBodyFilter = "";
+    this.colorFilter = "";
+    this.filters.opcionais = [];
+    this.applyFilters();
+  },
+},
+watch: {
   vehicles() {
     this.$nextTick(() => {
       const splides = document.querySelectorAll(".splide");
@@ -349,8 +368,8 @@ export default {
     });
   },
 },
-  created() {
-    this.fetchVehicles();
-  },
+created() {
+  this.fetchVehicles();
+},
 };
 </script>
