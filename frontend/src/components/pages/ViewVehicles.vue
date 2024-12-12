@@ -52,84 +52,99 @@
               <option v-for="marca in uniqueBrands" :key="marca" :value="marca">{{ marca }}</option>
             </select>
   
-            <h4 class="filter-subtitle">Faixa de Preço</h4>
-            <div class="filter-range-group">
-              <input
-                type="number"
-                v-model="priceFilter.min"
-                placeholder="Mínimo"
-                @input="applyFilters"
-                class="filter-input"
-              />
-              <input
-                type="number"
-                v-model="priceFilter.max"
-                placeholder="Máximo"
-                @input="applyFilters"
-                class="filter-input"
-              />
+            <div class="filter-content">
+              <h4 class="filter-subtitle">Faixa de Preço</h4>
+              <div class="filter-range-group">
+                <input
+                  type="number"
+                  v-model="priceFilter.min"
+                  placeholder="Mínimo"
+                  @input="applyFilters"
+                  class="filter-input"
+                />
+                <input
+                  type="number"
+                  v-model="priceFilter.max"
+                  placeholder="Máximo"
+                  @input="applyFilters"
+                  class="filter-input"
+                />
+              </div>
+            </div>
+            <div class="filter-content">
+              <h4 class="filter-subtitle">Quilometragem</h4>
+              <select v-model="kmFilter.maxRange" @change="applyFilters" class="filter-select">
+                <option value="">Todas</option>
+                <option value="0">0km</option>
+                <option value="0-10">0-10mil km</option>
+                <option value="10-50">10-50mil km</option>
+                <option value="50-100">50-100mil km</option>
+                <option value="100-200">100-200mil km</option>
+                <option value="200+">200+ mil km</option>
+              </select>
             </div>
   
-            <h4 class="filter-subtitle">Quilometragem</h4>
-            <select v-model="kmFilter.maxRange" @change="applyFilters" class="filter-select">
-              <option value="">Todas</option>
-              <option value="0">0km</option>
-              <option value="0-10">0-10mil km</option>
-              <option value="10-50">10-50mil km</option>
-              <option value="50-100">50-100mil km</option>
-              <option value="100-200">100-200mil km</option>
-              <option value="200+">200+ mil km</option>
-            </select>
+            <div class="filter-content">   
+              <h4 class="filter-subtitle">Condição</h4>
+              <select v-model="conditionFilter" @change="applyFilters" class="filter-select">
+                <option value="">Todas</option>
+                <option value="Novo">Novo</option>
+                <option value="Usado">Usado</option>
+              </select>
+            </div>
   
-            <h4 class="filter-subtitle">Condição</h4>
-            <select v-model="conditionFilter" @change="applyFilters" class="filter-select">
-              <option value="">Todas</option>
-              <option value="Novo">Novo</option>
-              <option value="Usado">Usado</option>
-            </select>
+            <div class="filter-content">
+              <h4 class="filter-subtitle">Portas</h4>
+              <select v-model="portasFilter" @change="applyFilters" class="filter-select">
+                <option value="">Todas</option>
+                <option value="2">2 Portas</option>
+                <option value="4">4 Portas</option>
+              </select>
+            </div>
   
-            <h4 class="filter-subtitle">Portas</h4>
-            <select v-model="portasFilter" @change="applyFilters" class="filter-select">
-              <option value="">Todas</option>
-              <option value="2">2 Portas</option>
-              <option value="4">4 Portas</option>
-            </select>
+            <div class="filter-content">
+              <h4 class="filter-subtitle">Tração</h4>
+              <select v-model="tractionFilter" @change="applyFilters" class="filter-select">
+                <option value="">Todas</option>
+                <option value="4x2">4x2</option>
+                <option value="4x4">4x4</option>
+                <option value="AWD">AWD</option>
+              </select>
+            </div>
   
-            <h4 class="filter-subtitle">Tração</h4>
-            <select v-model="tractionFilter" @change="applyFilters" class="filter-select">
-              <option value="">Todas</option>
-              <option value="4x2">4x2</option>
-              <option value="4x4">4x4</option>
-              <option value="AWD">AWD</option>
-            </select>
+            <div class="filter-content">
+              <h4 class="filter-subtitle">Transmissão</h4>
+              <select v-model="transmissionFilter" @change="applyFilters" class="filter-select">
+                <option value="">Todas</option>
+                <option value="Manual">Manual</option>
+                <option value="Automática">Automática</option>
+              </select>
+            </div>
   
-            <h4 class="filter-subtitle">Transmissão</h4>
-            <select v-model="transmissionFilter" @change="applyFilters" class="filter-select">
-              <option value="">Todas</option>
-              <option value="Manual">Manual</option>
-              <option value="Automática">Automática</option>
-            </select>
+            <div class="filter-content">
+              <h4 class="filter-subtitle">Carroceria</h4>
+              <select v-model="carBodyFilter" @change="applyFilters" class="filter-select">
+                <option value="">Todas</option>
+                <option value="Hatch">Hatch</option>
+                <option value="Sedan">Sedan</option>
+                <option value="SUV">SUV</option>
+              </select>
+            </div>
   
-            <h4 class="filter-subtitle">Carroceria</h4>
-            <select v-model="carBodyFilter" @change="applyFilters" class="filter-select">
-              <option value="">Todas</option>
-              <option value="Hatch">Hatch</option>
-              <option value="Sedan">Sedan</option>
-              <option value="SUV">SUV</option>
-            </select>
-  
-            <h4 class="filter-subtitle">Opcionais</h4>
-            <div v-for="opcional in opcionaisDisponiveis" :key="opcional" class="filter-checkbox-group">
-              <label>
-                <input
-                  type="checkbox"
-                  :value="opcional"
-                  v-model="filters.opcionais"
-                  @change="applyFilters"
-                  class="filter-checkbox"
-                />
-                {{ opcional }}
-              </label>
+            <div class="filter-content">
+              <h4 class="filter-subtitle">Opcionais</h4>
+              <div v-for="opcional in opcionaisDisponiveis" :key="opcional" class="filter-checkbox-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    :value="opcional"
+                    v-model="filters.opcionais"
+                    @change="applyFilters"
+                    class="filter-checkbox"
+                  />
+                  {{ opcional }}
+                </label>
+              </div>
             </div>
           </div>
         </div>
@@ -157,14 +172,11 @@
             <h3>{{ vehicle.marca || "Não informado" }}</h3>
             <h4>{{ vehicle.modelo || "Não informado" }}</h4>
             <p class="price">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</p>
-            <p>
-              <strong>Ano:</strong> {{ vehicle.ano || "Não informado" }} |
-              <strong>Quilometragem:</strong>
-              {{ vehicle.quilometragem ? vehicle.quilometragem.toLocaleString() + " Km" : "Não informado" }}
-            </p>
-            <p><strong>Transmissão:</strong> {{ vehicle.transmissao || "Não informado" }}</p>
-            <p><strong>Carroceria:</strong> {{ vehicle.carroceria || "Não informado" }}</p>
-            <p><strong>Cor:</strong> {{ vehicle.cor || "Não informado" }}</p>
+            <div class="vehicle-info-details">
+              <p>{{ vehicle.ano || "Não informado" }}</p>
+              <p>{{ vehicle.quilometragem ? vehicle.quilometragem.toLocaleString() + " Km" : "Não informado" }}</p>
+              <p>{{ vehicle.transmissao || "Não informado" }}</p>
+            </div>
             <button class="btn" @click="viewDetails(vehicle.id)">Ver Detalhes</button>
           </div>
         </div>

@@ -34,7 +34,7 @@
   max-height: calc(93% - 45px); /* Reduzido para acomodar o botão "Limpar" */
   overflow-y: auto;
   overflow-x: hidden;
-  scrollbar-width: thin;
+  scrollbar-width: none;
   scrollbar-color: #bbbbbb #f0f4f8;
 }
 
@@ -53,7 +53,7 @@
 
 /* Subtítulos */
 .filter-subtitle {
-  font-size: .75rem;
+  font-size: .95rem;
   font-weight: 600;
   color: #2d3748;
   margin: 10px 0 5px 0;
@@ -116,7 +116,11 @@
   }
 } */
 
-/* Inputs e Selects */
+.filter-content{
+  width: 100%;
+  margin: 1rem 0 0 0;
+}
+
 .filter-select, .filter-input{
   padding: 5px 40px 5px 16px;
 }
@@ -157,6 +161,7 @@
   flex-wrap: wrap;
   gap: 12px;
   width: 100%;
+  margin-top: .2rem;
 }
 
 
@@ -217,7 +222,6 @@
   flex-wrap: wrap;
   gap: 10px;
   align-content: flex-start; /* Mantém os itens alinhados ao topo */
-  justify-content: space-evenly; /* Distribui os cards de forma uniforme */
 }
 
 
@@ -292,31 +296,42 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  text-align: center;
+  text-align: left;
 }
 
 .vehicle-info h3 {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #2c3e50;
 }
 
 .vehicle-info h4 {
-  font-size: 1rem;
+  font-size: .9rem;
+  color: #555;
+}
+
+.vehicle-info-details{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.vehicle-info-details p{
+  font-size: .75rem;
   color: #555;
 }
 
 .vehicle-info .price {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  color: #28a745;
+  color: #131313;
 }
 
 .vehicle-info .btn {
   padding: 12px;
-  font-size: 1rem;
+  font-size: .75rem;
   color: #fff;
-  background: #007bff;
+  background: rgb(19,250,209);
+background: linear-gradient(162deg, rgba(19,250,209,1) 0%, rgba(94,70,252,1) 100%);
   border: none;
   border-radius: 8px;
   cursor: pointer;
