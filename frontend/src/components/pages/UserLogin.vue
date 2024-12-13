@@ -1,5 +1,6 @@
+
 <template>
-  <div class="login-container">
+  <div class="auth-container">
     <h2>Login</h2>
     <form @submit.prevent="loginUser">
       <div>
@@ -12,12 +13,13 @@
       </div>
       <button type="submit">Entrar</button>
     </form>
+    <router-link class="auth-link" to="/register">Não tem uma conta? Registre-se</router-link>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 import { updateAuthState } from "@/authState";
+import "@/assets/AppAuth.css";
 
 export default {
   name: "UserLogin",
@@ -51,39 +53,3 @@ export default {
   },
 };
 </script>
-
-  <style scoped>
-  .login-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  button {
-    width: 100%;
-    padding: 10px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  button:hover {
-    background: #0056b3;
-  }
-  </style>
-  
