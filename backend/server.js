@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const vehiclesRoutes = require('./routes/vehicles');
 const statisticsRoutes = require("./routes/statistics");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // Rotas da API
+app.use("/api/auth", authRoutes);
 app.use('/api/vehicles', vehiclesRoutes);
 app.use('/uploads', express.static('uploads'));
 app.use("/api/statistics", statisticsRoutes);

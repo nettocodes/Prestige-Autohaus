@@ -55,7 +55,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 import "@splidejs/vue-splide/css";
@@ -85,7 +84,7 @@ export default {
   methods: {
     async fetchVehicleDetails() {
       const vehicleId = this.$route.params.id;
-      const sessionId = localStorage.getItem("sessionId") || this.createSessionId();
+      const sessionId = this.getSessionId();
 
       try {
         console.log(`Buscando detalhes do veículo ID: ${vehicleId}`);
@@ -93,11 +92,14 @@ export default {
         // Obter detalhes do veículo
         const response = await axios.get(`http://localhost:5000/api/vehicles/${vehicleId}`);
         this.vehicle = response.data;
-        console.log(`Detalhes do veículo recebidos:`, this.vehicle);
 
-        // Registrar visualização
-        await axios.post("http://localhost:5000/api/statistics/views", { vehicleId, sessionId });
-        console.log(`Visualização registrada para o veículo ID: ${vehicleId}`);
+        // Registrar visualização se ainda não foi registrada na sessão
+        const viewedVehicles = JSON.parse(localStorage.getItem("viewedVehicles")) || [];
+        if (!viewedVehicles.includes(vehicleId)) {
+          await this.registerView(vehicleId, sessionId);
+          viewedVehicles.push(vehicleId);
+          localStorage.setItem("viewedVehicles", JSON.stringify(viewedVehicles));
+        }
       } catch (err) {
         console.error("Erro ao buscar detalhes do veículo:", err.message);
         if (err.response) {
@@ -106,8 +108,26 @@ export default {
       }
     },
 
+    async registerView(vehicleId, sessionId) {
+      if (!vehicleId || !sessionId) {
+        console.error("Erro: vehicleId ou sessionId ausentes.");
+        return;
+      }
+
+      try {
+        console.log("Registrando visualização...");
+        const response = await axios.post("http://localhost:5000/api/statistics/views", { vehicleId, sessionId });
+        console.log(`Visualização registrada com sucesso para o veículo ID: ${vehicleId}`, response.data);
+      } catch (err) {
+        console.error("Erro ao registrar visualização:", err.message);
+        if (err.response) {
+          console.error("Detalhes do erro:", err.response.data);
+        }
+      }
+    },
+
     async handleContactClick() {
-      const sessionId = localStorage.getItem("sessionId") || this.createSessionId();
+      const sessionId = this.getSessionId();
 
       try {
         console.log("Registrando clique em contato...");
@@ -121,11 +141,15 @@ export default {
       }
     },
 
-    createSessionId() {
-      const id = Math.random().toString(36).substring(2);
-      localStorage.setItem("sessionId", id);
-      return id;
+    getSessionId() {
+      let sessionId = localStorage.getItem("sessionId");
+      if (!sessionId) {
+        sessionId = Math.random().toString(36).substring(2);
+        localStorage.setItem("sessionId", sessionId);
+      }
+      return sessionId;
     },
+
   },
   mounted() {
     console.log("Componente VehicleDetails montado.");

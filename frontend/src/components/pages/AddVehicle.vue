@@ -183,6 +183,12 @@ export default {
     Splide,
     SplideSlide,
   },
+  beforeCreate() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || user.role !== 1) {
+        this.$router.push("/");
+    }
+  },
   data() {
     return {
       formMode: 'add',

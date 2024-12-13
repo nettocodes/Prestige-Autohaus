@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/db');
 const multer = require('multer');
+const { authenticateToken, requireAdmin } = require("../middlewares/authMiddleware");
 
 // Configuração do multer para upload de fotos
 const storage = multer.diskStorage({
@@ -22,7 +23,7 @@ const combustivelMap = {
     '3': 'Diesel',
 };
 
-router.post('/add', upload.array('fotos', 9), (req, res) => {
+router.post("/add", authenticateToken, requireAdmin, upload.array("fotos", 9), (req, res) => {
     const {
         marca,
         modelo,
