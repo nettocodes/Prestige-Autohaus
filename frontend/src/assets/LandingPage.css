@@ -7,13 +7,13 @@
     color: #2c3e50;
     text-align: center;
     margin: 0;
-    background-color: #fff;
+    background-color: #ece0f6a8;
 }
 
 /* Brand Section */
 .brand-section {
   padding: 3rem 1.5rem;
-  background-color: #f9fafc;
+  background-color: #e7dcf7;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   display: flex;

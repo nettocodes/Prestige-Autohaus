@@ -53,8 +53,13 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
+html{
+  scrollbar-width: none;
+}
 body {
 	line-height: 1;
+  
 }
 ol, ul {
 	list-style: none;
@@ -77,5 +82,6 @@ table {
   text-align: center;
   color: #2c3e50;
   background-color: #000;
+  
 }
 </style>
