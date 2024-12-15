@@ -1,7 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('variables.css');
+
+/* Footer */
 .footer {
-  background-color: #0f172a;
-  color: #ffffff;
+  background-color: var(--background-dark);
+  color: var(--text-primary);
   padding: 2rem 1rem;
+  font-family: 'Poppins', sans-serif;
 }
 
 .footer-container {
@@ -13,6 +18,7 @@
   gap: 2rem;
 }
 
+/* Área de Inscrição */
 .footer-subscribe {
   flex: 1 1 100%;
   text-align: center;
@@ -21,12 +27,13 @@
 .footer-subscribe h3 {
   font-size: 1.8rem;
   margin-bottom: 0.5rem;
+  color: var(--hover-color); /* Amarelo vibrante */
 }
 
 .footer-subscribe p {
   font-size: 1rem;
   margin-bottom: 1rem;
-  color: #9ca3af;
+  color: var(--text-secondary); /* Cinza claro */
 }
 
 .footer-subscribe-form {
@@ -37,27 +44,36 @@
 
 .footer-subscribe-form input {
   padding: 0.8rem;
-  border: none;
+  border: 1px solid var(--background-highlight);
   border-radius: 4px;
   font-size: 1rem;
   width: 300px;
+  background: var(--background-dark);
+  color: var(--text-primary);
+}
+
+.footer-subscribe-form input::placeholder {
+  color: var(--text-secondary);
 }
 
 .footer-subscribe-form button {
-  background-color: #2563eb;
-  color: #ffffff;
+  background-color: var(--button-color);
+  color: var(--text-primary);
   border: none;
   border-radius: 4px;
   padding: 0.8rem 1.2rem;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .footer-subscribe-form button:hover {
-  background-color: #1e40af;
+  background-color: var(--button-hover-color);
+  transform: scale(1.05);
 }
 
+/* Links do Footer */
 .footer-links {
   display: flex;
   flex-wrap: wrap;
@@ -65,12 +81,10 @@
   justify-content: space-between;
 }
 
-.footer-column {
-}
-
 .footer-column h4 {
   font-size: 1.2rem;
   margin-bottom: 1rem;
+  color: var(--hover-color); /* Amarelo vibrante */
 }
 
 .footer-column ul {
@@ -84,16 +98,17 @@
 }
 
 .footer-column ul li a {
-  color: #9ca3af;
+  color: var(--text-secondary);
   text-decoration: none;
-  font-size: 0.85rem;
-  transition: color 0.3s;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
 }
 
 .footer-column ul li a:hover {
-  color: #ffffff;
+  color: var(--hover-color); /* Amarelo vibrante no hover */
 }
 
+/* Social Icons */
 .footer-social .social-icons {
   display: flex;
   gap: 1rem;
@@ -101,20 +116,23 @@
 
 .footer-social .social-icons a {
   font-size: 1.5rem;
-  color: #9ca3af;
-  transition: color 0.3s;
+  color: var(--text-secondary);
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .footer-social .social-icons a:hover {
-  color: #ffffff;
+  color: var(--hover-color); /* Amarelo vibrante */
+  transform: scale(1.1);
 }
 
+/* Bottom Footer */
 .footer-bottom {
   margin-top: 2rem;
-  border-top: 1px solid #1e293b;
+  border-top: 1px solid var(--background-highlight);
   padding-top: 1rem;
   text-align: center;
   font-size: 0.9rem;
+  color: var(--text-secondary);
 }
 
 .footer-bottom ul {
@@ -127,15 +145,16 @@
 }
 
 .footer-bottom ul li a {
-  color: #9ca3af;
+  color: var(--text-secondary);
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
 }
 
 .footer-bottom ul li a:hover {
-  color: #ffffff;
+  color: var(--hover-color);
 }
 
+/* Responsividade */
 @media (max-width: 768px) {
   .footer-container {
     flex-direction: column;

@@ -1,0 +1,26 @@
+:root {
+    /* Cores principais */
+    --primary-color: #4a148c; /* Roxo vibrante - fundo hero */
+    --secondary-color: #fdd835; /* Amarelo - botões de ação */
+  
+    /* Cores de texto */
+    --text-primary: #ffffff; /* Branco - texto principal */
+    --text-secondary: #cccccc; /* Cinza claro - texto de apoio */
+    --text-contrast: #4a148c; /* Roxo vibrante - texto sobre fundo amarelo */
+  
+    /* Cores de destaque */
+    --highlight-color: #fdd835; /* Amarelo - botões e elementos destacados */
+  
+    /* Cores de fundo */
+    --background-dark: #1b1b1b; /* Preto escuro - cabeçalho, rodapé */
+    --background-light: #f4f4f4; /* Cinza claro - áreas de conteúdo */
+    --background-hero: linear-gradient(135deg, #4a148c, #2d0c52); /* Gradiente roxo hero */
+  
+    /* Cores de borda */
+    --border-light: #e0e0e0; /* Borda cinza claro */
+    --border-contrast: #fdd835; /* Borda amarela */
+  
+    /* Sombras */
+    --shadow-dark: rgba(0, 0, 0, 0.3); /* Sombra para botões e cards */
+  }
+  
