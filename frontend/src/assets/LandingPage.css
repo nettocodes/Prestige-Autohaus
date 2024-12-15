@@ -7,13 +7,13 @@
     color: #2c3e50;
     text-align: center;
     margin: 0;
-    background-color: #fff;
+    background-color: var(--background-dark);
 }
 /* Brand Section */
 .brand-section {
   padding: 3rem 1.5rem;
   background: var(--background-light); /* Fundo claro */
-  border-radius: 16px;
+  border-radius: 0 0 8px 8px;
   box-shadow: 0 8px 20px var(--shadow-color);
   display: flex;
   align-items: center;
@@ -61,7 +61,7 @@
 /* Lista de Cartões */
 .list-brand ul {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 1.5rem;
   list-style: none;
@@ -138,7 +138,6 @@
 
 @media (max-width: 768px) {
   .header-brand {
-    flex-direction: column;
     gap: 1rem;
     text-align: center;
   }
@@ -146,15 +145,19 @@
   .header-brand h2 {
     font-size: 1.8rem;
   }
-
+  .header-brand .show-all-brands{
+    font-size: 1rem;
+  }
   .brand-card {
-    width: 140px;
+    width: 90px;
     padding: 0.8rem;
   }
-
+  .brand-card p{
+    font-size: .75rem;
+  }
   .logo-brand {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
   }
 }
 
@@ -164,21 +167,32 @@
   }
 
   .header-brand h2 {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
   }
 
   .list-brand ul {
-    gap: 0.8rem;
+    gap: 0rem;
   }
 
   .brand-card {
-    width: 120px;
-    padding: 0.7rem;
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  .brand-card p{
+    display: none;
   }
 
   .logo-brand {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0;
+  }
+  .header-brand{
+    text-align: left;
+  }
+  .header-brand .show-all-brands{
+    font-size: .85rem;
   }
 }
 
@@ -226,6 +240,28 @@
   margin: 0 auto;
   overflow: hidden;
   width: 100%;
+  position: relative;
+}
+
+.custom-carousel::before,
+.custom-carousel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50px; /* Largura da sombra */
+  pointer-events: none; /* Não interfere com o clique */
+  z-index: 2;
+}
+
+.custom-carousel::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
+}
+
+.custom-carousel::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.3), transparent);
 }
 
 .custom-vehicle-card {
@@ -233,7 +269,6 @@
   max-width: 300px;
   height: 420px;
   background: var(--background-light); /* Branco */
-  border: 1px solid var(--border-color); /* Cinza claro */
   border-radius: 12px;
   box-shadow: 0 4px 10px var(--shadow-color);
   overflow: hidden;
@@ -289,25 +324,6 @@
 .custom-vehicle-info p {
   font-size: 1rem;
   color: var(--text-secondary);
-}
-
-/* Botão de Favorito */
-.custom-favorite-btn {
-  align-self: flex-start;
-  background: none;
-  border: none;
-  font-size: 18px;
-  color: var(--border-color); /* Cor neutra */
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.custom-favorite-btn.active {
-  color: var(--secondary-color); /* Amarelo vibrante */
-}
-
-.custom-favorite-btn:hover {
-  color: var(--hover-color); /* Amarelo mais claro */
 }
 
 /* Detalhes do veículo */
@@ -396,6 +412,9 @@
   .custom-price {
     font-size: 0.9rem;
   }
+  .custom-view-all-link{
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -403,18 +422,36 @@
     max-width: 180px;
     height: 280px;
   }
-
-  .custom-vehicle-info h3 {
-    font-size: 0.9rem;
+  .custom-carousel-header{
+    text-align: left;
   }
-
+  .custom-vehicle-info h3 {
+    font-size: 0.75rem;
+  }
+  .custom-carousel-header h2{
+    font-size: 1.3rem;
+  }
+  .custom-vehicle-info p{
+    font-size: .65rem;
+  }
   .custom-price {
     font-size: 0.8rem;
   }
 
   .custom-details-btn {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
+  .custom-view-all-link{
+    font-size: .85rem;
+  }
+  .custom-vehicle-bottom-item{
+    margin: 0;
+  }
+  .custom-vehicle-detail-item img{
+    width: 20px;
+    height: 20px;
+  }
+  
 }
 
 /* Section Principal */
@@ -554,23 +591,26 @@
     font-size: 2.2rem;
   }
 
-  .highlight-text ul li {
-    justify-content: center;
-  }
 }
 
 @media (max-width: 480px) {
   .highlight-text h2 {
-    font-size: 2rem;
+    font-size: 1.2rem;
   }
 
   .highlight-text p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .cta-button {
     font-size: 0.9rem;
     padding: 0.8rem 1.5rem;
+  }
+  .highlight-image, .highlight-text{
+    padding: 0;
+  }
+  .highlight-text ul li{
+    font-size: .75rem;
   }
 }
 
@@ -607,7 +647,7 @@
 .unique-view-all-link {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--text-secondary); /* Amarelo vibrante */
+  color: var(--secondary-color); /* Amarelo vibrante */
   text-decoration: none;
   transition: color 0.3s ease, transform 0.2s ease;
 }
@@ -667,7 +707,7 @@
   width: 100%;
   max-width: 450px;
   height: 200px;
-  margin: 1rem auto;
+  margin: 2rem auto;
   box-sizing: border-box;
 }
 
@@ -807,6 +847,9 @@
   .unique-brand-title {
     font-size: 0.75rem;
   }
+  .unique-brand-filter-header h2{
+    font-size: 1.2rem;
+  }
 
   .unique-brand-price {
     font-size: 0.75rem;
@@ -815,118 +858,7 @@
   .unique-details-btn {
     font-size: 0.65rem;
   }
-}
-
-/* Section Container */
-.browse-by-type-section {
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  max-width: 1400px;
-  text-align: center;
-  background-color: var(--background-light); /* Fundo suave */
-  border-radius: 16px;
-  box-shadow: 0 8px 20px var(--shadow-color);
-}
-
-/* Section Title */
-.browse-by-type-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--primary-color); /* Roxo vibrante */
-  margin-bottom: 2rem;
-  font-family: 'Poppins', sans-serif;
-  text-transform: uppercase;
-}
-
-/* Container for Buttons */
-.browse-by-type-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-}
-
-/* Individual Buttons */
-.browse-by-type-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  height: 100px;
-  border: 1px solid var(--border-color); /* Cinza claro */
-  border-radius: 12px;
-  background: var( --background-hero); /* Branco */
-  box-shadow: 0 4px 10px var(--shadow-color); /* Sombra suave */
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.browse-by-type-button:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-  background-color: var(--secondary-color); /* Amarelo vibrante no hover */
-}
-
-.browse-by-type-button:hover span {
-  color: var(--primary-color); /* Roxo vibrante no texto no hover */
-}
-
-/* Icon Inside Button */
-.browse-by-type-icon {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 0.5rem;
-  filter: drop-shadow(0 2px 4px var(--shadow-color)); /* Sombra no ícone */
-  transition: transform 0.3s ease;
-  filter: invert(100%);
-}
-
-.browse-by-type-button:hover .browse-by-type-icon {
-  transform: scale(1.1); /* Efeito de destaque no ícone */
-}
-
-/* Button Text */
-.browse-by-type-button span {
-  font-size: 1rem;
-  color: #fff; /* Cinza médio */
-  font-weight: 600;
-  transition: color 0.3s ease;
-  text-transform: capitalize;
-}
-
-/* Responsiveness */
-@media (max-width: 768px) {
-  .browse-by-type-title {
-    font-size: 2rem;
-  }
-
-  .browse-by-type-button {
-    width: 80px;
-    height: 80px;
-  }
-
-  .browse-by-type-button span {
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .browse-by-type-title {
-    font-size: 1.8rem;
-  }
-
-  .browse-by-type-button {
-    width: 70px;
-    height: 70px;
-  }
-
-  .browse-by-type-icon {
-    width: 30px;
-    height: 30px;
-  }
-
-  .browse-by-type-button span {
-    font-size: 0.75rem;
+  .unique-brand-vehicle-card{
+    width: 100%;
   }
 }

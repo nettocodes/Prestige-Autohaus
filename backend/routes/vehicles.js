@@ -149,11 +149,12 @@ router.get('/:id', (req, res) => {
             return res.status(404).json({ error: 'Veículo não encontrado.' });
         }
         const vehicle = results[0];
-        vehicle.fotos = JSON.parse(vehicle.fotos);
+        vehicle.fotos = JSON.parse(vehicle.fotos); // Converter JSON para array
         vehicle.opcionais = vehicle.opcionais ? vehicle.opcionais.split(',') : [];
         res.status(200).json(vehicle);
     });
 });
+
 
 router.delete('/:id', (req, res) => {
     const { id } = req.params;

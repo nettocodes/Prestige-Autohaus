@@ -193,22 +193,64 @@
   flex-direction: column;
   align-items: center;
 }
+/* Estilo do botão de filtro */
+.toggle-filter-btn {
+  position: fixed; /* Botão fixo */
+  right: -20px; /* Distância da borda direita */
+  top: 18%; /* Posiciona no meio verticalmente */
+  transform: rotate(-90deg);
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 999; /* Garante que esteja sobre outros elementos */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
-/* Grade de Veículos */
-.vehicle-grid {
+/* Responsividade */
+@media (min-width: 769px) {
+  .toggle-filter-btn {
+    display: none; /* Oculta o botão em telas maiores que 768px */
+  }
+}
+
+/* Filtros */
+.filter-container {
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.vehicles-container {
+  display: flex;
   margin-left: 320px; /* Largura do filtro (280px) + margem (40px) */
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  overflow-y: auto;
+  
+}
+.vehicle-grid {
+  
   padding: 15px;
-  height: calc(100vh - 80px);
   overflow-y: auto; /* Permite rolagem vertical */
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  justify-content: center;
   align-content: flex-start; /* Mantém os itens alinhados ao topo */
 }
+.vehicle-count {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+}
 
-
-
-/* Card do Veículo */
 .vehicle-card {
   max-width: 300px; /* Limita a largura máxima dos cards */
   border: 1px solid #ddd;
@@ -360,8 +402,7 @@
     flex-direction: column;
   }
   .filter-container {
-    flex-direction: column; 
-    position: relative;
+    flex-direction: column;
     max-width: 100%;
     padding: 15px;
     box-shadow: none; /* Remove sombra em telas menores */
@@ -375,7 +416,7 @@
   }
 
   .filter-container-inner {
-    max-height: calc(100% - 0px);
+    max-height: calc(85% - 0px);
     padding: 0;
     width: 100%;
   }
@@ -491,6 +532,9 @@
     font-size: 1rem;
     color: #4a5568;
   }
+  .vehicles-container{
+    margin-left: 0;
+  }
   .vehicle-grid {
     justify-content: center; /* Alinha os itens ao centro */
     margin-left: 0;
@@ -524,7 +568,6 @@
 @media (max-width: 480px) {
   .filter-container {
     padding: 10px;
-    height: calc(50vh - 0px);
   }
 
   .vehicle-card {

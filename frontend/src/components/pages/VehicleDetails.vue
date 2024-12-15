@@ -1,22 +1,28 @@
 <template>
   <div class="details-page">
     <div class="details-content">
-
+      <!-- Breadcrumb -->
       <nav class="breadcrumb">
         <router-link to="/">Home</router-link> / Listings / {{ vehicle?.modelo || "Loading..." }}
       </nav>
-  
+
+      <!-- Verificação se os detalhes do veículo estão disponíveis -->
       <div v-if="vehicle" class="vehicle-details-container">
         <!-- Galeria de Imagens -->
         <div class="vehicle-gallery">
           <Splide :options="mainOptions" ref="mainCarousel">
-            <SplideSlide v-for="(foto, index) in vehicle.fotos || []" :key="index" class="splide-slide">
+            <SplideSlide
+              v-for="(foto, index) in vehicle.fotos || []"
+              :key="index"
+              class="splide-slide"
+              @click="openZoom(foto)"
+            >
               <img :src="`http://localhost:5000/uploads/${foto}`" alt="Vehicle photo" />
             </SplideSlide>
           </Splide>
         </div>
-  
-        <!-- Informações principais -->
+
+        <!-- Detalhes do veículo ao lado -->
         <div class="vehicle-main-info">
           <div class="vehicle-title">
             <h1>{{ vehicle.marca || "Marca não informada" }} {{ vehicle.modelo || "Modelo não informado" }}</h1>
@@ -24,37 +30,77 @@
           </div>
           <div class="price-section">
             <h2>R$ {{ Math.floor(vehicle.preco || 0).toLocaleString("pt-BR") }}</h2>
-            <div class="price-offer">
-              <img src="@/assets/images/icons/offer.png" alt="">
-              <button class="offer-btn"> Fazer uma Oferta</button>
-            </div>
           </div>
           <div class="tags">
             <span class="tag">{{ vehicle.ano || "Ano não informado" }}</span>
             <span class="tag">{{ vehicle.transmissao || "Transmissão não informada" }}</span>
             <span class="tag">{{ vehicle.combustivel || "Combustível não informado" }}</span>
           </div>
+          <div class="contact-buttons">
+            <a
+              :href="`https://wa.me/47997486918?text=${encodeURIComponent(`Olá, estou interessado no veículo ${vehicle.marca} ${vehicle.modelo}`)}`"
+      target="_blank"
+              class="whatsapp-btn"
+            >
+              <img src="@/assets/images/icons/whatsapp.png" alt="WhatsApp Icon" class="whatsapp-icon" />
+              <span>WhatsApp</span>
+            </a>
+          </div>
         </div>
       </div>
-  
+
       <!-- Resumo do Veículo -->
       <div v-if="vehicle" class="vehicle-overview">
         <h2>Visão geral</h2>
         <div class="details-grid">
           <div><strong>Carroceria:</strong> {{ vehicle.carroceria || "Não informado" }}</div>
-          <div><strong>Condicao:</strong> {{ vehicle.condicao || "Usado" }}</div>
+          <div><strong>Condição:</strong> {{ vehicle.condicao || "Não informado" }}</div>
           <div><strong>Quilometragem:</strong> {{ vehicle.quilometragem?.toLocaleString() || "0" }} Km</div>
-          <div><strong>Combustivel:</strong> {{ vehicle.combustivel || "Não informado" }}</div>
-          <div><strong>Portas:</strong> {{ vehicle.portas || "4" }}</div>
-          <div><strong>Transmissao:</strong> {{ vehicle.transmissao || "Não informado" }}</div>
+          <div><strong>Combustível:</strong> {{ vehicle.combustivel || "Não informado" }}</div>
+          <div><strong>Portas:</strong> {{ vehicle.portas || "Não informado" }}</div>
           <div><strong>Cor:</strong> {{ vehicle.cor || "Não informado" }}</div>
+          <div><strong>Tipo de Drive:</strong> {{ vehicle.driveType || "Não informado" }}</div>
+          <div><strong>Cilindros:</strong> {{ vehicle.cilindros || "Não informado" }}</div>
+          <div><strong>Opcionais:</strong>
+            <span v-if="vehicle.opcionais.length">
+              {{ vehicle.opcionais.join(", ") }}
+            </span>
+            <span v-else>Não informado</span>
+          </div>
         </div>
       </div>
-  
-      <div v-else class="loading">Carregando informações do veículo...</div>
+
+      <!-- Modal de Zoom -->
+      <div v-if="zoomImage" class="zoom-modal" @click="closeZoom">
+        <div
+          class="zoom-container"
+          @mousemove="handleMouseMove"
+          @mouseleave="resetZoom"
+        >
+          <img
+            ref="zoomedImage"
+            :src="`http://localhost:5000/uploads/${zoomImage}`"
+            alt="Zoomed image"
+          />
+          <div
+            class="zoom-lens"
+            :style="{ top: lensPosition.y + 'px', left: lensPosition.x + 'px' }"
+          ></div>
+          <div
+            class="zoom-result"
+            :style="{
+              backgroundImage: `url(http://localhost:5000/uploads/${zoomImage})`,
+              backgroundPosition: zoomBackgroundPosition,
+            }"
+          ></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
+
+
 <script>
 import axios from "axios";
 import "@splidejs/vue-splide/css";
@@ -70,15 +116,21 @@ export default {
   data() {
     return {
       vehicle: null,
+      zoomImage: null, // Controla a imagem exibida no modal
+      lensPosition: { x: 0, y: 0 }, // Posição do quadrado de zoom
+      zoomBackgroundPosition: "0% 0%",
+      isZoomEnabled: false,
       mainOptions: {
         type: "loop",
-        heightRatio: 0.6,
+        height: "500px", // Define a altura fixa dos slides
+        width: "500px", // Define a largura fixa dos slides
         pagination: true,
         arrows: true,
         autoplay: true,
         interval: 4000,
         cover: true,
       },
+
     };
   },
   methods: {
@@ -107,7 +159,42 @@ export default {
         }
       }
     },
+    openZoom(image) {
+      this.zoomImage = image; // Define a imagem para exibir no modal
+    },
+    closeZoom() {
+      this.zoomImage = null; // Fecha o modal
+    },
+    handleMouseMove(event) {
+      if (!this.isZoomEnabled) return;
 
+      const zoomContainer = event.currentTarget;
+      const rect = zoomContainer.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      // Calcula a posição do quadrado de zoom (ampliação maior)
+      const lensX = Math.max(0, Math.min(x - 75, rect.width - 150)); // Aumenta a área visível
+      const lensY = Math.max(0, Math.min(y - 75, rect.height - 150));
+
+      // Calcula a posição de fundo da área ampliada
+      const backgroundX = (x / rect.width) * 100;
+      const backgroundY = (y / rect.height) * 100;
+
+      // Atualiza as propriedades
+      this.lensPosition = { x: lensX, y: lensY };
+      this.zoomBackgroundPosition = `${backgroundX}% ${backgroundY}%`;
+    },
+
+    resetZoom() {
+      // Reseta o estado do zoom quando o mouse sai do container
+      this.lensPosition = { x: 0, y: 0 };
+      this.zoomBackgroundPosition = "0% 0%";
+    },
+    checkZoomAvailability() {
+      // Ativa/desativa o zoom dinâmico baseado na largura da tela
+      this.isZoomEnabled = window.matchMedia("(min-width: 768px)").matches;
+    },
     async registerView(vehicleId, sessionId) {
       if (!vehicleId || !sessionId) {
         console.error("Erro: vehicleId ou sessionId ausentes.");
@@ -125,7 +212,6 @@ export default {
         }
       }
     },
-
     async handleContactClick() {
       const sessionId = this.getSessionId();
 
@@ -140,7 +226,6 @@ export default {
         }
       }
     },
-
     getSessionId() {
       let sessionId = localStorage.getItem("sessionId");
       if (!sessionId) {
@@ -149,11 +234,15 @@ export default {
       }
       return sessionId;
     },
-
   },
   mounted() {
     console.log("Componente VehicleDetails montado.");
     this.fetchVehicleDetails();
+    this.checkZoomAvailability();
+    window.addEventListener("resize", this.checkZoomAvailability);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.checkZoomAvailability);
   },
 };
 </script>

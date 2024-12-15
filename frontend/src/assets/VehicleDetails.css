@@ -6,20 +6,72 @@
   margin: 0 auto;
   padding: 2rem 1rem;
   color: var(--text-secondary);
-  background-color: var(--background-light); /* Fundo claro */
+  background: var(--background-hero); /* Fundo claro */
   font-family: 'Poppins', sans-serif;
 }
 
 .details-content {
-  max-width: 1400px;
+  max-width: 1440px;
   margin: 0 auto;
-  background: var(--text-primary); /* Branco */
+  background: var(--background-light); /* Branco */
   border-radius: 10px;
   box-shadow: 0 4px 10px var(--shadow-color); /* Sombra */
   overflow: hidden;
-  padding: 2rem;
 }
 
+.zoom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.zoom-container {
+  position: relative;
+  width: 1024px;
+  height: auto;
+  cursor: none;
+}
+
+.zoom-container img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.zoom-lens {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid #000;
+  pointer-events: none;
+}
+
+.zoom-result {
+  position: absolute;
+  top: 0;
+  left: 620px;
+  width: 300px; /* Largura da área de zoom */
+  height: 300px; /* Altura da área de zoom */
+  border: 1px solid #000;
+  background-repeat: no-repeat;
+  background-size: 400%; /* Aumenta o zoom */
+  pointer-events: none;
+}
+
+
+
+.container-details-vehicle{
+  padding: 1rem;
+}
 .breadcrumb {
   font-size: 0.9rem;
   margin-bottom: 1rem;
@@ -29,51 +81,55 @@
 /* Container de Detalhes */
 .vehicle-details-container {
   display: flex;
-  gap: 2rem;
+  flex-direction: row; /* Alinha o conteúdo na horizontal */
+  gap: 2rem; /* Espaço entre as colunas */
   margin-bottom: 2rem;
 }
 
 .vehicle-gallery {
-  flex: 1.5;
+  flex: 1; /* Ocupará proporcionalmente 1 parte do espaço */
 }
 
 .vehicle-gallery .splide {
-  width: 100%;
-  height: auto;
+  max-width: 500px; /* Define a largura máxima do Splide */
+  margin: 0 auto; /* Centraliza a galeria */
 }
 
 .splide-slide img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px var(--shadow-color);
+  max-height: 200px; /* Diminui a altura máxima */
+  object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+  border-radius: 10px; /* Adiciona bordas arredondadas */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra leve */
 }
+
 
 .vehicle-main-info {
-  flex: 1;
+  flex: 1; /* Ocupará proporcionalmente 1 parte do espaço */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centraliza verticalmente o conteúdo */
+  gap: 1rem; /* Espaço entre os elementos dentro da seção */
 }
 
-/* Títulos */
 .vehicle-title h1 {
-  text-align: start;
-  font-size: 2.5rem;
+  text-align: left; /* Garante alinhamento à esquerda */
+  font-size: 2rem;
   margin-bottom: 0.5rem;
-  color: var(--primary-color); /* Roxo vibrante */
+  color: var(--primary-color);
 }
 
 .subtitle {
   font-size: 1rem;
-  text-align: start;
+  text-align: left;
   color: var(--text-secondary);
   margin-bottom: 1rem;
 }
 
-/* Seção de Preço */
 .price-section {
-  display: flex;
-  margin: 1.5rem 0;
-  justify-content: space-between;
+  margin-top: 1rem;
+  text-align: left
 }
 
 .price-section h2 {
@@ -110,12 +166,11 @@
   transform: translateY(-2px);
 }
 
-/* Tags */
 .tags {
   display: flex;
+  flex-wrap: wrap; /* Permite quebra de linha */
   gap: 0.5rem;
   margin-top: 1rem;
-  flex-wrap: wrap;
 }
 
 .tag {
@@ -128,13 +183,43 @@
   text-transform: capitalize;
 }
 
+.contact-buttons{
+  display: flex;
+  align-items: start;
+}
+/* Botão WhatsApp */
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #25d366; /* Verde do WhatsApp */
+  color: #fff; /* Texto branco */
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+  background-color: #1ebe57; /* Cor levemente mais escura no hover */
+}
+
+.whatsapp-icon {
+  width: 20px;
+  height: 20px;
+}
+
+
 /* Visão Geral */
 .vehicle-overview {
-  background-color: var(--background-light);
-  padding: 1.5rem;
   border-radius: 10px;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 5px var(--shadow-color);
+  padding: 1rem;
 }
 
 .vehicle-overview h2 {
@@ -153,9 +238,9 @@
 }
 
 .details-grid div {
-  background: var(--text-primary); /* Branco */
   padding: 0.8rem;
   border-radius: 5px;
+  color: #4a148c;
   box-shadow: 0 2px 5px var(--shadow-color);
 }
 
@@ -217,10 +302,6 @@
 @media (max-width: 480px) {
   .details-page {
     padding: 1rem;
-  }
-
-  .details-content {
-    padding: 1.5rem;
   }
 
   .vehicle-title h1 {
