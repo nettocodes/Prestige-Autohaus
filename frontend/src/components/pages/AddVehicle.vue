@@ -44,6 +44,14 @@
             class="vehicle-form-input"
           />
         </div>
+        <div class="vehicle-form-group">
+          <label class="vehicle-form-label">Condição:</label>
+          <select v-model="formData.condicao" required class="vehicle-form-select">
+            <option value="" disabled>Selecione a condição</option>
+            <option value="Novo">Novo</option>
+            <option value="Usado">Usado</option>
+          </select>
+        </div>
 
         <div class="vehicle-form-group">
           <label class="vehicle-form-label">Quilometragem:</label>
@@ -233,26 +241,49 @@ export default {
       }
     },
     async fetchMarcas() {
-      const response = await axios.get('https://parallelum.com.br/fipe/api/v1/carros/marcas');
-      this.marcas = response.data;
+      try {
+        const response = await axios.get('https://parallelum.com.br/fipe/api/v1/carros/marcas');
+        this.marcas = response.data;
+      } catch (error) {
+        console.error('Erro ao buscar marcas:', error);
+      }
     },
     async fetchModelos() {
-      const response = await axios.get(
-        `https://parallelum.com.br/fipe/api/v1/carros/marcas/${this.formData.selectedMarca}/modelos`
-      );
-      this.modelos = response.data.modelos;
+      try {
+        if (!this.formData.selectedMarca) {
+          console.error('Marca não selecionada!');
+          return;
+        }
+
+        const response = await axios.get(
+          `https://parallelum.com.br/fipe/api/v1/carros/marcas/${this.formData.selectedMarca}/modelos`
+        );
+        this.modelos = response.data.modelos;
+      } catch (error) {
+        console.error('Erro ao buscar modelos:', error);
+      }
     },
     async fetchAnos() {
-      const response = await axios.get(
-        `https://parallelum.com.br/fipe/api/v1/carros/marcas/${this.formData.selectedModelo}/anos`
-      );
-      this.anos = response.data;
+      try {
+        if (!this.formData.selectedMarca || !this.formData.selectedModelo) {
+          console.error('Marca ou modelo não selecionado!');
+          return;
+        }
+
+        const response = await axios.get(
+          `https://parallelum.com.br/fipe/api/v1/carros/marcas/${this.formData.selectedMarca}/modelos/${this.formData.selectedModelo}/anos`
+        );
+        this.anos = response.data;
+      } catch (error) {
+        console.error('Erro ao buscar anos:', error);
+      }
     },
     handleFileUpload(event) {
       const files = event.target.files;
-      this.formData.fotos = files;
+      this.formData.fotos = Array.from(files); 
       this.previewFotos = Array.from(files).map((file) => URL.createObjectURL(file));
     },
+
     removeExistingFoto(index) {
       this.formData.existingFotos.splice(index, 1);
     },
@@ -261,31 +292,37 @@ export default {
     },
     async handleSubmit() {
       const formData = new FormData();
+
       Object.keys(this.formData).forEach((key) => {
         if (key === 'fotos') {
           this.formData.fotos.forEach((file) => formData.append('fotos', file));
-        } else if (key === 'existingFotos') {
-          formData.append('existingFotos', JSON.stringify(this.formData.existingFotos));
         } else {
           formData.append(key, this.formData[key]);
         }
       });
 
       try {
-        const url =
-          this.formMode === 'edit'
-            ? `/api/vehicles/${this.formData.id}`
-            : '/api/vehicles/add';
-        const method = this.formMode === 'edit' ? 'put' : 'post';
+        const token = localStorage.getItem("token");
+        if (!token) {
+          alert("Token de autenticação não encontrado. Faça login novamente.");
+          return this.$router.push("/login");
+        }
 
-        await axios[method](url, formData);
-        alert('Veículo salvo com sucesso!');
+        await axios.post('/api/vehicles/add', formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        alert('Veículo adicionado com sucesso!');
         this.resetForm();
-        this.fetchVehicles();
       } catch (error) {
-        console.error('Erro ao salvar veículo:', error);
+        console.error('Erro ao adicionar veículo:', error.response?.data || error.message);
+        alert(error.response?.data?.error || 'Erro ao adicionar veículo.');
       }
     },
+
     async deleteVehicle(id) {
       try {
         await axios.delete(`/api/vehicles/${id}`);

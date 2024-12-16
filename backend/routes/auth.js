@@ -54,11 +54,11 @@ router.post("/login", (req, res) => {
 
         // Gera um token JWT com o papel do usuário
         const token = jwt.sign(
-            { id: user.id, name: user.name, role: user.role },
+            { id: user.id, name: user.name, role: user.role }, // Payload
             JWT_SECRET,
             { expiresIn: "1h" }
         );
-
+        
         res.status(200).json({ message: "Login bem-sucedido.", token, user: { id: user.id, name: user.name, role: user.role } });
     });
 });

@@ -18,7 +18,7 @@
 </template>
 <script>
 import axios from "axios";
-import { updateAuthState } from "@/authState";
+import { updateAuthState } from "@/authState"; // Importa corretamente a função
 import "@/assets/AppAuth.css";
 
 export default {
@@ -38,10 +38,14 @@ export default {
         });
         const { token, user } = response.data;
 
+        // Salva os dados no localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
 
-        updateAuthState(); // Atualiza o estado global
+        // Chama a função para atualizar o estado global
+        if (typeof updateAuthState === "function") {
+          updateAuthState();
+        }
 
         alert("Login bem-sucedido!");
         this.$router.push("/");

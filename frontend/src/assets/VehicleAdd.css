@@ -1,36 +1,41 @@
 @import url('variables.css'); /* Importa as variáveis de cores */
 
+/* Página principal */
 .vehicle-form-page {
   padding: 20px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  background: var(--background-light); /* Fundo claro */
+  align-items: flex-start;
+  background: var(--background-gradient); /* Gradiente para fundo */
   min-height: 100vh;
 }
 
+/* Container do formulário */
 .vehicle-form-container {
   width: 100%;
   max-width: 800px;
-  background: var(--text-primary); /* Fundo branco */
-  border-radius: 10px;
-  box-shadow: 0 8px 20px var(--shadow-color); /* Sombra leve */
-  padding: 20px;
+  background: var(--background-light); /* Fundo claro */
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+  padding: 25px;
+  animation: fadeIn 0.5s ease;
 }
 
+/* Título do formulário */
 .vehicle-form-title {
   text-align: center;
-  font-size: 28px;
-  color: var(--primary-color); /* Roxo vibrante */
+  font-size: 32px;
+  color: var(--primary-color);
   margin-bottom: 20px;
   font-weight: 700;
-  font-family: 'Poppins', sans-serif;
+  letter-spacing: 1px;
 }
 
+/* Formulário */
 .vehicle-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
 .vehicle-form-group {
@@ -38,98 +43,150 @@
   flex-direction: column;
 }
 
+/* Labels */
 .vehicle-form-label {
-  font-size: 14px;
-  color: var(--text-secondary); /* Cinza claro */
-  margin-bottom: 5px;
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
   font-weight: 600;
 }
 
+/* Inputs e selects */
 .vehicle-form-input,
-.vehicle-form-select {
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid var(--border-color); /* Borda cinza */
-  border-radius: 5px;
-  background: var(--background-light); /* Fundo claro */
-  color: var(--text-primary); /* Texto escuro */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.vehicle-form-select,
+.vehicle-form-textarea {
+  padding: 12px;
+  font-size: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--background-light);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
 }
 
 .vehicle-form-input:focus,
-.vehicle-form-select:focus {
-  border-color: var(--primary-color); /* Roxo vibrante */
-  box-shadow: 0 0 5px rgba(74, 20, 140, 0.3); /* Sombra sutil */
+.vehicle-form-select:focus,
+.vehicle-form-textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(74, 20, 140, 0.2);
   outline: none;
 }
 
+/* Textarea */
+.vehicle-form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Grupo de checkboxes */
 .vehicle-form-checkbox-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
 }
 
 .vehicle-form-checkbox-item {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
 .vehicle-form-checkbox {
   transform: scale(1.2);
-  accent-color: var(--primary-color); /* Cor do checkbox */
+  accent-color: var(--primary-color);
 }
 
-.vehicle-form-file {
-  border: none;
-  font-size: 14px;
-}
-
-.vehicle-form-thumbnails {
-  margin-top: 10px;
-}
-
-.vehicle-thumbnail {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-
+/* Botão */
 .vehicle-form-button {
-  padding: 12px;
+  padding: 14px;
   font-size: 16px;
   font-weight: 600;
   text-align: center;
-  color: var(--text-contrast); /* Texto branco */
-  background: var(--secondary-color); /* Amarelo vibrante */
+  color: var(--text-contrast);
+  background: var(--primary-color);
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .vehicle-form-button:hover {
-  background: #ffeb3b; /* Amarelo mais claro */
-  transform: scale(1.05);
+  background: var(--secondary-color);
+  transform: scale(1.03);
 }
 
-/* Responsividade */
+/* Botão cancelar */
+.cancel-btn {
+  background: var(--text-secondary);
+  color: var(--background-light);
+}
+
+.cancel-btn:hover {
+  background: var(--border-color);
+}
+
+/* Thumbnails */
+.vehicle-thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.vehicle-thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Botão para remover fotos */
+.remove-foto-btn {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  background: var(--secondary-color);
+  color: var(--text-contrast);
+  padding: 5px 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.remove-foto-btn:hover {
+  background: var(--primary-color);
+}
+
+/* Efeitos e responsividade */
 @media (max-width: 768px) {
   .vehicle-form-container {
-    padding: 15px;
+    padding: 20px;
   }
 
   .vehicle-form-title {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .vehicle-form-input,
-  .vehicle-form-select {
-    font-size: 13px;
+  .vehicle-form-select,
+  .vehicle-form-textarea {
+    font-size: 14px;
   }
 
   .vehicle-form-button {
-    font-size: 14px;
+    font-size: 15px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
