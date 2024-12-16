@@ -11,15 +11,16 @@
         <!-- Galeria de Imagens -->
         <div class="vehicle-gallery">
           <Splide :options="mainOptions" ref="mainCarousel">
-            <SplideSlide
-              v-for="(foto, index) in vehicle.fotos || []"
-              :key="index"
-              class="splide-slide"
-              @click="openZoom(foto)"
-            >
-              <img :src="`/uploads/${foto}`" alt="Vehicle photo" />
-            </SplideSlide>
-          </Splide>
+          <SplideSlide
+            v-for="(foto, index) in vehicle.fotos || []"
+            :key="index"
+            class="splide-slide"
+            @click="openZoom(foto)"
+          >
+            <img :src="`/api/uploads/${foto}`" alt="Vehicle photo" />
+          </SplideSlide>
+        </Splide>
+
         </div>
 
         <!-- Detalhes do veículo ao lado -->
@@ -79,7 +80,7 @@
         >
           <img
             ref="zoomedImage"
-            :src="`/uploads/${zoomImage}`"
+            :src="`/api/uploads/${zoomImage}`"
             alt="Zoomed image"
           />
           <div
@@ -89,7 +90,7 @@
           <div
             class="zoom-result"
             :style="{
-              backgroundImage: `url(/uploads/${zoomImage})`,
+              backgroundImage: `url(/api/uploads/${zoomImage})`,
               backgroundPosition: zoomBackgroundPosition,
             }"
           ></div>

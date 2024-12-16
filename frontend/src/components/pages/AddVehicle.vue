@@ -154,7 +154,7 @@
           <div class="vehicle-image">
             <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
               <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
-                <img :src="`../backend/uploads/${foto}`" alt="Vehicle photo" />
+                <img :src="`api/uploads/${foto}`" alt="Vehicle photo" />
               </SplideSlide>
             </Splide>
           </div>

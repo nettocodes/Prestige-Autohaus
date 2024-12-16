@@ -144,7 +144,8 @@
             <SplideSlide v-for="vehicle in filteredVehiclesForBrands" :key="vehicle.id">
               <div class="unique-brand-vehicle-card">
                 <div class="unique-brand-vehicle-image">
-                  <img :src="`/uploads/${vehicle.fotos[0]}`" alt="Foto do Veículo" />
+
+                  <img :src="`api/uploads/${vehicle.fotos[0]}`" alt="Foto do Veículo" />
                 </div>
                 <div class="unique-brand-vehicle-info">
                   <h3 class="unique-brand-title">{{ vehicle.marca || "Não informado" }}</h3>

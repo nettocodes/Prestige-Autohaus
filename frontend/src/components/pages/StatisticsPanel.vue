@@ -29,7 +29,7 @@
           <div class="vehicle-image-stats">
             <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
               <SplideSlide v-for="foto in car.fotos" :key="foto">
-                <img :src="`/uploads/${foto}`" alt="Foto do veículo" />
+                <img :src="`api/uploads/${foto}`" alt="Foto do veículo" />
               </SplideSlide>
             </Splide>
           </div>
@@ -52,7 +52,7 @@
           <div class="vehicle-image-stats">
             <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
               <SplideSlide v-for="foto in car.fotos" :key="foto">
-                <img :src="`/uploads/${foto}`" alt="Foto do veículo" />
+                <img :src="`api/uploads/${foto}`" alt="Foto do veículo" />
               </SplideSlide>
             </Splide>
           </div>
@@ -75,7 +75,7 @@
           <div class="vehicle-image-stats">
             <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
               <SplideSlide v-for="foto in car.fotos" :key="foto">
-                <img :src="`/uploads/${foto}`" alt="Foto do veículo" />
+                <img :src="`api/uploads/${foto}`" alt="Foto do veículo" />
               </SplideSlide>
             </Splide>
           </div>
