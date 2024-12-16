@@ -56,7 +56,7 @@
               <div class="custom-vehicle-image">
                 <Splide :options="splideOptionsInner">
                   <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
-                    <img :src="`http://localhost:5000/uploads/${foto}`" alt="Foto do Veículo" />
+                    <img :src="`https://prestige-backend.up.railway.app/uploads/${foto}`" alt="Foto do Veículo" />
                   </SplideSlide>
                 </Splide>
               </div>
@@ -143,7 +143,7 @@
             <SplideSlide v-for="vehicle in filteredVehiclesForBrands" :key="vehicle.id">
               <div class="unique-brand-vehicle-card">
                 <div class="unique-brand-vehicle-image">
-                  <img :src="`http://localhost:5000/uploads/${vehicle.fotos[0]}`" alt="Foto do Veículo" />
+                  <img :src="`https://prestige-backend.up.railway.app/uploads/${vehicle.fotos[0]}`" alt="Foto do Veículo" />
                 </div>
                 <div class="unique-brand-vehicle-info">
                   <h3 class="unique-brand-title">{{ vehicle.marca || "Não informado" }}</h3>
@@ -272,7 +272,7 @@ export default {
   methods: {
     async fetchVehicles() {
       try {
-        const response = await axios.get("http://localhost:5000/api/vehicles");
+        const response = await axios.get("https://prestige-backend.up.railway.app/api/vehicles");
         this.vehicles = response.data;
 
         // Inicializa veículos filtrados para ambos os carrosséis
@@ -335,7 +335,7 @@ export default {
       once: true, // Animação ocorre apenas uma vez
     });
     this.fetchVehicles(); 
-    axios.post("http://localhost:5000/api/statistics/accesses")
+    axios.post("https://prestige-backend.up.railway.app/api/statistics/accesses")
         .then(() => console.log("Acesso registrado na landing page"))
         .catch((err) => console.error("Erro ao registrar acesso:", err));
   },

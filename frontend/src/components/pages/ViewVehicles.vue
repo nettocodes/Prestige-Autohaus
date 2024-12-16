@@ -171,7 +171,7 @@
           <div class="vehicle-image">
             <Splide :options="{ type: 'loop', autoplay: true, interval: 3000, }">
               <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
-                <img :src="`http://localhost:5000/uploads/${foto}`" alt="Vehicle photo" />
+                <img :src="`https://prestige-backend.up.railway.app/uploads/${foto}`" alt="Vehicle photo" />
               </SplideSlide>
             </Splide>
             <button
@@ -256,7 +256,7 @@ export default {
     },
     async fetchVehicles() {
       try {
-        const response = await axios.get("http://localhost:5000/api/vehicles");
+        const response = await axios.get("https://prestige-backend.up.railway.app/api/vehicles");
         this.vehicles = response.data.map((vehicle) => ({
           ...vehicle,
           quilometragem: vehicle.quilometragem || 0,
@@ -297,7 +297,7 @@ export default {
     },
     async toggleFavorite(vehicle) {
       try {
-        const response = await axios.post("http://localhost:5000/api/statistics/favorites", { vehicleId: vehicle.id });
+        const response = await axios.post("https://prestige-backend.up.railway.app/api/statistics/favorites", { vehicleId: vehicle.id });
         console.log(response.data.message);
 
         const index = this.favorites.findIndex((fav) => fav.id === vehicle.id);
@@ -380,7 +380,7 @@ export default {
     async viewDetails(vehicleId) {
       try {
         const sessionId = this.getSessionId();
-        await axios.post("http://localhost:5000/api/statistics/views", {
+        await axios.post("https://prestige-backend.up.railway.app/api/statistics/views", {
           vehicleId,
           sessionId,
         });

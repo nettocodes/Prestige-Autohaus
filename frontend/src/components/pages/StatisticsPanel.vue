@@ -29,7 +29,7 @@
           <div class="vehicle-image-stats">
             <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
               <SplideSlide v-for="foto in car.fotos" :key="foto">
-                <img :src="`http://localhost:5000/uploads/${foto}`" alt="Foto do veículo" />
+                <img :src="`https://prestige-backend.up.railway.app/uploads/${foto}`" alt="Foto do veículo" />
               </SplideSlide>
             </Splide>
           </div>
@@ -52,7 +52,7 @@
           <div class="vehicle-image-stats">
             <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
               <SplideSlide v-for="foto in car.fotos" :key="foto">
-                <img :src="`http://localhost:5000/uploads/${foto}`" alt="Foto do veículo" />
+                <img :src="`https://prestige-backend.up.railway.app/uploads/${foto}`" alt="Foto do veículo" />
               </SplideSlide>
             </Splide>
           </div>
@@ -75,7 +75,7 @@
           <div class="vehicle-image-stats">
             <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
               <SplideSlide v-for="foto in car.fotos" :key="foto">
-                <img :src="`http://localhost:5000/uploads/${foto}`" alt="Foto do veículo" />
+                <img :src="`https://prestige-backend.up.railway.app/uploads/${foto}`" alt="Foto do veículo" />
               </SplideSlide>
             </Splide>
           </div>
@@ -115,12 +115,12 @@ export default {
   methods: {
     async fetchStatistics() {
       try {
-        const accessesResponse = await axios.get("http://localhost:5000/api/statistics/accesses");
-        const favoritesResponse = await axios.get("http://localhost:5000/api/statistics/favorites");
-        const contactClicksResponse = await axios.get("http://localhost:5000/api/statistics/contact-clicks");
-        const mostViewedResponse = await axios.get("http://localhost:5000/api/statistics/most-viewed");
-        const mostFavoritedResponse = await axios.get("http://localhost:5000/api/statistics/most-favorited");
-        const interactionResponse = await axios.get("http://localhost:5000/api/statistics/interactions");
+        const accessesResponse = await axios.get("https://prestige-backend.up.railway.app/api/statistics/accesses");
+        const favoritesResponse = await axios.get("https://prestige-backend.up.railway.app/api/statistics/favorites");
+        const contactClicksResponse = await axios.get("https://prestige-backend.up.railway.app/api/statistics/contact-clicks");
+        const mostViewedResponse = await axios.get("https://prestige-backend.up.railway.app/api/statistics/most-viewed");
+        const mostFavoritedResponse = await axios.get("https://prestige-backend.up.railway.app/api/statistics/most-favorited");
+        const interactionResponse = await axios.get("https://prestige-backend.up.railway.app/api/statistics/interactions");
 
         // Tratamento para garantir que fotos sempre seja um array
         this.mostViewedCars = mostViewedResponse.data.map((car) => ({

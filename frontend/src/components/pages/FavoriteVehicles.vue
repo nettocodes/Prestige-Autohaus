@@ -9,7 +9,7 @@
         <div class="vehicle-image">
           <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
             <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
-              <img :src="`http://localhost:5000/uploads/${foto}`" alt="Vehicle photo" />
+              <img :src="`https://prestige-backend.up.railway.app/uploads/${foto}`" alt="Vehicle photo" />
             </SplideSlide>
           </Splide>
           <button
@@ -60,7 +60,7 @@ export default {
 
       // Registra o favorito
       try {
-        await axios.post("http://localhost:5000/api/statistics/favorites", { vehicleId: vehicle.id });
+        await axios.post("https://prestige-backend.up.railway.app/api/statistics/favorites", { vehicleId: vehicle.id });
         console.log("Favorito registrado com sucesso");
       } catch (error) {
         console.error("Erro ao registrar favorito:", error);

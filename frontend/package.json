@@ -2,12 +2,11 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
- "scripts": {
-  "serve": "vue-cli-service serve",
-  "build": "vue-cli-service build",
-  "start": "npm run build && npx serve -s dist"
-},
-
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "start": "npm run build && npx serve -s dist"
+  },
   "dependencies": {
     "@splidejs/vue-splide": "^0.6.12",
     "aos": "^2.3.4",
