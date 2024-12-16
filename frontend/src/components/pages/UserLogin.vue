@@ -32,7 +32,7 @@ export default {
   methods: {
     async loginUser() {
       try {
-        const response = await axios.post("https://prestige-backend.up.railway.app/api/auth/login", {
+        const response = await axios.post("/api/auth/login", {
           email: this.email,
           password: this.password,
         });

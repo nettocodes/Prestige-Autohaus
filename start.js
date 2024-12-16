@@ -1,16 +1,25 @@
-const { exec } = require('child_process');
-const path = require('path');
+const express = require("express");
+const path = require("path");
+const backend = require("./backend/server"); // Importa o app do backend
 
-// Caminhos das pastas
-const backendPath = path.resolve(__dirname, 'backend');
-const frontendPath = path.resolve(__dirname, 'frontend');
+const app = express();
+const PORT = process.env.PORT || 8080;
 
-// Iniciar backend
-const backend = exec('node server.js', { cwd: backendPath });
-backend.stdout.on('data', (data) => console.log(`[BACKEND] ${data}`));
-backend.stderr.on('data', (data) => console.error(`[BACKEND ERROR] ${data}`));
+// Servir o frontend
+const frontendPath = path.join(__dirname, "frontend", "dist");
+app.use(express.static(frontendPath));
 
-// Iniciar frontend
-const frontend = exec('npm run serve', { cwd: frontendPath });
-frontend.stdout.on('data', (data) => console.log(`[FRONTEND] ${data}`));
-frontend.stderr.on('data', (data) => console.error(`[FRONTEND ERROR] ${data}`));
+// Servir a pasta 'uploads' diretamente
+app.use('/api/uploads', express.static(path.join(__dirname, "backend", "uploads")));
+
+// Encaminhar API para o backend
+app.use("/api", backend);
+
+// Rota fallback para o frontend (SPA)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
+});
+
+app.listen(PORT, () => {
+  console.log(`Servidor combinado rodando na porta ${PORT}`);
+});

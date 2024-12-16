@@ -128,13 +128,19 @@ router.get('/', (req, res) => {
         }
 
         results.forEach((vehicle) => {
-            vehicle.fotos = JSON.parse(vehicle.fotos);
+            try {
+                vehicle.fotos = JSON.parse(vehicle.fotos); // Garanta que fotos seja um array
+            } catch (e) {
+                console.error('Erro ao parsear fotos:', e);
+                vehicle.fotos = []; // Se falhar, retorne um array vazio
+            }
             vehicle.opcionais = vehicle.opcionais ? vehicle.opcionais.split(',') : [];
         });
 
         res.status(200).json(results);
     });
 });
+
 
 // Rota para buscar detalhes de um veículo específico
 router.get('/:id', (req, res) => {
@@ -149,7 +155,8 @@ router.get('/:id', (req, res) => {
             return res.status(404).json({ error: 'Veículo não encontrado.' });
         }
         const vehicle = results[0];
-        vehicle.fotos = JSON.parse(vehicle.fotos); // Converter JSON para array
+        vehicle.fotos = JSON.parse(vehicle.fotos);
+ // Converter JSON para array
         vehicle.opcionais = vehicle.opcionais ? vehicle.opcionais.split(',') : [];
         res.status(200).json(vehicle);
     });

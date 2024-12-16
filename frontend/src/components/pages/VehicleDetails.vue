@@ -17,7 +17,7 @@
               class="splide-slide"
               @click="openZoom(foto)"
             >
-              <img :src="`https://prestige-backend.up.railway.app/uploads/${foto}`" alt="Vehicle photo" />
+              <img :src="`/uploads/${foto}`" alt="Vehicle photo" />
             </SplideSlide>
           </Splide>
         </div>
@@ -79,7 +79,7 @@
         >
           <img
             ref="zoomedImage"
-            :src="`https://prestige-backend.up.railway.app/uploads/${zoomImage}`"
+            :src="`/uploads/${zoomImage}`"
             alt="Zoomed image"
           />
           <div
@@ -89,7 +89,7 @@
           <div
             class="zoom-result"
             :style="{
-              backgroundImage: `url(https://prestige-backend.up.railway.app/uploads/${zoomImage})`,
+              backgroundImage: `url(/uploads/${zoomImage})`,
               backgroundPosition: zoomBackgroundPosition,
             }"
           ></div>
@@ -142,7 +142,7 @@ export default {
         console.log(`Buscando detalhes do veículo ID: ${vehicleId}`);
 
         // Obter detalhes do veículo
-        const response = await axios.get(`https://prestige-backend.up.railway.app/api/vehicles/${vehicleId}`);
+        const response = await axios.get(`/api/vehicles/${vehicleId}`);
         this.vehicle = response.data;
 
         // Registrar visualização se ainda não foi registrada na sessão
@@ -203,7 +203,7 @@ export default {
 
       try {
         console.log("Registrando visualização...");
-        const response = await axios.post("https://prestige-backend.up.railway.app/api/statistics/views", { vehicleId, sessionId });
+        const response = await axios.post("/api/statistics/views", { vehicleId, sessionId });
         console.log(`Visualização registrada com sucesso para o veículo ID: ${vehicleId}`, response.data);
       } catch (err) {
         console.error("Erro ao registrar visualização:", err.message);
@@ -217,7 +217,7 @@ export default {
 
       try {
         console.log("Registrando clique em contato...");
-        await axios.post("https://prestige-backend.up.railway.app/api/statistics/contact-clicks", { sessionId });
+        await axios.post("/api/statistics/contact-clicks", { sessionId });
         console.log("Clique em contato registrado com sucesso.");
       } catch (err) {
         console.error("Erro ao registrar clique em contato:", err.message);

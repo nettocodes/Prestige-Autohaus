@@ -56,8 +56,9 @@
               <div class="custom-vehicle-image">
                 <Splide :options="splideOptionsInner">
                   <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
-                    <img :src="`https://prestige-backend.up.railway.app/uploads/${foto}`" alt="Foto do Veículo" />
+                    <img :src="`/api/uploads/${foto}`" alt="Foto do Veículo" />
                   </SplideSlide>
+
                 </Splide>
               </div>
               <div class="custom-vehicle-info">
@@ -143,7 +144,7 @@
             <SplideSlide v-for="vehicle in filteredVehiclesForBrands" :key="vehicle.id">
               <div class="unique-brand-vehicle-card">
                 <div class="unique-brand-vehicle-image">
-                  <img :src="`https://prestige-backend.up.railway.app/uploads/${vehicle.fotos[0]}`" alt="Foto do Veículo" />
+                  <img :src="`/uploads/${vehicle.fotos[0]}`" alt="Foto do Veículo" />
                 </div>
                 <div class="unique-brand-vehicle-info">
                   <h3 class="unique-brand-title">{{ vehicle.marca || "Não informado" }}</h3>
@@ -272,19 +273,28 @@ export default {
   methods: {
     async fetchVehicles() {
       try {
-        const response = await axios.get("https://prestige-backend.up.railway.app/api/vehicles");
-        this.vehicles = response.data;
+        const response = await axios.get("/api/vehicles");
 
-        // Inicializa veículos filtrados para ambos os carrosséis
-        this.filteredVehiclesForBrands = [...this.vehicles];
-        this.filteredVehiclesForAll = [...this.vehicles];
+        // Verificar se a resposta é válida
+        if (Array.isArray(response.data)) {
+          this.vehicles = response.data;
 
-        // Lista única de marcas
-        this.uniqueBrands = [...new Set(this.vehicles.map((vehicle) => vehicle.marca))];
+          // Inicializa veículos filtrados
+          this.filteredVehiclesForBrands = [...this.vehicles];
+          this.filteredVehiclesForAll = [...this.vehicles];
+
+          // Lista única de marcas
+          this.uniqueBrands = [...new Set(this.vehicles.map((vehicle) => vehicle.marca))];
+        } else {
+          console.error("Resposta inesperada da API:", response.data);
+          this.vehicles = [];
+        }
       } catch (error) {
         console.error("Erro ao buscar veículos:", error);
+        this.vehicles = []; // Garante que não quebre a aplicação
       }
     },
+
 
     // Filtro para o carrossel de marcas
     filterByBrandForBrands(brand) {
@@ -335,7 +345,7 @@ export default {
       once: true, // Animação ocorre apenas uma vez
     });
     this.fetchVehicles(); 
-    axios.post("https://prestige-backend.up.railway.app/api/statistics/accesses")
+    axios.post("/api/statistics/accesses")
         .then(() => console.log("Acesso registrado na landing page"))
         .catch((err) => console.error("Erro ao registrar acesso:", err));
   },

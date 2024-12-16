@@ -127,7 +127,7 @@
           <input type="file" multiple @change="handleFileUpload" accept="image/*" class="vehicle-form-file" />
           <div class="vehicle-thumbnails">
             <div v-for="(foto, index) in formData.existingFotos" :key="index" class="thumbnail-item">
-              <img :src="`https://prestige-backend.up.railway.app/uploads/${foto}`" alt="Foto existente" class="vehicle-thumbnail" />
+              <img :src="`/uploads/${foto}`" alt="Foto existente" class="vehicle-thumbnail" />
               <button type="button" @click="removeExistingFoto(index)" class="remove-foto-btn">Remover</button>
             </div>
             <div v-for="(foto, index) in previewFotos" :key="index" class="thumbnail-item">
@@ -154,7 +154,7 @@
           <div class="vehicle-image">
             <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
               <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
-                <img :src="`https://prestige-backend.up.railway.app/uploads/${foto}`" alt="Vehicle photo" />
+                <img :src="`../backend/uploads/${foto}`" alt="Vehicle photo" />
               </SplideSlide>
             </Splide>
           </div>
@@ -223,7 +223,7 @@ export default {
   methods: {
     async fetchVehicles() {
       try {
-        const response = await axios.get('https://prestige-backend.up.railway.app/api/vehicles');
+        const response = await axios.get('/api/vehicles');
         this.vehicles = response.data.map((vehicle) => ({
           ...vehicle,
           fotos: vehicle.fotos || [],
@@ -274,8 +274,8 @@ export default {
       try {
         const url =
           this.formMode === 'edit'
-            ? `https://prestige-backend.up.railway.app/api/vehicles/${this.formData.id}`
-            : 'https://prestige-backend.up.railway.app/api/vehicles/add';
+            ? `/api/vehicles/${this.formData.id}`
+            : '/api/vehicles/add';
         const method = this.formMode === 'edit' ? 'put' : 'post';
 
         await axios[method](url, formData);
@@ -288,7 +288,7 @@ export default {
     },
     async deleteVehicle(id) {
       try {
-        await axios.delete(`https://prestige-backend.up.railway.app/api/vehicles/${id}`);
+        await axios.delete(`/api/vehicles/${id}`);
         alert('Veículo excluído com sucesso!');
         this.fetchVehicles();
       } catch (error) {
