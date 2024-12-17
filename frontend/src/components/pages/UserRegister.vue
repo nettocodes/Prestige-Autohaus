@@ -1,26 +1,32 @@
 <template>
-  <div class="auth-container">
-    <h2>Registrar</h2>
-    <form @submit.prevent="registerUser">
-      <div>
-        <label for="name">Nome</label>
-        <input v-model="name" id="name" type="text" placeholder="Seu nome" required />
-      </div>
-      <div>
-        <label for="email">Email</label>
-        <input v-model="email" id="email" type="email" placeholder="Seu email" required />
-      </div>
-      <div>
-        <label for="password">Senha</label>
-        <input v-model="password" id="password" type="password" placeholder="Sua senha" required />
-      </div>
-      <button type="submit">Registrar</button>
-    </form>
-    
+  <div class="auth-page">
+    <!-- Faixa Superior -->
+    <div class="auth-banner"></div>
 
-    <router-link class="auth-link" to="/login">Já tem uma conta? Faça login</router-link>
+    <!-- Formulário de Registro -->
+    <div class="auth-container">
+      <h2>Registrar</h2>
+      <form @submit.prevent="registerUser">
+        <div>
+          <label for="name">Nome</label>
+          <input v-model="name" id="name" type="text" placeholder="Seu nome" required />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input v-model="email" id="email" type="email" placeholder="Seu email" required />
+        </div>
+        <div>
+          <label for="password">Senha</label>
+          <input v-model="password" id="password" type="password" placeholder="Sua senha" required />
+        </div>
+        <button type="submit">Registrar</button>
+      </form>
+      <router-link class="auth-link" to="/login">Já tem uma conta? Faça login</router-link>
+    </div>
   </div>
 </template>
+
+
   
   <script>
   import axios from "axios";

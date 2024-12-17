@@ -1,0 +1,44 @@
+/* Container principal da ação */
+.action-prompt {
+    text-align: center;
+    background-color: #f9f9f9; /* Fundo suave */
+    padding: 40px;
+    margin: 30px auto;
+    border: 1px solid #ddd; /* Borda sutil */
+    border-radius: 6px;
+    max-width: 900px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  /* Título elegante */
+  .action-prompt h3 {
+    font-size: 2.2rem;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+  }
+  
+  /* Texto informativo */
+  .action-prompt p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  
+  
+  /* Animação de FadeIn */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

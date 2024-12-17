@@ -179,8 +179,8 @@
 
 
     </div>
+    <AppFooter />
   </div>
-  <AppFooter />
 </template>
 <script>
 import AppHero from "@/components/common/AppHero.vue";

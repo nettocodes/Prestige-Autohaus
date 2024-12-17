@@ -528,7 +528,7 @@
 
 .highlight-text ul li {
   font-size: 1rem;
-  color: var(--text-primary); /* Texto escuro */
+  color: var(--text-contrast); /* Texto escuro */
   margin: 0.5rem 0;
   display: flex;
   align-items: center;
@@ -640,6 +640,7 @@
 }
 
 .unique-brand-filter-header h2 {
+  color: var(--text-primary);
   font-size: 2.5rem;
   font-weight: 700;
 }
@@ -674,7 +675,7 @@
 }
 
 .unique-brand-tab.unique-active-tab {
-  color: var(--text-contrast); /* Texto branco */
+  color: var(--text-primary); /* Texto branco */
   position: relative;
 }
 
@@ -751,6 +752,7 @@
 
 .unique-brand-model {
   font-size: 0.8rem;
+  text-align: left;
   color: var(--text-secondary); /* Texto cinza */
   margin-bottom: .6rem;
 }

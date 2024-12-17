@@ -80,8 +80,7 @@ table {
   width: 100%;
   font-family: 'DM Sans', sans-serif;
   text-align: center;
-  color: #2c3e50;
-  background-color: #000;
+  background-color: #1b1b1b;
   
 }
 </style>

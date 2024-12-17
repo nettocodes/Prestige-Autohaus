@@ -1,21 +1,29 @@
-
 <template>
-  <div class="auth-container">
-    <h2>Login</h2>
-    <form @submit.prevent="loginUser">
-      <div>
-        <label for="email">Email</label>
-        <input v-model="email" id="email" type="email" placeholder="Seu email" required />
-      </div>
-      <div>
-        <label for="password">Senha</label>
-        <input v-model="password" id="password" type="password" placeholder="Sua senha" required />
-      </div>
-      <button type="submit">Entrar</button>
-    </form>
-    <router-link class="auth-link" to="/register">Não tem uma conta? Registre-se</router-link>
+  <div class="auth-page">
+    <!-- Faixa Superior -->
+    <div class="auth-banner"></div>
+
+    <!-- Formulário de Login -->
+    <div class="auth-container">
+      <h2>Login</h2>
+      <form @submit.prevent="loginUser">
+        <div>
+          <label for="email">Email</label>
+          <input v-model="email" id="email" type="email" placeholder="Seu email" required />
+        </div>
+        <div>
+          <label for="password">Senha</label>
+          <input v-model="password" id="password" type="password" placeholder="Sua senha" required />
+        </div>
+        <button type="submit">Entrar</button>
+      </form>
+      <router-link class="auth-link" to="/register">Não tem uma conta? Registre-se</router-link>
+    </div>
+    
   </div>
 </template>
+
+
 <script>
 import axios from "axios";
 import { updateAuthState } from "@/authState"; // Importa corretamente a função
