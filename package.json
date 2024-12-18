@@ -6,9 +6,11 @@
   "version": "1.0.0",
   "main": "start.js",
   "scripts": {
-    "start": "npm run build:frontend && node start.js",
+    "start": "node start.js",
+    "build": "npm run build:frontend",
     "build:frontend": "cd frontend && npm install && npm run build"
   },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
