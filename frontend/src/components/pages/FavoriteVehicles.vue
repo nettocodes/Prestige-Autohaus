@@ -6,7 +6,8 @@
       <div class="action-prompt">
         <h3>Seu próximo carro está à sua espera</h3>
         <p>
-          Os melhores veículos que você selecionou estão aqui. Não perca tempo para agendar um <strong>test drive</strong> exclusivo e garantir o carro dos seus sonhos.
+          Os melhores veículos que você selecionou estão aqui. Não perca tempo para agendar um
+          <strong>test drive</strong> exclusivo e garantir o carro dos seus sonhos.
         </p>
         <a
           :href="`https://wa.me/47997486918?text=${encodeURIComponent(`Olá, estou interessado em agendar um test drive para os veículos que selecionei.`)}`"
@@ -15,8 +16,8 @@
         >
           Agendar Test Drive
         </a>
-        <img src="@/assets/images/backgrounds/miata.png" alt="">
       </div>
+
 
 
       <!-- Caso não existam favoritos -->

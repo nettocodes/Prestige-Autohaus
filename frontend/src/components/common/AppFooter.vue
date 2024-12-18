@@ -4,6 +4,7 @@
       <div class="footer-logo" data-aos="fade-right">
         <h3>Element</h3>
         <p>Seu parceiro confiável em soluções tecnológicas e inovação.</p>
+        <p>&copy; 2024 Element. All rights reserved.</p>
       </div>
       <div class="footer-contact" data-aos="fade-left">
         <h4>Fale Conosco</h4>
@@ -19,9 +20,6 @@
           </li>
         </ul>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2024 Element. All rights reserved.</p>
     </div>
   </footer>
 </template>

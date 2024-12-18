@@ -1,44 +1,79 @@
-/* Container principal da ação */
 .action-prompt {
-    text-align: center;
-    background-color: #f9f9f9; /* Fundo suave */
-    padding: 40px 0;
-    margin: 30px auto;
-    border: 1px solid #ddd; /* Borda sutil */
-    border-radius: 6px;
-    max-width: 1440px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: 'Poppins', sans-serif;
-    animation: fadeIn 1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  max-width: 1440px;
+  margin: 40px auto;
+  position: relative;
+  overflow: hidden;
+
+  /* Imagem de fundo */
+  background-image: url('@/assets/images/backgrounds/miata2.jpg'); /* Caminho correto */
+  background-size: 150px; /* Tamanho desejado */
+  background-repeat: no-repeat;
+  background-position: right; /* Posição centralizada no fundo */
+  background-position-x: 85%;
+}
+
+.action-prompt h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.action-prompt p {
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 700px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.action-prompt img {
+  width: 120px;
+  margin-top: 20px;
+  position: relative;
+  z-index: 1;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Botão Chamativo */
+.whatsapp-btn {
+  background: linear-gradient(135deg, #00c851, #007e33);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 12px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  z-index: 1;
+}
+
+.whatsapp-btn:hover {
+  background: linear-gradient(135deg, #007e33, #004d1a);
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Animação de Flutuação */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
   }
-  
-  /* Título elegante */
-  .action-prompt h3 {
-    font-size: 2.2rem;
-    color: #333;
-    font-weight: 600;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
+  50% {
+    transform: translateY(-10px);
   }
-  
-  /* Texto informativo */
-  .action-prompt p {
-    font-size: 1.1rem;
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 30px;
-  }
-  
-  
-  /* Animação de FadeIn */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
+}

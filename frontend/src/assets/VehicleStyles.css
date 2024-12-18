@@ -32,7 +32,7 @@
 
 /* Container Interno com Scroll */
 .filter-container-inner {
-  max-height: calc(70% - 0px); /* Ajustado para acomodar o botão "Limpar" */
+  max-height: calc(80% - 0px); /* Ajustado para acomodar o botão "Limpar" */
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none; /* Remove bordas no scroll */
@@ -387,12 +387,6 @@
   padding-left: 30px;
 }
 
-@media (min-width: 1024px) {
-  .filter-container-inner{
-    max-height: calc(50% - 0px);
-  }
-}
-
 /* Telas menores que 1024px */
 @media (max-width: 1024px) {
   .vehicle-grid {
@@ -400,7 +394,7 @@
     gap: 15px; /* Reduz o espaçamento entre os cards */
   }
   .filter-container-inner{
-    max-height: calc(50% - 0px);
+    max-height: calc(70% - 0px);
   }
 }
 
