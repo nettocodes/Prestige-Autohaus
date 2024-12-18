@@ -18,8 +18,6 @@
         </a>
       </div>
 
-
-
       <!-- Caso não existam favoritos -->
       <div v-if="favorites.length === 0" class="no-favorites">
         <p>Você ainda não adicionou veículos aos favoritos.</p>
