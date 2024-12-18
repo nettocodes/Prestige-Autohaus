@@ -23,3 +23,5 @@ app.get("*", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor combinado rodando na porta ${PORT}`);
 });
+
+//teste
