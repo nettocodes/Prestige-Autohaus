@@ -233,7 +233,6 @@
   
 }
 .vehicle-grid {
-  
   padding: 15px;
   overflow-y: auto; /* Permite rolagem vertical */
   display: flex;
@@ -241,6 +240,15 @@
   gap: 10px;
   justify-content: center;
   align-content: flex-start; /* Mantém os itens alinhados ao topo */
+}
+.container-vehicles{
+  width: 1440px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+  box-shadow: rgb(25, 25, 25) 3px 3px 6px 0px inset, rgba(0, 0, 0, 0.2) -3px -3px 6px 1px inset;
 }
 .vehicle-count {
   font-size: 1.2rem;

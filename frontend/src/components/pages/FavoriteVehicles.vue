@@ -15,6 +15,7 @@
         >
           Agendar Test Drive
         </a>
+        <img src="@/assets/images/backgrounds/miata.png" alt="">
       </div>
 
 
@@ -23,34 +24,35 @@
         <p>Você ainda não adicionou veículos aos favoritos.</p>
       </div>
 
-      <!-- Lista de Veículos Favoritos -->
       <div v-else class="vehicle-grid">
-        <div v-for="vehicle in favorites" :key="vehicle.id" class="vehicle-card">
-          <!-- Imagem do veículo com carrossel -->
-          <div class="vehicle-image">
-            <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
-              <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
-                <img :src="`api/uploads/${foto}`" alt="Vehicle photo" />
-              </SplideSlide>
-            </Splide>
-            <button
-              class="favorite-btn"
-              @click="toggleFavorite(vehicle)"
-              :class="{ active: isFavorite(vehicle.id) }"
-            >
-              ❤
-            </button>
-          </div>
-
-          <!-- Informação do veículo -->
-          <div class="vehicle-info">
-            <h3>{{ vehicle.marca }} {{ vehicle.modelo }}</h3>
-            <p class="description">{{ vehicle.carroceria }} - {{ vehicle.combustivel }}</p>
-            <p class="price">R$ {{ new Intl.NumberFormat().format(vehicle.preco) }}</p>
-            <p class="details">{{ vehicle.ano }} | {{ vehicle.quilometragem.toLocaleString() }} Km</p>
-            <button class="btn view-details-btn" @click="viewDetails(vehicle.id)">
-              Ver Detalhes
-            </button>
+        <div class="container-vehicles">
+          <div v-for="vehicle in favorites" :key="vehicle.id" class="vehicle-card">
+            <!-- Imagem do veículo com carrossel -->
+            <div class="vehicle-image">
+              <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
+                <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
+                  <img :src="`api/uploads/${foto}`" alt="Vehicle photo" />
+                </SplideSlide>
+              </Splide>
+              <button
+                class="favorite-btn"
+                @click="toggleFavorite(vehicle)"
+                :class="{ active: isFavorite(vehicle.id) }"
+              >
+                ❤
+              </button>
+            </div>
+  
+            <!-- Informação do veículo -->
+            <div class="vehicle-info">
+              <h3>{{ vehicle.marca }} {{ vehicle.modelo }}</h3>
+              <p class="description">{{ vehicle.carroceria }} - {{ vehicle.combustivel }}</p>
+              <p class="price">R$ {{ new Intl.NumberFormat().format(vehicle.preco) }}</p>
+              <p class="details">{{ vehicle.ano }} | {{ vehicle.quilometragem.toLocaleString() }} Km</p>
+              <button class="btn view-details-btn" @click="viewDetails(vehicle.id)">
+                Ver Detalhes
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -2,11 +2,11 @@
 .action-prompt {
     text-align: center;
     background-color: #f9f9f9; /* Fundo suave */
-    padding: 40px;
+    padding: 40px 0;
     margin: 30px auto;
     border: 1px solid #ddd; /* Borda sutil */
     border-radius: 6px;
-    max-width: 900px;
+    max-width: 1440px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-family: 'Poppins', sans-serif;
     animation: fadeIn 1s ease-in-out;
