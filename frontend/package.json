@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "start": "npm run build && npx serve -s dist"
+    "start": "npm run build"
   },
   "dependencies": {
     "@splidejs/vue-splide": "^0.6.12",
