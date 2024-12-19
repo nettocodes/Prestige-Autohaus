@@ -13,7 +13,8 @@
           :href="`https://wa.me/47997486918?text=${encodeURIComponent(`Olá, estou interessado em agendar um test drive para os veículos que selecionei.`)}`"
           target="_blank"
           class="whatsapp-btn"
-        >
+        >              <img src="@/assets/images/icons/whatsapp.png" alt="WhatsApp Icon" class="whatsapp-icon" />
+
           Agendar Test Drive
         </a>
       </div>

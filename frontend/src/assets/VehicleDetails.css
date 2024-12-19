@@ -74,15 +74,14 @@
 }
 .breadcrumb {
   font-size: 0.9rem;
-  margin-bottom: 1rem;
+  margin: 1rem;
   color: var(--text-secondary); /* Cinza claro */
 }
 
 /* Container de Detalhes */
 .vehicle-details-container {
   display: flex;
-  flex-direction: row; /* Alinha o conteúdo na horizontal */
-  gap: 2rem; /* Espaço entre as colunas */
+  flex-direction: row;
   margin-bottom: 2rem;
 }
 
@@ -109,7 +108,6 @@
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centraliza verticalmente o conteúdo */
   gap: 1rem; /* Espaço entre os elementos dentro da seção */
 }
 
