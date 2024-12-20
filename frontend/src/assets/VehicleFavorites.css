@@ -1,3 +1,6 @@
+.content-vehicles-favorites{
+  background-color: var(--background-light);
+}
 .action-prompt {
   display: flex;
   flex-direction: column;
@@ -9,7 +12,7 @@
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   max-width: 1440px;
-  margin: 40px auto;
+  margin: 0 auto;
   position: relative;
   overflow: hidden;
 
@@ -38,26 +41,3 @@
   position: relative;
   z-index: 1;
 }
-
-/* Botão Chamativo */
-.whatsapp-btn {
-  background: linear-gradient(135deg, #00c851, #007e33);
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: 600;
-  padding: 12px 30px;
-  border-radius: 30px;
-  text-decoration: none;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease-in-out;
-  position: relative;
-  z-index: 1;
-}
-
-.whatsapp-btn:hover {
-  background: linear-gradient(135deg, #007e33, #004d1a);
-  transform: scale(1.05);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-}
-
-

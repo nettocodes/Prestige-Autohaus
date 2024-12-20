@@ -1,110 +1,128 @@
 <template>
   <div class="details-page">
+    <nav class="breadcrumb">
+      <router-link to="/">Home</router-link> / <router-link to="/view">Estoque</router-link> / {{ vehicle?.modelo || "Loading..." }}
+    </nav>
+
+    <div class="vehicle-gallery">
+      <Splide :options="mainOptions" ref="mainCarousel">
+        <SplideSlide v-for="(foto, index) in vehicle.fotos || []" :key="index" class="splide-slide"
+          @click="openZoom(foto)">
+          <img :src="`/api/uploads/${foto}`" alt="Vehicle photo" />
+        </SplideSlide>
+      </Splide>
+    </div>
     <div class="details-content">
-      <!-- Breadcrumb -->
-      <nav class="breadcrumb">
-        <router-link to="/">Home</router-link> / Listings / {{ vehicle?.modelo || "Loading..." }}
-      </nav>
 
-      <!-- Verificação se os detalhes do veículo estão disponíveis -->
-      <div v-if="vehicle" class="vehicle-details-container">
-        <!-- Galeria de Imagens -->
-        <div class="vehicle-gallery">
-          <Splide :options="mainOptions" ref="mainCarousel">
-          <SplideSlide
-            v-for="(foto, index) in vehicle.fotos || []"
-            :key="index"
-            class="splide-slide"
-            @click="openZoom(foto)"
-          >
-            <img :src="`/api/uploads/${foto}`" alt="Vehicle photo" />
-          </SplideSlide>
-        </Splide>
+      <div class="car-details-content">
+        <div class="details-layout">
 
+          <!-- Informações do Veículo -->
+          <div class="vehicle-details">
+            <div class="vehicle-header">
+              <h1>{{ vehicle.marca || "Marca não informada" }} </h1>
+              <h2>{{ vehicle.modelo || "Modelo não informado" }}</h2>
+            </div>
+
+
+
+            <div class="tags">
+              <span class="tag">Ano: {{ vehicle.ano || "Não informado" }}</span>
+              <span class="tag">Transmissão: {{ vehicle.transmissao || "Não informado" }}</span>
+              <span class="tag">Combustível: {{ vehicle.combustivel || "Não informado" }}</span>
+            </div>
+
+            <div class="details-grid">
+              <div class="detail-item">
+                <span class="detail-label">Carroceria:</span>
+                <span class="detail-value">{{ vehicle.carroceria || "Não informado" }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Condição:</span>
+                <span class="detail-value">{{ vehicle.condicao || "Não informado" }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Quilometragem:</span>
+                <span class="detail-value">{{ vehicle.quilometragem?.toLocaleString() || "0" }} Km</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Portas:</span>
+                <span class="detail-value">{{ vehicle.portas || "Não informado" }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Cor:</span>
+                <span class="detail-value">{{ vehicle.cor || "Não informado" }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Tipo de Drive:</span>
+                <span class="detail-value">{{ vehicle.driveType || "Não informado" }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Cilindros:</span>
+                <span class="detail-value">{{ vehicle.cilindros || "Não informado" }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Opcionais:</span>
+                <span class="detail-value">
+                  <span v-if="vehicle.opcionais.length">
+                    {{ vehicle.opcionais.join(", ") }}
+                  </span>
+                  <span v-else>Não informado</span>
+                </span>
+              </div>
+            </div>
+            <div class="details-grid">
+              <p class="subtitle">{{ vehicle.descricao || "Explore mais detalhes sobre este veículo." }}</p>
+            </div>
+          </div>
         </div>
 
-        <!-- Detalhes do veículo ao lado -->
-        <div class="vehicle-main-info">
-          <div class="vehicle-title">
-            <h1>{{ vehicle.marca || "Marca não informada" }} {{ vehicle.modelo || "Modelo não informado" }}</h1>
-            <p class="subtitle">{{ vehicle.descricao || "Explore mais detalhes sobre este veículo." }}</p>
-          </div>
+        <!-- Detalhes Adicionais -->
+        <div class="additional-details">
           <div class="price-section">
             <h2>R$ {{ Math.floor(vehicle.preco || 0).toLocaleString("pt-BR") }}</h2>
           </div>
-          <div class="tags">
-            <span class="tag">{{ vehicle.ano || "Ano não informado" }}</span>
-            <span class="tag">{{ vehicle.transmissao || "Transmissão não informada" }}</span>
-            <span class="tag">{{ vehicle.combustivel || "Combustível não informado" }}</span>
+          <div class="contact-section">
+            <h3>Entre em contato</h3>
+            <form class="contact-form">
+              <input type="text" placeholder="Nome" required />
+              <input type="email" placeholder="E-mail" required />
+              <input type="tel" placeholder="Telefone" required />
+              <textarea placeholder="Mensagem" rows="3"></textarea>
+              <button type="submit" class="btn-primary">Enviar</button>
+            </form>
           </div>
           <div class="contact-buttons">
-            <a
-              :href="`https://wa.me/47997486918?text=${encodeURIComponent(`Olá, estou interessado no veículo ${vehicle.marca} ${vehicle.modelo}`)}`"
-      target="_blank"
-              class="whatsapp-btn"
-            >
-              <img src="@/assets/images/icons/whatsapp.png" alt="WhatsApp Icon" class="whatsapp-icon" />
-              <span>WhatsApp</span>
-            </a>
-          </div>
+              <a :href="`https://wa.me/47997486918?text=${encodeURIComponent(`Olá, estou interessado no veículo ${vehicle.marca} ${vehicle.modelo}`)}`"
+                target="_blank" class="whatsapp-btn">
+                <img src="@/assets/images/icons/whatsapp.png" alt="WhatsApp Icon" class="whatsapp-icon" />
+                <span>WhatsApp</span>
+              </a>
+            </div>
         </div>
       </div>
 
-      <!-- Resumo do Veículo -->
-      <div v-if="vehicle" class="vehicle-overview">
-        <h2>Visão geral</h2>
-        <div class="details-grid">
-          <div><strong>Carroceria:</strong> {{ vehicle.carroceria || "Não informado" }}</div>
-          <div><strong>Condição:</strong> {{ vehicle.condicao || "Não informado" }}</div>
-          <div><strong>Quilometragem:</strong> {{ vehicle.quilometragem?.toLocaleString() || "0" }} Km</div>
-          <div><strong>Combustível:</strong> {{ vehicle.combustivel || "Não informado" }}</div>
-          <div><strong>Portas:</strong> {{ vehicle.portas || "Não informado" }}</div>
-          <div><strong>Cor:</strong> {{ vehicle.cor || "Não informado" }}</div>
-          <div><strong>Tipo de Drive:</strong> {{ vehicle.driveType || "Não informado" }}</div>
-          <div><strong>Cilindros:</strong> {{ vehicle.cilindros || "Não informado" }}</div>
-          <div><strong>Opcionais:</strong>
-            <span v-if="vehicle.opcionais.length">
-              {{ vehicle.opcionais.join(", ") }}
-            </span>
-            <span v-else>Não informado</span>
-          </div>
-        </div>
-      </div>
 
       <!-- Modal de Zoom -->
       <div v-if="zoomImage" class="zoom-modal" @click="closeZoom">
-        <div
-          class="zoom-container"
-          @mousemove="handleMouseMove"
-          @mouseleave="resetZoom"
-        >
-          <img
-            ref="zoomedImage"
-            :src="`/api/uploads/${zoomImage}`"
-            alt="Zoomed image"
-          />
-          <div
-            class="zoom-lens"
-            :style="{ top: lensPosition.y + 'px', left: lensPosition.x + 'px' }"
-          ></div>
-          <div
-            class="zoom-result"
-            :style="{
-              backgroundImage: `url(/api/uploads/${zoomImage})`,
-              backgroundPosition: zoomBackgroundPosition,
-            }"
-          ></div>
+        <div class="zoom-container" @mousemove="handleMouseMove" @mouseleave="resetZoom">
+          <img ref="zoomedImage" :src="`/api/uploads/${zoomImage}`" alt="Zoomed image" />
+          <div class="zoom-lens" :style="{ top: lensPosition.y + 'px', left: lensPosition.x + 'px' }"></div>
+          <div class="zoom-result" :style="{
+            backgroundImage: `url(/api/uploads/${zoomImage})`,
+            backgroundPosition: zoomBackgroundPosition,
+          }"></div>
         </div>
       </div>
-
     </div>
+    <AppFooter />
   </div>
 </template>
-
 
 <script>
 import axios from "axios";
 import "@splidejs/vue-splide/css";
+import AppFooter from "../common/AppFooter.vue";
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import "@/assets/VehicleDetails.css";
 
@@ -113,6 +131,7 @@ export default {
   components: {
     Splide,
     SplideSlide,
+    AppFooter,
   },
   data() {
     return {
@@ -123,15 +142,19 @@ export default {
       isZoomEnabled: false,
       mainOptions: {
         type: "loop",
-        height: "500px", // Define a altura fixa dos slides
-        width: "500px", // Define a largura fixa dos slides
+        height: "500px", // Altura fixa dos slides
+        perPage: 3, // Exibe 3 imagens por página
         pagination: true,
         arrows: true,
         autoplay: true,
         interval: 4000,
+        gap: '0rem', // Espaço entre as imagens
         cover: true,
+        breakpoints: {
+          768: { perPage: 2 },
+          480: { perPage: 2 },
+        },
       },
-
     };
   },
   methods: {
@@ -168,32 +191,22 @@ export default {
     },
     handleMouseMove(event) {
       if (!this.isZoomEnabled) return;
-
       const zoomContainer = event.currentTarget;
       const rect = zoomContainer.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
-
-      // Calcula a posição do quadrado de zoom (ampliação maior)
-      const lensX = Math.max(0, Math.min(x - 75, rect.width - 150)); // Aumenta a área visível
+      const lensX = Math.max(0, Math.min(x - 75, rect.width - 150));
       const lensY = Math.max(0, Math.min(y - 75, rect.height - 150));
-
-      // Calcula a posição de fundo da área ampliada
       const backgroundX = (x / rect.width) * 100;
       const backgroundY = (y / rect.height) * 100;
-
-      // Atualiza as propriedades
       this.lensPosition = { x: lensX, y: lensY };
       this.zoomBackgroundPosition = `${backgroundX}% ${backgroundY}%`;
     },
-
     resetZoom() {
-      // Reseta o estado do zoom quando o mouse sai do container
       this.lensPosition = { x: 0, y: 0 };
       this.zoomBackgroundPosition = "0% 0%";
     },
     checkZoomAvailability() {
-      // Ativa/desativa o zoom dinâmico baseado na largura da tela
       this.isZoomEnabled = window.matchMedia("(min-width: 768px)").matches;
     },
     async registerView(vehicleId, sessionId) {

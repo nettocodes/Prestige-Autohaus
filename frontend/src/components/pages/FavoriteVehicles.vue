@@ -1,8 +1,6 @@
 <template>
   <div class="vehicle-container">
     <div class="content-vehicles-favorites">
-      <!-- Título Principal -->
-      <h2 class="vehicle-title">Veículos Favoritos</h2>
       <div class="action-prompt">
         <h3>Seu próximo carro está à sua espera</h3>
         <p>

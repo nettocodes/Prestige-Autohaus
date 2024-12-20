@@ -9,14 +9,14 @@
       <button class="menu-toggle" @click="toggleMenu">☰</button>
       <nav>
         <ul :class="['nav-links', { active: isMenuActive }]">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/view">View Vehicles</router-link></li>
-          <li v-if="isLoggedIn && !isAdmin"><router-link to="/favorites">Favorites</router-link></li>
-          <li v-if="isAdmin"><router-link to="/add">Add Vehicle</router-link></li>
-          <li v-if="isAdmin"><router-link to="/statistics">Statistics</router-link></li>
-          <li v-if="!isLoggedIn"><router-link to="/login">Login</router-link></li>
-          <li v-if="!isLoggedIn"><router-link to="/register">Register</router-link></li>
-          <li v-if="isLoggedIn"><button @click="logout">Logout</button></li>
+          <li><router-link to="/">Inicio</router-link></li>
+          <li><router-link to="/view">Estoque</router-link></li>
+          <li v-if="isLoggedIn && !isAdmin"><router-link to="/favorites">Favoritos</router-link></li>
+          <li v-if="isAdmin"><router-link to="/add">Administração</router-link></li>
+          <li v-if="isAdmin"><router-link to="/statistics">Estatisticas</router-link></li>
+          <li v-if="!isLoggedIn"><router-link to="/login">Entrar</router-link></li>
+          <li v-if="!isLoggedIn"><router-link to="/register">Registrar</router-link></li>
+          <li v-if="isLoggedIn"><button @click="logout">Sair</button></li>
         </ul>
       </nav>
     </div>

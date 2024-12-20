@@ -157,19 +157,19 @@
     <!-- Listagem de Veículos -->
     <div class="vehicle-management-section">
       <h2>Gerenciar Veículos</h2>
-      <div class="vehicle-grid">
-        <div v-for="vehicle in vehicles" :key="vehicle.id" class="vehicle-card">
-          <div class="vehicle-image">
+      <div class="vehicle-grid-adm">
+        <div v-for="vehicle in vehicles" :key="vehicle.id" class="vehicle-card-adm">
+          <div class="vehicle-image-adm">
             <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
               <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
                 <img :src="`api/uploads/${foto}`" alt="Vehicle photo" />
               </SplideSlide>
             </Splide>
           </div>
-          <div class="vehicle-info">
+          <div class="vehicle-info-adm">
             <h3>{{ vehicle.marca || 'Não informado' }}</h3>
             <h4>{{ vehicle.modelo || 'Não informado' }}</h4>
-            <p class="price">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</p>
+            <p class="price-adm">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</p>
             <div class="vehicle-management-actions">
               <button @click="editVehicle(vehicle)" class="btn-edit">Editar</button>
               <button @click="deleteVehicle(vehicle.id)" class="btn-delete">Excluir</button>

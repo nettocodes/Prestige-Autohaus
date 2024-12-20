@@ -256,12 +256,12 @@
 
 .custom-carousel::before {
   left: 0;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
+  background: linear-gradient(to right, rgba(27, 27, 27, 0.3), transparent);
 }
 
 .custom-carousel::after {
   right: 0;
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.3), transparent);
+  background: linear-gradient(to left, rgba(27, 27, 27, 0.3), transparent);
 }
 
 .custom-vehicle-card {
