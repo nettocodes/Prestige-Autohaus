@@ -138,29 +138,31 @@ router.post("/add", authenticateToken, requireAdmin, upload.array("fotos", 9), a
     }
 });
 
-// Obter veículos
 router.get('/', (req, res) => {
     const query = 'SELECT * FROM vehicles';
     db.query(query, (err, results) => {
         if (err) {
-            console.error(err);
+            console.error('Erro ao buscar veículos:', err);
             return res.status(500).json({ error: 'Failed to fetch vehicles.' });
         }
 
         results.forEach((vehicle) => {
             try {
-                vehicle.fotos = JSON.parse(vehicle.fotos); // Garanta que fotos seja um array
+                vehicle.fotos = JSON.parse(vehicle.fotos); // Garante que fotos seja um array
             } catch (e) {
                 console.error('Erro ao parsear fotos:', e);
                 vehicle.fotos = []; // Se falhar, retorne um array vazio
             }
-            vehicle.opcionais = vehicle.opcionais ? vehicle.opcionais.split(',') : [];
+            // Normaliza os opcionais no back-end
+            vehicle.opcionais = vehicle.opcionais
+                ? vehicle.opcionais.split(',').map((o) => o.trim().toLowerCase())
+                : [];
         });
 
+        console.log('Veículos retornados com opcionais normalizados:', results);
         res.status(200).json(results);
     });
 });
-
 
 // Rota para buscar detalhes de um veículo específico
 router.get('/:id', (req, res) => {

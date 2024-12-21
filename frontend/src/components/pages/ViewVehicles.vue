@@ -225,7 +225,7 @@ export default {
       searchQuery: "",
       uniqueBrands: [],
       selectedMarca: "",
-      opcionaisDisponiveis: ["Banco de couro", "Teto solar", "Câmera de ré", "Ar-condicionado"],
+      opcionaisDisponiveis: [ 'Airbag', 'Alarme', 'Ar condicionado', 'Ar quente', 'Banco com regulagem de altura', 'Bancos dianteiros com aquecimento', 'Bancos em couro', 'Capota marítima', 'CD e mp3 player', 'CD player', 'Computador de bordo', 'Controle automático de velocidade', 'Controle de tração', 'Desembaçador traseiro', 'Direção hidráulica', 'Disqueteira', 'DVD player', 'Encosto de cabeça traseiro', 'Farol de xenônio', 'Freio abs', 'GPS', 'Limpador traseiro', 'Protetor de caçamba', 'Rádio', 'Rádio e toca fitas', 'Retrovisor fotocrômico', 'Retrovisores elétricos', 'Rodas de liga leve', 'Sensor de chuva', 'Sensor de estacionamento', 'Teto solar', 'Tração 4x4', 'Travas elétricas', 'Vidros elétricos', 'Volante com regulagem de altura' ],
       filters: {
         opcionais: [],
       },
@@ -324,51 +324,73 @@ export default {
       this.selectedMarca = ""; // Reseta o select de marcas
     },
     applyFilters() {
-      if (this.selectedMarca) {
-        // Se o select de marcas for usado, aplica o filtro e reseta o Splide
-        this.filteredVehicles = this.vehicles.filter(
-          (vehicle) => vehicle.marca === this.selectedMarca
+      console.log("Aplicando filtros com os seguintes valores:", {
+        priceFilter: this.priceFilter,
+        kmFilter: this.kmFilter,
+        conditionFilter: this.conditionFilter,
+        portasFilter: this.portasFilter,
+        tractionFilter: this.tractionFilter,
+        transmissionFilter: this.transmissionFilter,
+        carBodyFilter: this.carBodyFilter,
+        opcionaisFilter: this.filters.opcionais,
+      });
+
+      this.filteredVehicles = this.vehicles.filter((vehicle) => {
+        const searchMatch = `${vehicle.marca} ${vehicle.modelo}`
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
+        const priceMatch =
+          (!this.priceFilter.min || vehicle.preco >= this.priceFilter.min) &&
+          (!this.priceFilter.max || vehicle.preco <= this.priceFilter.max);
+        const kmMatch = !this.kmFilter.maxRange || this.matchKilometragem(vehicle.quilometragem);
+        const conditionMatch = !this.conditionFilter || vehicle.condicao === this.conditionFilter;
+        const portasMatch = !this.portasFilter || vehicle.portas === parseInt(this.portasFilter);
+        const tractionMatch = !this.tractionFilter || vehicle.driveType === this.tractionFilter;
+        const transmissionMatch =
+          !this.transmissionFilter || vehicle.transmissao === this.transmissionFilter;
+        const carBodyMatch = !this.carBodyFilter || vehicle.carroceria === this.carBodyFilter;
+        const colorMatch =
+          !this.colorFilter || vehicle.cor.toLowerCase().includes(this.colorFilter.toLowerCase());
+
+        // Verifica se opcionais está definido e converte para string antes de aplicar o split
+        const vehicleOpcionais = String(vehicle.opcionais || "")
+          .split(",")
+          .map((opcional) => opcional.trim().toLowerCase());
+        const selectedOpcionais = this.filters.opcionais.map((opcional) =>
+          opcional.trim().toLowerCase()
         );
-      } else {
-        // Aplica outros filtros normalmente
-        this.filteredVehicles = this.vehicles.filter((vehicle) => {
-          const searchMatch = `${vehicle.marca} ${vehicle.modelo}`
-            .toLowerCase()
-            .includes(this.searchQuery.toLowerCase());
-          const priceMatch =
-            (!this.priceFilter.min || vehicle.preco >= this.priceFilter.min) &&
-            (!this.priceFilter.max || vehicle.preco <= this.priceFilter.max);
-          const kmMatch = !this.kmFilter.maxRange || this.matchKilometragem(vehicle.quilometragem);
-          const conditionMatch = !this.conditionFilter || vehicle.condicao === this.conditionFilter;
-          const portasMatch = !this.portasFilter || vehicle.portas === parseInt(this.portasFilter);
-          const tractionMatch =
-            !this.tractionFilter || vehicle.driveType === this.tractionFilter;
-          const transmissionMatch =
-            !this.transmissionFilter || vehicle.transmissao === this.transmissionFilter;
-          const carBodyMatch =
-            !this.carBodyFilter || vehicle.carroceria === this.carBodyFilter;
-          const colorMatch =
-            !this.colorFilter || vehicle.cor.toLowerCase().includes(this.colorFilter.toLowerCase());
-          const opcionaisMatch =
-            this.filters.opcionais.length === 0 ||
-            this.filters.opcionais.every((opcional) =>
-              vehicle.opcionais.includes(opcional)
-            );
-          return (
-            searchMatch &&
-            priceMatch &&
-            kmMatch &&
-            conditionMatch &&
-            portasMatch &&
-            tractionMatch &&
-            transmissionMatch &&
-            carBodyMatch &&
-            colorMatch &&
-            opcionaisMatch
-          );
+
+        // Verifica se todos os opcionais selecionados estão presentes no veículo
+        const opcionaisMatch =
+          selectedOpcionais.length === 0 || // Nenhum filtro de opcionais selecionado
+          selectedOpcionais.every((opcional) => vehicleOpcionais.includes(opcional));
+
+        console.log("Verificando veículo:", {
+          id: vehicle.id,
+          marca: vehicle.marca,
+          opcionais: vehicleOpcionais,
+          selectedOpcionais,
+          opcionaisMatch,
         });
-      }
+
+        return (
+          searchMatch &&
+          priceMatch &&
+          kmMatch &&
+          conditionMatch &&
+          portasMatch &&
+          tractionMatch &&
+          transmissionMatch &&
+          carBodyMatch &&
+          colorMatch &&
+          opcionaisMatch
+        );
+      });
+
+      console.log("Veículos filtrados:", this.filteredVehicles);
     },
+
+
     applyInitialFilter() {
       const brand = this.$route.query.brand;
       if (brand) {
