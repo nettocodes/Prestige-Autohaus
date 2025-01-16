@@ -6,7 +6,10 @@
           <img class="header-logo" src="@/assets/images/icons/logo.png" alt="Logo">
         </router-link>
       </div>
-      <nav class="nav-links-container">
+      <button class="menu-toggle" @click="toggleMenu" v-if="isMobile">
+        ☰
+      </button>
+      <nav class="nav-links-container" :class="{ open: isMenuOpen }">
         <ul class="nav-links">
           <li><router-link to="/">Inicio</router-link></li>
           <li><router-link to="/view">Estoque</router-link></li>
@@ -23,6 +26,7 @@
     </div>
   </header>
 </template>
+
 <script>
 import "@/assets/AppHeader.css";
 import { authState, updateAuthState } from "@/authState";
@@ -32,6 +36,8 @@ export default {
   data() {
     return {
       isScrolled: false,
+      isMenuOpen: false,
+      isMobile: window.innerWidth <= 768,
     };
   },
   computed: {
@@ -52,12 +58,23 @@ export default {
     handleScroll() {
       this.isScrolled = window.scrollY > 50;
     },
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+    },
+    handleResize() {
+      this.isMobile = window.innerWidth <= 768;
+      if (!this.isMobile) {
+        this.isMenuOpen = false;
+      }
+    },
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("resize", this.handleResize);
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("resize", this.handleResize);
   },
 };
 </script>

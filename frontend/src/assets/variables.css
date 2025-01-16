@@ -7,6 +7,7 @@
     --text-primary: #ffffff; /* Branco - texto principal */
     --text-secondary: #616161; /* Cinza claro - texto de apoio */
     --text-contrast: #4a148c; /* Roxo vibrante - texto sobre fundo amarelo */
+    --text-dark: #1b1b1b;
   
     /* Cores de destaque */
     --highlight-color: #fdd835; /* Amarelo - botões e elementos destacados */

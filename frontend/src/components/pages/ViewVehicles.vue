@@ -6,46 +6,41 @@
         @click="toggleFilters" 
         v-if="isSmallScreen"
       >
-        {{ 'Filtros' }}
+        {{ showFilters ? 'Fechar Filtros' : 'Abrir Filtros' }}
       </button>
+
       <aside
         class="filter-container"
-        :style="{ top: `${headerHeight}px` }"
-        v-if="!checkSmallScreen || showFilters"
+        :style="{ top: `15vh` }"
+        v-if="!isSmallScreen || showFilters"
       >
-        <div v-if="checkSmallScreen" class="filter-toggle-btn-container">
-          <button class="filter-toggle-btn" @click="showFilters = !showFilters">
-            {{ showFilters ? "Fechar Filtros" : "Abrir Filtros" }}
-          </button>
-        </div>
-        <div class="filter-container-inner">
+        <div class="splide-brand-filter">
           <h4 class="filter-subtitle">Marcas</h4>
-          <div class="splide-brand-filter">
-            <Splide
-              :options="{
-                type: 'loop',
-                gap: '0.25rem', // Menor espaçamento entre os itens
-                pagination: false,
-                arrows: false,
-                drag: true,
-                perPage: 8, // Quantidade inicial de itens visíveis
-                breakpoints: {
-                  1024: { perPage: 8, gap: '0.2rem' }, // Ajuste para telas menores
-                  768: { perPage: 8, gap: '0.15rem' },
-                  480: { perPage: 8, gap: '0.1rem' },
-                },
-              }"
-              class="brand-splide"
-            >
-              <SplideSlide v-for="marca in uniqueBrands" :key="marca">
-                <div class="brand-filter-splide" @click="filterByBrand(marca)">
-                  <img :src="getBrandImage(marca)" :alt="marca" class="brand-logo" />
-                </div>
-              </SplideSlide>
-            </Splide>
-          </div>
+          <Splide
+            :options="{
+              type: 'loop',
+              gap: '0.25rem',
+              pagination: false,
+              arrows: false,
+              drag: true,
+              perPage: 6,
+              breakpoints: {
+                1024: { perPage: 8, gap: '0.2rem' },
+                768: { perPage: 8, gap: '0.15rem' },
+                480: { perPage: 8, gap: '0.1rem' },
+              },
+            }"
+            class="brand-splide"
+          >
+            <SplideSlide v-for="marca in uniqueBrands" :key="marca">
+              <div class="brand-filter-splide" @click="filterByBrand(marca)">
+                <img :src="getBrandImage(marca)" :alt="marca" class="brand-logo" />
+              </div>
+            </SplideSlide>
+          </Splide>
+        </div>
 
-
+        <div class="filter-content-scroll">
           <h4 class="filter-subtitle">Selecione a Marca</h4>
           <select v-model="selectedMarca" @change="applyFilters" class="filter-select">
             <option value="" disabled>Selecione uma marca</option>
@@ -104,16 +99,6 @@
           </div>
 
           <div class="filter-content">
-            <h4 class="filter-subtitle">Tração</h4>
-            <select v-model="tractionFilter" @change="applyFilters" class="filter-select">
-              <option value="">Todas</option>
-              <option value="4x2">4x2</option>
-              <option value="4x4">4x4</option>
-              <option value="AWD">AWD</option>
-            </select>
-          </div>
-
-          <div class="filter-content">
             <h4 class="filter-subtitle">Transmissão</h4>
             <select v-model="transmissionFilter" @change="applyFilters" class="filter-select">
               <option value="">Todas</option>
@@ -147,11 +132,13 @@
               </label>
             </div>
           </div>
-          <div class="filter-content-clear">
-            <button class="filter-btn-clear" @click="clearFilters">Limpar Filtros</button>
-          </div>
+        </div>
+
+        <div class="filter-clear">
+          <button class="filter-btn-clear" @click="clearFilters">Limpar Filtros</button>
         </div>
       </aside>
+
 
 
 
@@ -211,11 +198,11 @@ export default {
   },
   data() {
     return {
-      headerHeight: 0,
       vehicles: [],
       filteredVehicles: [],
       showFilters: false, // Controla a visibilidade dos filtros
       isSmallScreen: false, // Detecta se a tela é <= 768px
+      headerHeight: 0,
       favorites: JSON.parse(localStorage.getItem("favorites")) || [],
       searchQuery: "",
       uniqueBrands: [],
@@ -246,18 +233,19 @@ export default {
   },
 
   methods: {
-    updateHeaderHeight() {
-      const header = document.querySelector(".app-header");
-      this.headerHeight = header ? header.offsetHeight : 0;
-    },
     toggleFilters() {
       this.showFilters = !this.showFilters;
     },
     checkScreenSize() {
       this.isSmallScreen = window.innerWidth <= 768;
       if (!this.isSmallScreen) {
-        this.showFilters = true; // Garante que os filtros apareçam em telas maiores
+        this.showFilters = true; // Mostra os filtros automaticamente em telas maiores.
       }
+    },
+    updateHeaderHeight() {
+      // Atualize o cálculo do header se necessário.
+      const header = document.querySelector('header');
+      this.headerHeight = header ? header.offsetHeight : 0;
     },
     async fetchVehicles() {
       try {
@@ -454,14 +442,15 @@ export default {
   },
   mounted() {
     this.checkScreenSize();
-    window.addEventListener("resize", this.checkScreenSize);
+    window.addEventListener('resize', this.checkScreenSize);
     this.updateHeaderHeight();
-    window.addEventListener("resize", this.updateHeaderHeight);
+    window.addEventListener('resize', this.updateHeaderHeight);
   },
   beforeUnmount() {
-    window.removeEventListener("resize", this.checkScreenSize);
-    window.removeEventListener("resize", this.updateHeaderHeight);
+    window.removeEventListener('resize', this.checkScreenSize);
+    window.removeEventListener('resize', this.updateHeaderHeight);
   },
+
   created() {
     this.fetchVehicles();
   },
