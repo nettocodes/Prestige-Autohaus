@@ -282,7 +282,17 @@
   background-size: 400%;
 }
 
-/* Responsividade */
+@media (max-width: 1024px) {
+  .zoom-lens {
+    display: none;
+  }
+  
+  .zoom-result {
+    display: none;
+  }
+  
+}
+
 @media (max-width: 768px) {
   .vehicle-details {
     text-align: center;

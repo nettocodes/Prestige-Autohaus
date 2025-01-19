@@ -152,7 +152,7 @@ export default {
         cover: true,
         breakpoints: {
           768: { perPage: 2 },
-          480: { perPage: 2 },
+          480: { perPage: 1 },
         },
       },
     };

@@ -10,10 +10,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-.app-header.shrink {
-  height: 10vh;
-}
-
 .header-container {
   display: flex;
   justify-content: space-between;
