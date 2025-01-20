@@ -9,30 +9,36 @@
   background: var(--background-gradient);
   min-height: 100vh;
 }
-.vehicle-form-container {
-  width: 100%;
+
+/* Estilos base para o formulário de veículos */
+.vehicle-form-wrapper {
+  max-width: 100%;
+  width: 90%;
   max-width: 1440px;
-  background: var(--background-light);
+  padding: 30px;
+  background-color: var(--background-light);
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  padding: 25px;
-  animation: fadeIn 0.5s ease;
+  box-shadow: 0 4px 8px var(--shadow-dark);
+  border: 1px solid var(--border-light);
 }
 
-/* Título do formulário */
 .vehicle-form-title {
   text-align: center;
-  font-size: 32px;
-  color: var(--primary-color);
-  margin-bottom: 20px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: var(--text-dark);
+  font-weight: bold;
 }
 
-/* Formulário */
 .vehicle-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.vehicle-form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
@@ -41,234 +47,325 @@
   flex-direction: column;
 }
 
-/* Labels */
 .vehicle-form-label {
-  font-size: 15px;
+  margin-bottom: 10px;
+  font-weight: bold;
   color: var(--text-secondary);
-  margin-bottom: 8px;
-  font-weight: 600;
+  font-size: 1rem;
 }
 
-/* Inputs e selects */
 .vehicle-form-input,
 .vehicle-form-select,
 .vehicle-form-textarea {
-  padding: 12px;
-  font-size: 15px;
-  border: 1px solid var(--border-color);
+  padding: 14px;
+  font-size: 1rem;
+  border: 1px solid var(--border-light);
   border-radius: 8px;
-  transition: all 0.3s ease;
+  background-color: var(--background-light);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .vehicle-form-input:focus,
 .vehicle-form-select:focus,
 .vehicle-form-textarea:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 8px rgba(74, 20, 140, 0.2);
+  box-shadow: 0 0 10px var(--primary-color);
   outline: none;
 }
 
-.vehicle-form-textarea {
-  grid-column: span 2;
-  resize: vertical;
-  min-height: 80px;
-}
-
 .vehicle-form-checkbox-group {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 15px;
+  background-color: var(--background-light);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
 }
 
 .vehicle-form-checkbox-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
 }
 
 .vehicle-form-checkbox {
-  transform: scale(1.2);
   accent-color: var(--primary-color);
-}
-
-/* Botões */
-.vehicle-form-button {
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 600;
-  text-align: center;
-  color: var(--text-primary);
-  background: var(--primary-color);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  grid-column: span 2;
-}
-
-.vehicle-form-button:hover {
-  background: var(--secondary-color);
-  transform: scale(1.03);
-}
-
-.cancel-btn {
-  background: var(--text-secondary);
-  color: var(--background-light);
-}
-
-.cancel-btn:hover {
-  background: var(--border-color);
 }
 
 .vehicle-thumbnails {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 10px;
-  grid-column: span 2;
+  justify-content: space-between;
+}
+
+.thumbnail-item {
+  position: relative;
+  width: 110px;
+  height: 110px;
 }
 
 .vehicle-thumbnail {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-light);
 }
 
 .remove-foto-btn {
-  display: block;
-  margin-top: 5px;
-  font-size: 12px;
-  background: var(--secondary-color);
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background-color: var(--highlight-color);
   color: var(--text-contrast);
-  padding: 5px 8px;
   border: none;
-  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .remove-foto-btn:hover {
-  background: var(--primary-color);
+  background-color: darken(var(--highlight-color), 10%);
 }
 
-.vehicle-management-section {
+.vehicle-form-file {
+  font-size: 1rem;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.vehicle-form-buttons {
   display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
   justify-content: center;
-  margin-top: 40px;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
 }
 
-.vehicle-grid-adm {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+.vehicle-form-button {
+  padding: 14px 28px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--primary-color);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.vehicle-form-button:hover {
+  background-color: darken(var(--primary-color), 10%);
+  transform: translateY(-2px);
+}
+
+.cancel-btn {
+  background-color: var(--text-secondary);
+  color: var(--text-dark);
+}
+
+.cancel-btn:hover {
+  background-color: darken(var(--text-secondary), 10%);
+}
+
+/* Estilos responsivos */
+@media (max-width: 1024px) {
+  .vehicle-form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .vehicle-form-wrapper {
+    width: 95%;
+  }
+
+  .vehicle-form-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .vehicle-form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .vehicle-form-title {
+    font-size: 1.8rem;
+  }
+
+  .vehicle-form-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .vehicle-form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .vehicle-form-wrapper {
+    width: 85%;
+  }
+
+  .vehicle-form-title {
+    font-size: 1.5rem;
+  }
+
+  .vehicle-form-button {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Estilos base para a seção de gerenciamento de veículos */
+.vehicle-management-section {
   max-width: 1440px;
+  margin: 0 auto;
 }
 
-.vehicle-card-adm {
+.management-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+/* Grid de veículos */
+.vehicle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Card de veículo */
+.vehicle-card {
   display: flex;
-  background: var(--background-light);
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  background-color: var(--background-light);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
   overflow: hidden;
-
+  box-shadow: 0 2px 4px var(--shadow-dark);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.vehicle-image-adm img {
+.vehicle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px var(--shadow-dark);
+}
+
+/* Imagem do veículo */
+.vehicle-image {
+  position: relative;
   width: 100%;
-  height: 150px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: var(--background-dark);
+}
+
+.vehicle-image img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
-.vehicle-info-adm {
-  font-size: .75rem;
-  padding: 10px;
-  text-align: center;
-}
-
-.vehicle-info-adm h3,
-.vehicle-info-adm h4 {
-  margin: 0;
-}
-
-.price-adm {
-  font-size: 18px;
-  font-weight: bold;
-  color: var(--primary-color);
-  margin: 10px 0;
-}
-
-.vehicle-management-actions {
+/* Informações do veículo */
+.vehicle-info {
+  padding: 15px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 10px;
 }
 
-.vehicle-management-actions button {
-  flex: 1;
-  padding: 5px;
-  font-size: 14px;
+.vehicle-brand {
+  font-size: 1.2rem;
   font-weight: bold;
+  color: var(--text-dark);
+}
+
+.vehicle-model {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.vehicle-price {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+/* Ações de gerenciamento */
+.vehicle-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 1rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.action-btn:not(:last-child) {
+  margin-right: 10px;
 }
 
 .btn-edit {
-  background: var(--primary-color);
-  color: var( --text-primary);
+  background-color: var(--primary-color);
+  color: var(--text-primary);
 }
 
 .btn-edit:hover {
-  background: var(--secondary-color);
+  background-color: darken(var(--primary-color), 10%);
+  transform: translateY(-2px);
 }
 
 .btn-delete {
-  background: var(--secondary-color);
+  background-color: var(--highlight-color);
   color: var(--text-contrast);
 }
 
 .btn-delete:hover {
-  background: var(--primary-color);
+  background-color: darken(var(--highlight-color), 10%);
+  transform: translateY(-2px);
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
-  .vehicle-form-container {
-    padding: 20px;
+  .vehicle-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 
-  .vehicle-form-title {
-    font-size: 28px;
+  .vehicle-card {
+    flex-direction: column;
   }
 
-  .vehicle-form-input,
-  .vehicle-form-select,
-  .vehicle-form-textarea {
-    font-size: 14px;
-  }
-
-  .vehicle-form-button {
-    font-size: 15px;
-  }
-
-  .vehicle-grid-adm {
-    grid-template-columns: 1fr;
+  .management-title {
+    font-size: 1.8rem;
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
+@media (max-width: 480px) {
+  .vehicle-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .management-title {
+    font-size: 1.5rem;
+  }
+
+  .action-btn {
+    font-size: 0.9rem;
+    padding: 8px 12px;
   }
 }

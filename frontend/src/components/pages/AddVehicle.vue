@@ -1,120 +1,141 @@
 <template>
   <div class="vehicle-form-page">
-    <div class="vehicle-form-container">
-      <h2 class="vehicle-form-title">{{ formMode === 'add' ? 'Adicionar Veículo' : 'Editar Veículo' }}</h2>
+    <div class="vehicle-form-wrapper">
+      <h2 class="vehicle-form-title">
+        {{ formMode === 'add' ? 'Adicionar Veículo' : 'Editar Veículo' }}
+      </h2>
+
       <form @submit.prevent="handleSubmit" enctype="multipart/form-data" class="vehicle-form">
-        <div class="vehicle-form-group">
-          <label class="vehicle-form-label">Marca:</label>
-          <select v-model="formData.selectedMarca" :disabled="formMode === 'edit'" @change="fetchModelos" required class="vehicle-form-select">
-            <option value="" disabled>Selecione uma marca</option>
-            <option v-for="marca in marcas" :key="marca.codigo" :value="marca.codigo">{{ marca.nome }}</option>
-          </select>
-        </div>
+        <!-- Container para todos os campos do formulário -->
+        <div class="vehicle-form-grid">
+          <!-- Marca -->
+          <div class="vehicle-form-group">
+            <label class="vehicle-form-label">Marca:</label>
+            <select
+              v-model="formData.selectedMarca"
+              :disabled="formMode === 'edit'"
+              @change="fetchModelos"
+              required
+              class="vehicle-form-select">
+              <option value="" disabled>Selecione uma marca</option>
+              <option v-for="marca in marcas" :key="marca.codigo" :value="marca.codigo">{{ marca.nome }}</option>
+            </select>
+          </div>
 
-        <div class="vehicle-form-group">
-          <label class="vehicle-form-label">Modelo:</label>
-          <select
-            v-model="formData.selectedModelo"
-            :disabled="formMode === 'edit' || !modelos.length"
-            @change="fetchAnos"
-            required
-            class="vehicle-form-select"
-          >
-            <option value="" disabled>Selecione um modelo</option>
-            <option v-for="modelo in modelos" :key="modelo.codigo" :value="modelo.codigo">{{ modelo.nome }}</option>
-          </select>
-        </div>
+          <!-- Modelo -->
+          <div class="vehicle-form-group">
+            <label class="vehicle-form-label">Modelo:</label>
+            <select
+              v-model="formData.selectedModelo"
+              :disabled="formMode === 'edit' || !modelos.length"
+              @change="fetchAnos"
+              required
+              class="vehicle-form-select">
+              <option value="" disabled>Selecione um modelo</option>
+              <option v-for="modelo in modelos" :key="modelo.codigo" :value="modelo.codigo">{{ modelo.nome }}</option>
+            </select>
+          </div>
 
-        <div class="vehicle-form-group">
-          <label class="vehicle-form-label">Ano:</label>
-          <select v-model="formData.selectedAno" :disabled="formMode === 'edit'" required class="vehicle-form-select">
-            <option value="" disabled>Selecione o ano</option>
-            <option v-for="ano in anos" :key="ano.codigo" :value="ano.codigo">{{ ano.nome }}</option>
-          </select>
-        </div>
+          <!-- Ano -->
+          <div class="vehicle-form-group">
+            <label class="vehicle-form-label">Ano:</label>
+            <select v-model="formData.selectedAno" :disabled="formMode === 'edit'" required class="vehicle-form-select">
+              <option value="" disabled>Selecione o ano</option>
+              <option v-for="ano in anos" :key="ano.codigo" :value="ano.codigo">{{ ano.nome }}</option>
+            </select>
+          </div>
 
-        <div class="vehicle-form-group">
-          <label class="vehicle-form-label">Preço:</label>
-          <input
-            v-model.number="formData.preco"
-            type="number"
-            step="0.01"
-            placeholder="Digite o preço"
-            required
-            class="vehicle-form-input"
-          />
-        </div>
-        <div class="vehicle-form-group">
-          <label class="vehicle-form-label">Condição:</label>
-          <select v-model="formData.condicao" required class="vehicle-form-select">
-            <option value="" disabled>Selecione a condição</option>
-            <option value="Novo">Novo</option>
-            <option value="Usado">Usado</option>
-          </select>
-        </div>
+          <!-- Preço -->
+          <div class="vehicle-form-group">
+            <label class="vehicle-form-label">Preço:</label>
+            <input
+              v-model.number="formData.preco"
+              type="number"
+              step="0.01"
+              placeholder="Digite o preço"
+              required
+              class="vehicle-form-input" />
+          </div>
 
-        <div class="vehicle-form-group">
-          <label class="vehicle-form-label">Quilometragem:</label>
-          <input
-            v-model.number="formData.quilometragem"
-            type="number"
-            placeholder="Digite a quilometragem"
-            required
-            class="vehicle-form-input"
-          />
-        </div>
+          <!-- Condição -->
+          <div class="vehicle-form-group">
+            <label class="vehicle-form-label">Condição:</label>
+            <select v-model="formData.condicao" required class="vehicle-form-select">
+              <option value="" disabled>Selecione a condição</option>
+              <option value="Novo">Novo</option>
+              <option value="Usado">Usado</option>
+            </select>
+          </div>
 
-        <div class="vehicle-form-group">
-          <label class="vehicle-form-label">Carroceria:</label>
-          <select v-model="formData.carroceria" required class="vehicle-form-select">
-            <option value="" disabled>Selecione a carroceria</option>
-            <option v-for="option in carroceriaOptions" :key="option" :value="option">{{ option }}</option>
-          </select>
-        </div>
+          <!-- Quilometragem -->
+          <div class="vehicle-form-group">
+            <label class="vehicle-form-label">Quilometragem:</label>
+            <input
+              v-model.number="formData.quilometragem"
+              type="number"
+              placeholder="Digite a quilometragem"
+              required
+              class="vehicle-form-input" />
+          </div>
 
-        <div class="vehicle-form-group">
-          <label class="vehicle-form-label">Transmissão:</label>
-          <select v-model="formData.transmissao" required class="vehicle-form-select">
-            <option value="" disabled>Selecione a transmissão</option>
-            <option v-for="option in transmissaoOptions" :key="option" :value="option">{{ option }}</option>
-          </select>
-        </div>
+          <!-- Carroceria -->
+          <div class="vehicle-form-group">
+            <label class="vehicle-form-label">Carroceria:</label>
+            <select v-model="formData.carroceria" required class="vehicle-form-select">
+              <option value="" disabled>Selecione a carroceria</option>
+              <option v-for="option in carroceriaOptions" :key="option" :value="option">{{ option }}</option>
+            </select>
+          </div>
 
-        <div class="vehicle-form-group">
-          <label class="vehicle-form-label">Portas:</label>
-          <select v-model="formData.portas" required class="vehicle-form-select">
-            <option value="" disabled>Selecione o número de portas</option>
-            <option value="2">2 Portas</option>
-            <option value="4">4 Portas</option>
-          </select>
-        </div>
+          <!-- Transmissão -->
+          <div class="vehicle-form-group">
+            <label class="vehicle-form-label">Transmissão:</label>
+            <select v-model="formData.transmissao" required class="vehicle-form-select">
+              <option value="" disabled>Selecione a transmissão</option>
+              <option v-for="option in transmissaoOptions" :key="option" :value="option">{{ option }}</option>
+            </select>
+          </div>
 
-        <div class="vehicle-form-group">
-          <label class="vehicle-form-label">Cor:</label>
-          <input v-model="formData.cor" placeholder="Cor" required class="vehicle-form-input" />
-        </div>
+          <!-- Portas -->
+          <div class="vehicle-form-group">
+            <label class="vehicle-form-label">Portas:</label>
+            <select v-model="formData.portas" required class="vehicle-form-select">
+              <option value="" disabled>Selecione o número de portas</option>
+              <option value="2">2 Portas</option>
+              <option value="4">4 Portas</option>
+            </select>
+          </div>
 
-        <div class="vehicle-form-group">
-          <label class="vehicle-form-label">Tipo de Tração:</label>
-          <select v-model="formData.driveType" required class="vehicle-form-select">
-            <option value="" disabled>Selecione a tração</option>
-            <option value="4x2">4x2</option>
-            <option value="4x4">4x4</option>
-            <option value="AWD">AWD</option>
-          </select>
-        </div>
+          <!-- Cor -->
+          <div class="vehicle-form-group">
+            <label class="vehicle-form-label">Cor:</label>
+            <input v-model="formData.cor" placeholder="Cor" required class="vehicle-form-input" />
+          </div>
 
-        <div class="vehicle-form-group">
-          <label class="vehicle-form-label">Número de Cilindros:</label>
-          <input
-            v-model.number="formData.cilindros"
-            type="number"
-            placeholder="Digite o número de cilindros"
-            required
-            class="vehicle-form-input"
-          />
-        </div>
+          <!-- Tipo de Tração -->
+          <div class="vehicle-form-group">
+            <label class="vehicle-form-label">Tipo de Tração:</label>
+            <select v-model="formData.driveType" required class="vehicle-form-select">
+              <option value="" disabled>Selecione a tração</option>
+              <option value="4x2">4x2</option>
+              <option value="4x4">4x4</option>
+              <option value="AWD">AWD</option>
+            </select>
+          </div>
 
+          <!-- Número de Cilindros -->
+          <div class="vehicle-form-group">
+            <label class="vehicle-form-label">Número de Cilindros:</label>
+            <input
+              v-model.number="formData.cilindros"
+              type="number"
+              placeholder="Digite o número de cilindros"
+              required
+              class="vehicle-form-input" />
+          </div>
+
+        </div>
+        <!-- Opcionais -->
         <div class="vehicle-form-group">
           <label class="vehicle-form-label">Opcionais:</label>
           <div class="vehicle-form-checkbox-group">
@@ -125,11 +146,13 @@
           </div>
         </div>
 
+        <!-- Descrição -->
         <div class="vehicle-form-group">
           <label class="vehicle-form-label">Descrição:</label>
           <textarea v-model="formData.descricao" placeholder="Digite a descrição" class="vehicle-form-textarea"></textarea>
         </div>
 
+        <!-- Fotos -->
         <div class="vehicle-form-group">
           <label class="vehicle-form-label">Fotos:</label>
           <input type="file" multiple @change="handleFileUpload" accept="image/*" class="vehicle-form-file" />
@@ -145,39 +168,50 @@
           </div>
         </div>
 
-        <button type="submit" class="vehicle-form-button">
-          {{ formMode === 'add' ? 'Adicionar Veículo' : 'Salvar Alterações' }}
-        </button>
-        <button v-if="formMode === 'edit'" type="button" class="vehicle-form-button cancel-btn" @click="resetForm">
-          Cancelar
-        </button>
+        <!-- Botões -->
+        <div class="vehicle-form-buttons">
+          <button type="submit" class="vehicle-form-button">
+            {{ formMode === 'add' ? 'Adicionar Veículo' : 'Salvar Alterações' }}
+          </button>
+          <button v-if="formMode === 'edit'" type="button" class="vehicle-form-button cancel-btn" @click="resetForm">
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
 
+
+
     <!-- Listagem de Veículos -->
     <div class="vehicle-management-section">
-      <h2>Gerenciar Veículos</h2>
-      <div class="vehicle-grid-adm">
-        <div v-for="vehicle in vehicles" :key="vehicle.id" class="vehicle-card-adm">
-          <div class="vehicle-image-adm">
+      <h2 class="management-title">Gerenciar Veículos</h2>
+      <div class="vehicle-grid">
+        <div v-for="vehicle in vehicles" :key="vehicle.id" class="vehicle-card">
+          <!-- Imagem do veículo com slider -->
+          <div class="vehicle-image">
             <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
               <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
-                <img :src="`api/uploads/${foto}`" alt="Vehicle photo" />
+                <img :src="`api/uploads/${foto}`" alt="Foto do veículo" />
               </SplideSlide>
             </Splide>
           </div>
-          <div class="vehicle-info-adm">
-            <h3>{{ vehicle.marca || 'Não informado' }}</h3>
-            <h4>{{ vehicle.modelo || 'Não informado' }}</h4>
-            <p class="price-adm">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</p>
-            <div class="vehicle-management-actions">
-              <button @click="editVehicle(vehicle)" class="btn-edit">Editar</button>
-              <button @click="deleteVehicle(vehicle.id)" class="btn-delete">Excluir</button>
+
+          <!-- Informações do veículo -->
+          <div class="vehicle-info">
+            <h3 class="vehicle-brand">{{ vehicle.marca || 'Não informado' }}</h3>
+            <h4 class="vehicle-model">{{ vehicle.modelo || 'Não informado' }}</h4>
+            <p class="vehicle-price">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</p>
+
+            <!-- Ações de gerenciamento -->
+            <div class="vehicle-actions">
+              <button @click="editVehicle(vehicle)" class="action-btn btn-edit">Editar</button>
+              <button @click="deleteVehicle(vehicle.id)" class="action-btn btn-delete">Excluir</button>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
