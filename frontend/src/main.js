@@ -12,6 +12,7 @@ import UserRegister from "@/components/pages/UserRegister.vue";
 import UserLogin from "@/components/pages/UserLogin.vue";
 import AdminPanel from "@/components/pages/AdminPanel.vue";
 import ListVehicles from "@/components/pages/ListVehicles.vue";
+import StatisticsPage from "@/components/pages/StatisticsPage.vue"; // Nova página de estatísticas
 
 // Configuração de rotas
 const routes = [
@@ -21,10 +22,11 @@ const routes = [
   { path: "/view", component: ViewVehicles },
   { path: "/favorites", component: FavoriteVehicles },
   { path: "/details/:id", component: VehicleDetails, props: true },
-  { path: "/register", component: UserRegister  }, // Rota de registro
-  { path: "/login", component: UserLogin  }, // Rota de login
-  { path: "/admin", component: AdminPanel  },
-  { path: "/list", component: ListVehicles  },
+  { path: "/register", component: UserRegister }, // Rota de registro
+  { path: "/login", component: UserLogin }, // Rota de login
+  { path: "/admin", component: AdminPanel },
+  { path: "/list", component: ListVehicles },
+  { path: "/statistics", component: StatisticsPage }, // Rota de estatísticas
   { path: "/:pathMatch(.*)*", redirect: "/" }, // Redireciona URLs inválidas para a landing page
 ];
 

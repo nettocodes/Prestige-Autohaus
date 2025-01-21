@@ -1,82 +1,85 @@
 <template>
-    <div id="dashboard">
-      <!-- Botão para abrir/fechar o menu em telas pequenas -->
-      <button 
-        class="toggle-sidebar-btn" 
-        @click="toggleSidebar" 
-        v-if="isSmallScreen">
-        {{ showSidebar ? 'Fechar Menu' : 'Abrir Menu' }}
-      </button>
-  
-      <!-- Sidebar -->
-      <aside
-        class="sidebar-container"
-        :class="{ open: showSidebar }">
-        <ul class="sidebar-menu">
-          <li 
-            v-for="item in menuItems" 
-            :key="item.panel" 
-            @click="setActivePanel(item.panel)"
-            :class="{ active: activePanel === item.panel }">
-            {{ item.label }}
-          </li>
-        </ul>
-      </aside>
-  
-      <!-- Conteúdo principal -->
-      <main class="dashboard-content">
-        <component :is="activePanel" />
-      </main>
-    </div>
-  </template>
-  
-  <script>
-  import AddVehicle from './AddVehicle.vue';
-  import ListVehicles from './ListVehicles.vue';
-  
-  export default {
-    name: 'VehicleDashboard',
-    components: {
-      AddVehicle,
-      ListVehicles,
+  <div id="dashboard">
+    <!-- Botão para abrir/fechar o menu em telas pequenas -->
+    <button 
+      class="toggle-sidebar-btn" 
+      @click="toggleSidebar" 
+      v-if="isSmallScreen">
+      {{ showSidebar ? 'Fechar Menu' : 'Abrir Menu' }}
+    </button>
+
+    <!-- Sidebar -->
+    <aside
+      class="sidebar-container"
+      :class="{ open: showSidebar }">
+      <ul class="sidebar-menu">
+        <li 
+          v-for="item in menuItems" 
+          :key="item.panel" 
+          @click="setActivePanel(item.panel)"
+          :class="{ active: activePanel === item.panel }">
+          {{ item.label }}
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Conteúdo principal -->
+    <main class="dashboard-content">
+      <component :is="activePanel" />
+    </main>
+  </div>
+</template>
+
+<script>
+import AddVehicle from './AddVehicle.vue';
+import ListVehicles from './ListVehicles.vue';
+import StatisticsPage from './StatisticsPage.vue';
+
+export default {
+  name: 'VehicleDashboard',
+  components: {
+    AddVehicle,
+    ListVehicles,
+    StatisticsPage,
+  },
+  data() {
+    return {
+      activePanel: 'AddVehicle',
+      isSmallScreen: window.innerWidth <= 768,
+      showSidebar: !window.innerWidth <= 768, // Mostra a sidebar em telas maiores
+      menuItems: [
+        { label: 'Adicionar Veículos', panel: 'AddVehicle' },
+        { label: 'Listar e Editar Veículos', panel: 'ListVehicles' },
+        { label: 'Estatísticas', panel: 'StatisticsPage' },
+      ],
+    };
+  },
+  methods: {
+    setActivePanel(panel) {
+      this.activePanel = panel;
+      if (this.isSmallScreen) this.showSidebar = false; // Fecha o menu ao clicar
     },
-    data() {
-      return {
-        activePanel: 'AddVehicle',
-        isSmallScreen: window.innerWidth <= 768,
-        showSidebar: !window.innerWidth <= 768, // Mostra a sidebar em telas maiores
-        menuItems: [
-          { label: 'Adicionar Veículos', panel: 'AddVehicle' },
-          { label: 'Listar e Editar Veículos', panel: 'ListVehicles' },
-        ],
-      };
+    toggleSidebar() {
+      this.showSidebar = !this.showSidebar;
     },
-    methods: {
-      setActivePanel(panel) {
-        this.activePanel = panel;
-        if (this.isSmallScreen) this.showSidebar = false; // Fecha o menu ao clicar
-      },
-      toggleSidebar() {
-        this.showSidebar = !this.showSidebar;
-      },
-      handleResize() {
-        this.isSmallScreen = window.innerWidth <= 768;
-        if (!this.isSmallScreen) {
-          this.showSidebar = true; // Abre o menu em telas grandes
-        } else {
-          this.showSidebar = false; // Fecha o menu em telas pequenas
-        }
-      },
+    handleResize() {
+      this.isSmallScreen = window.innerWidth <= 768;
+      if (!this.isSmallScreen) {
+        this.showSidebar = true; // Abre o menu em telas grandes
+      } else {
+        this.showSidebar = false; // Fecha o menu em telas pequenas
+      }
     },
-    mounted() {
-      window.addEventListener('resize', this.handleResize);
-    },
-    beforeUnmount() {
-      window.removeEventListener('resize', this.handleResize);
-    },
-  };
-  </script>
-  
+  },
+  mounted() {
+    window.addEventListener('resize', this.handleResize);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  },
+};
+</script>
+
   <style scoped>
   #dashboard {
     display: flex;

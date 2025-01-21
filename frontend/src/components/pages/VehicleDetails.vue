@@ -93,11 +93,13 @@
             </form>
           </div>
           <div class="contact-buttons">
-              <a :href="`https://wa.me/47997486918?text=${encodeURIComponent(`Olá, estou interessado no veículo ${vehicle.marca} ${vehicle.modelo}`)}`"
-                target="_blank" class="whatsapp-btn">
-                <img src="@/assets/images/icons/whatsapp.png" alt="WhatsApp Icon" class="whatsapp-icon" />
-                <span>WhatsApp</span>
-              </a>
+            <a :href="`https://wa.me/47997486918?text=${encodeURIComponent(`Olá, estou interessado no veículo ${vehicle.marca} ${vehicle.modelo}`)}`"
+              target="_blank"
+              class="whatsapp-btn"
+              @click="trackWhatsAppClick(vehicle.id)">
+              <img src="@/assets/images/icons/whatsapp.png" alt="WhatsApp Icon" class="whatsapp-icon" />
+              <span>WhatsApp</span>
+            </a>
             </div>
         </div>
       </div>
@@ -158,9 +160,16 @@ export default {
     };
   },
   methods: {
+    trackWhatsAppClick(vehicleId) {
+      // Registrar o clique no backend
+      fetch('/api/statistics/whatsapp-click', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ vehicleId, timestamp: new Date().toISOString() }),
+      });
+    },
     async fetchVehicleDetails() {
       const vehicleId = this.$route.params.id;
-      const sessionId = this.getSessionId();
 
       try {
         console.log(`Buscando detalhes do veículo ID: ${vehicleId}`);
@@ -172,7 +181,6 @@ export default {
         // Registrar visualização se ainda não foi registrada na sessão
         const viewedVehicles = JSON.parse(localStorage.getItem("viewedVehicles")) || [];
         if (!viewedVehicles.includes(vehicleId)) {
-          await this.registerView(vehicleId, sessionId);
           viewedVehicles.push(vehicleId);
           localStorage.setItem("viewedVehicles", JSON.stringify(viewedVehicles));
         }
@@ -183,6 +191,7 @@ export default {
         }
       }
     },
+
     openZoom(image) {
       this.zoomImage = image; // Define a imagem para exibir no modal
     },

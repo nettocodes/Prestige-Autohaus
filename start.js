@@ -1,27 +1,26 @@
-const express = require("express");
 const path = require("path");
-const backend = require("./backend/server"); // Importa o app do backend
+const express = require("express");
+const backend = require("./backend/server"); // Importa o servidor corretamente
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Servir o frontend
-const frontendPath = path.join(__dirname, "frontend", "dist");
-app.use(express.static(frontendPath));
-
-// Servir a pasta 'uploads' diretamente
+// Servir uploads diretamente
 app.use('/api/uploads', express.static(path.join(__dirname, "backend", "uploads")));
 
 // Encaminhar API para o backend
 app.use("/api", backend);
 
-// Rota fallback para o frontend (SPA)
+// Servir o frontend
+const frontendPath = path.join(__dirname, "frontend", "dist");
+app.use(express.static(frontendPath));
+
+// Rota fallback para SPA
 app.get("*", (req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"));
+    res.sendFile(path.join(frontendPath, "index.html"));
 });
 
+// Inicia o servidor combinado
 app.listen(PORT, () => {
-  console.log(`Servidor combinado rodando na porta ${PORT}`);
+    console.log(`Servidor combinado rodando na porta ${PORT}`);
 });
-
-//teste

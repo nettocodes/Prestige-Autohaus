@@ -392,11 +392,23 @@ export default {
     },
     async viewDetails(vehicleId) {
       try {
+        // Enviar os dados de rastreamento para o backend
+        await fetch('/api/statistics/details-click', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            vehicleId: vehicleId,
+            timestamp: new Date().toISOString(),
+          }),
+        });
+
+        // Navegar para a página de detalhes do veículo
         this.$router.push({ path: `/details/${vehicleId}` });
       } catch (error) {
         console.error("Erro ao registrar visualização:", error);
       }
     },
+
     getBrandImage(brand) {
       const normalizedBrand = brand.toLowerCase().replace(/\s+/g, "-");
       try {
