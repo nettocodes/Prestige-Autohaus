@@ -290,8 +290,6 @@ export default {
     },
     async toggleFavorite(vehicle) {
       try {
-        const response = await axios.post("/api/statistics/favorites", { vehicleId: vehicle.id });
-        console.log(response.data.message);
 
         const index = this.favorites.findIndex((fav) => fav.id === vehicle.id);
         if (index > -1) {
@@ -394,11 +392,6 @@ export default {
     },
     async viewDetails(vehicleId) {
       try {
-        const sessionId = this.getSessionId();
-        await axios.post("/api/statistics/views", {
-          vehicleId,
-          sessionId,
-        });
         this.$router.push({ path: `/details/${vehicleId}` });
       } catch (error) {
         console.error("Erro ao registrar visualização:", error);

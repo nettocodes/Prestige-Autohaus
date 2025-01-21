@@ -209,37 +209,6 @@ export default {
     checkZoomAvailability() {
       this.isZoomEnabled = window.matchMedia("(min-width: 768px)").matches;
     },
-    async registerView(vehicleId, sessionId) {
-      if (!vehicleId || !sessionId) {
-        console.error("Erro: vehicleId ou sessionId ausentes.");
-        return;
-      }
-
-      try {
-        console.log("Registrando visualização...");
-        const response = await axios.post("/api/statistics/views", { vehicleId, sessionId });
-        console.log(`Visualização registrada com sucesso para o veículo ID: ${vehicleId}`, response.data);
-      } catch (err) {
-        console.error("Erro ao registrar visualização:", err.message);
-        if (err.response) {
-          console.error("Detalhes do erro:", err.response.data);
-        }
-      }
-    },
-    async handleContactClick() {
-      const sessionId = this.getSessionId();
-
-      try {
-        console.log("Registrando clique em contato...");
-        await axios.post("/api/statistics/contact-clicks", { sessionId });
-        console.log("Clique em contato registrado com sucesso.");
-      } catch (err) {
-        console.error("Erro ao registrar clique em contato:", err.message);
-        if (err.response) {
-          console.error("Detalhes do erro:", err.response.data);
-        }
-      }
-    },
     getSessionId() {
       let sessionId = localStorage.getItem("sessionId");
       if (!sessionId) {

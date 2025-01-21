@@ -8,9 +8,10 @@ import ViewVehicles from "@/components/pages/ViewVehicles.vue";
 import FavoriteVehicles from "@/components/pages/FavoriteVehicles.vue";
 import VehicleDetails from "@/components/pages/VehicleDetails.vue";
 import LandingPage from "@/components/pages/LandingPage.vue";
-import StatisticsPanel from "@/components/pages/StatisticsPanel.vue";
 import UserRegister from "@/components/pages/UserRegister.vue";
 import UserLogin from "@/components/pages/UserLogin.vue";
+import AdminPanel from "@/components/pages/AdminPanel.vue";
+import ListVehicles from "@/components/pages/ListVehicles.vue";
 
 // Configuração de rotas
 const routes = [
@@ -20,9 +21,10 @@ const routes = [
   { path: "/view", component: ViewVehicles },
   { path: "/favorites", component: FavoriteVehicles },
   { path: "/details/:id", component: VehicleDetails, props: true },
-  { path: "/statistics", component: StatisticsPanel },
   { path: "/register", component: UserRegister  }, // Rota de registro
   { path: "/login", component: UserLogin  }, // Rota de login
+  { path: "/admin", component: AdminPanel  },
+  { path: "/list", component: ListVehicles  },
   { path: "/:pathMatch(.*)*", redirect: "/" }, // Redireciona URLs inválidas para a landing page
 ];
 

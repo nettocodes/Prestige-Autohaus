@@ -164,25 +164,39 @@ router.get('/', (req, res) => {
     });
 });
 
-// Rota para buscar detalhes de um veículo específico
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     const query = 'SELECT * FROM vehicles WHERE id = ?';
     db.query(query, [id], (err, results) => {
         if (err) {
-            console.error(err);
+            console.error('Erro ao buscar veículo:', err);
             return res.status(500).json({ error: 'Erro ao buscar veículo.' });
         }
         if (results.length === 0) {
             return res.status(404).json({ error: 'Veículo não encontrado.' });
         }
         const vehicle = results[0];
-        vehicle.fotos = JSON.parse(vehicle.fotos);
- // Converter JSON para array
-        vehicle.opcionais = vehicle.opcionais ? vehicle.opcionais.split(',') : [];
+
+        try {
+            vehicle.fotos = JSON.parse(vehicle.fotos || '[]'); // Processa fotos como array
+        } catch (e) {
+            console.error('Erro ao parsear fotos:', e);
+            vehicle.fotos = [];
+        }
+
+        try {
+            vehicle.opcionais = vehicle.opcionais
+                ? vehicle.opcionais.split(',').map(opcional => opcional.trim())
+                : []; // Processa opcionais como array
+        } catch (e) {
+            console.error('Erro ao processar opcionais:', e);
+            vehicle.opcionais = [];
+        }
+
         res.status(200).json(vehicle);
     });
 });
+
 
 
 router.delete('/:id', (req, res) => {
@@ -196,19 +210,70 @@ router.delete('/:id', (req, res) => {
       res.status(200).json({ message: 'Veículo excluído com sucesso!' });
     });
 });
-
 router.put('/:id', upload.array('fotos', 9), (req, res) => {
     const { id } = req.params;
-    const { marca, modelo, ano, preco, descricao } = req.body;
-    const query = `UPDATE vehicles SET marca = ?, modelo = ?, ano = ?, preco = ?, descricao = ? WHERE id = ?`;
-    db.query(query, [marca, modelo, ano, preco, descricao, id], (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: 'Erro ao editar veículo.' });
-      }
-      res.status(200).json({ message: 'Veículo editado com sucesso!' });
-    });
+    const {
+        marca,
+        modelo,
+        ano,
+        preco,
+        descricao,
+        quilometragem,
+        carroceria,
+        transmissao,
+        portas,
+        cor,
+        cilindros,
+        fotosExistentes, // Fotos existentes devem vir no body
+    } = req.body;
+
+    try {
+        // Processar novas fotos
+        const novasFotos = req.files ? req.files.map((file) => file.filename) : [];
+        const fotosExistentesArray = fotosExistentes ? JSON.parse(fotosExistentes) : [];
+        const fotosAtualizadas = [...fotosExistentesArray, ...novasFotos];
+
+        // Atualizar veículo no banco de dados
+        const query = `
+            UPDATE vehicles 
+            SET 
+                marca = ?, modelo = ?, ano = ?, preco = ?, descricao = ?, 
+                quilometragem = ?, carroceria = ?, transmissao = ?, portas = ?, 
+                cor = ?, cilindros = ?,  fotos = ?
+            WHERE id = ?
+        `;
+
+        db.query(
+            query,
+            [
+                marca,
+                modelo,
+                ano,
+                preco,
+                descricao,
+                quilometragem,
+                carroceria,
+                transmissao,
+                portas,
+                cor,
+                cilindros,
+                JSON.stringify(fotosAtualizadas),
+                id,
+            ],
+            (err) => {
+                if (err) {
+                    console.error('Erro ao atualizar veículo:', err.message);
+                    return res.status(500).json({ error: 'Erro ao editar veículo.' });
+                }
+                res.status(200).json({ message: 'Veículo editado com sucesso!' });
+            }
+        );
+    } catch (error) {
+        console.error('Erro no servidor:', error.message);
+        res.status(500).json({ error: 'Erro no processamento dos dados do veículo.' });
+    }
 });
+
   
 
 module.exports = router;

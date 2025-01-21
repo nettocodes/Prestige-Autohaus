@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const vehiclesRoutes = require('./routes/vehicles');
-const statisticsRoutes = require("./routes/statistics");
 const authRoutes = require("./routes/auth");
 const path = require("path");
 
@@ -21,7 +20,7 @@ app.use((req, res, next) => {
 app.use("/auth", authRoutes);
 app.use('/vehicles', vehiclesRoutes);
 app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use("/statistics", statisticsRoutes);
+
 
 // Rota inicial
 app.get('/', (req, res) => {

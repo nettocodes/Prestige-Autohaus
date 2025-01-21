@@ -346,9 +346,6 @@ export default {
       once: true, // Animação ocorre apenas uma vez
     });
     this.fetchVehicles(); 
-    axios.post("/api/statistics/accesses")
-        .then(() => console.log("Acesso registrado na landing page"))
-        .catch((err) => console.error("Erro ao registrar acesso:", err));
   },
   
 };

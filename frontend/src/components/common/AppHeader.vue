@@ -14,8 +14,7 @@
           <li><router-link to="/">Inicio</router-link></li>
           <li><router-link to="/view">Estoque</router-link></li>
           <li v-if="isLoggedIn && !isAdmin"><router-link to="/favorites">Favoritos</router-link></li>
-          <li v-if="isAdmin"><router-link to="/add">Administração</router-link></li>
-          <li v-if="isAdmin"><router-link to="/statistics">Estatísticas</router-link></li>
+          <li v-if="isAdmin"><router-link to="/admin">Painel</router-link></li>
           <li v-if="!isLoggedIn"><router-link to="/login">Entrar</router-link></li>
           <li v-if="!isLoggedIn"><router-link to="/register">Registrar</router-link></li>
           <li v-if="isLoggedIn">

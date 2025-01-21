@@ -1,6 +1,5 @@
 <template>
-  <div class="vehicle-form-page">
-    <div class="vehicle-form-wrapper">
+  <div class="vehicle-form-wrapper">
       <h2 class="vehicle-form-title">
         {{ formMode === 'add' ? 'Adicionar Veículo' : 'Editar Veículo' }}
       </h2>
@@ -179,52 +178,13 @@
         </div>
       </form>
     </div>
-
-
-
-    <!-- Listagem de Veículos -->
-    <div class="vehicle-management-section">
-      <h2 class="management-title">Gerenciar Veículos</h2>
-      <div class="vehicle-grid">
-        <div v-for="vehicle in vehicles" :key="vehicle.id" class="vehicle-card">
-          <!-- Imagem do veículo com slider -->
-          <div class="vehicle-image">
-            <Splide :options="{ type: 'loop', autoplay: true, interval: 3000 }">
-              <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
-                <img :src="`api/uploads/${foto}`" alt="Foto do veículo" />
-              </SplideSlide>
-            </Splide>
-          </div>
-
-          <!-- Informações do veículo -->
-          <div class="vehicle-info">
-            <h3 class="vehicle-brand">{{ vehicle.marca || 'Não informado' }}</h3>
-            <h4 class="vehicle-model">{{ vehicle.modelo || 'Não informado' }}</h4>
-            <p class="vehicle-price">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</p>
-
-            <!-- Ações de gerenciamento -->
-            <div class="vehicle-actions">
-              <button @click="editVehicle(vehicle)" class="action-btn btn-edit">Editar</button>
-              <button @click="deleteVehicle(vehicle.id)" class="action-btn btn-delete">Excluir</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
 </template>
 
 <script>
 import axios from 'axios';
-import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@/assets/VehicleAdd.css';
 
 export default {
-  components: {
-    Splide,
-    SplideSlide,
-  },
   beforeCreate() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user || user.role !== 1) {
@@ -357,19 +317,6 @@ export default {
       }
     },
 
-    async deleteVehicle(id) {
-      try {
-        await axios.delete(`/api/vehicles/${id}`);
-        alert('Veículo excluído com sucesso!');
-        this.fetchVehicles();
-      } catch (error) {
-        console.error('Erro ao excluir veículo:', error);
-      }
-    },
-    editVehicle(vehicle) {
-      this.formMode = 'edit';
-      this.formData = { ...vehicle, fotos: [], existingFotos: vehicle.fotos };
-    },
     resetForm() {
       this.formMode = 'add';
       this.formData = {
