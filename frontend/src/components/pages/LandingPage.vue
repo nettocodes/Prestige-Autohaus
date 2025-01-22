@@ -205,17 +205,6 @@ export default {
       filteredVehiclesForAll: [], // Veículos filtrados para o carrossel geral
       selectedBrand: "", // Marca selecionada para filtro no carrossel de marcas
       uniqueBrands: [], // Lista de marcas únicas
-      carBodyTypes: [
-        { name: "SUV", value: "SUV", icon: require("@/assets/images/icons/suv.png") },
-        { name: "Sedan", value: "Sedan", icon: require("@/assets/images/icons/sedan.png") },
-        { name: "Hatchback", value: "Hatchback", icon: require("@/assets/images/icons/hatchback.png") },
-        { name: "Coupe", value: "Coupe", icon: require("@/assets/images/icons/coupe.png") },
-        { name: "Hybrid", value: "Hybrid", icon: require("@/assets/images/icons/hybrid.png") },
-        { name: "Convertible", value: "Convertible", icon: require("@/assets/images/icons/convertible.png") },
-        { name: "Van", value: "Van", icon: require("@/assets/images/icons/van.png") },
-        { name: "Truck", value: "Truck", icon: require("@/assets/images/icons/truck.png") },
-        { name: "Electric", value: "Electric", icon: require("@/assets/images/icons/electric.png") },
-      ],
       favorites: JSON.parse(localStorage.getItem("favorites")) || [], // Lista de favoritos
       splideOptionsVehicles: {
         type: "loop",
@@ -310,11 +299,6 @@ export default {
     // Reset para o carrossel geral
     resetFiltersForAll() {
       this.filteredVehiclesForAll = [...this.vehicles];
-    },
-
-    // Filtro por tipo de carroceria para o carrossel geral
-    filterByCarBody(carBody) {
-      this.filteredVehiclesForAll = this.vehicles.filter((vehicle) => vehicle.carroceria === carBody);
     },
 
     // Alterna o estado de favorito

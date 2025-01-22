@@ -24,7 +24,6 @@ const combustivelMap = {
     '2': 'Álcool',
     '3': 'Diesel',
 };
-
 router.post("/add", authenticateToken, requireAdmin, upload.array("fotos", 9), async (req, res) => {
     const {
         selectedMarca,
@@ -80,9 +79,6 @@ router.post("/add", authenticateToken, requireAdmin, upload.array("fotos", 9), a
         const modelosResponse = await axios.get(`https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedMarca}/modelos`);
         const modelo = modelosResponse.data.modelos.find(m => m.codigo == selectedModelo)?.nome || "Modelo não encontrado";
 
-        console.log("Marca obtida:", marca);
-        console.log("Modelo obtido:", modelo);
-
         // Conversão de valores numéricos
         const quilometragemProcessada = parseInt(quilometragem, 10);
         const precoProcessado = parseFloat(preco);
@@ -137,7 +133,6 @@ router.post("/add", authenticateToken, requireAdmin, upload.array("fotos", 9), a
         return res.status(400).json({ error: "Erro ao processar dados do veículo." });
     }
 });
-
 router.get('/', (req, res) => {
     const query = 'SELECT * FROM vehicles';
     db.query(query, (err, results) => {
@@ -159,11 +154,9 @@ router.get('/', (req, res) => {
                 : [];
         });
 
-        console.log('Veículos retornados com opcionais normalizados:', results);
         res.status(200).json(results);
     });
 });
-
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     const query = 'SELECT * FROM vehicles WHERE id = ?';
@@ -196,9 +189,6 @@ router.get('/:id', (req, res) => {
         res.status(200).json(vehicle);
     });
 });
-
-
-
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
     const query = 'DELETE FROM vehicles WHERE id = ?';
