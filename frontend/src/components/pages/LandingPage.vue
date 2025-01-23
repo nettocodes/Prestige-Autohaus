@@ -17,22 +17,11 @@
           <!-- Lista de Marcas -->
           <div class="list-brand" data-aos="fade-up" data-aos-delay="400">
             <ul>
-              <li
-                v-for="(brand, index) in uniqueBrands"
-                :key="brand"
-                :data-aos="index % 2 === 0 ? 'fade-up' : 'fade-down'" 
-                :data-aos-delay="100 * index"
-              >
-                <router-link
-                  :to="{ path: '/view', query: { brand: brand } }"
-                  class="brand-card-link"
-                >
+              <!-- Lista manual de marcas -->
+              <li v-for="(brand, index) in selectedBrands" :key="brand" :data-aos="index % 2 === 0 ? 'fade-up' : 'fade-down'" :data-aos-delay="100 * index">
+                <router-link :to="{ path: '/view', query: { brand: brand } }" class="brand-card-link">
                   <div class="brand-card">
-                    <img
-                      :src="require(`@/assets/images/logos/${brand.toLowerCase().replace(/\s+/g, '-')}.webp`)"
-                      :alt="brand"
-                      class="logo-brand"
-                    />
+                    <img :src="getBrandImage(brand)" :alt="brand" class="logo-brand" />
                     <p>{{ brand }}</p>
                   </div>
                 </router-link>
@@ -41,6 +30,7 @@
           </div>
         </div>
       </section>
+
 
 
       <!-- Dynamic Vehicle Carousel -->
@@ -201,7 +191,7 @@ export default {
   data() {
     return {
       vehicles: [], // Todos os veículos
-      filteredVehiclesForBrands: [], // Veículos filtrados para o carrossel de marcas
+      selectedBrands: ["audi", "bmw", "ferrari", "lamborghini", "porsche"],
       filteredVehiclesForAll: [], // Veículos filtrados para o carrossel geral
       selectedBrand: "", // Marca selecionada para filtro no carrossel de marcas
       uniqueBrands: [], // Lista de marcas únicas
@@ -224,7 +214,7 @@ export default {
         type: "loop",
         perPage: 3,
         gap: "1rem", // Espaço entre slides
-        pagination: true,
+        pagination: false,
         focus: "center",
         autoplay: true,
         lazyLoad: "nearby",
@@ -261,6 +251,9 @@ export default {
 
   },
   methods: {
+    getBrandImage(brand) {
+      return require(`@/assets/images/logos/${brand.toLowerCase().replace(/\s+/g, '-')}.webp`);
+    },
     async fetchVehicles() {
       try {
         const response = await axios.get("/api/vehicles");

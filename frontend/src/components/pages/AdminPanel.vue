@@ -49,7 +49,7 @@ export default {
       showSidebar: !window.innerWidth <= 768, // Mostra a sidebar em telas maiores
       menuItems: [
         { label: 'Adicionar Veículos', panel: 'AddVehicle' },
-        { label: 'Listar e Editar Veículos', panel: 'ListVehicles' },
+        { label: 'LMeu Estoque', panel: 'ListVehicles' },
         { label: 'Estatísticas', panel: 'StatisticsPage' },
       ],
     };
