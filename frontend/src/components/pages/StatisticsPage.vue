@@ -66,9 +66,7 @@ export default {
   methods: {
     async fetchVehicles() {
       try {
-        const vehiclesResponse = await axios.get(
-          "http://localhost:8080/api/vehicles"
-        );
+        const vehiclesResponse = await axios.get("/api/vehicles");
         this.vehicles = vehiclesResponse.data.map((vehicle) => {
           try {
             if (typeof vehicle.fotos === "string") {
@@ -127,9 +125,7 @@ export default {
     async applyFilter(filterKey) {
       this.loading = true;
       try {
-        const response = await axios.get(
-          `http://localhost:8080/api/statistics/filter/${filterKey}`
-        );
+        const response = await axios.get(`/api/statistics/filter/${filterKey}`);
         this.statistics = response.data;
         this.groupStatistics();
       } catch (error) {
@@ -145,6 +141,7 @@ export default {
   },
 };
 </script>
+
 
 <style>
 .statistics-page {

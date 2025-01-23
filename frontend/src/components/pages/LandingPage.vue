@@ -190,7 +190,8 @@ export default {
   },
   data() {
     return {
-      vehicles: [], // Todos os veículos
+      vehicles: [],
+      filteredVehiclesForBrands: [],
       selectedBrands: ["audi", "bmw", "ferrari", "lamborghini", "porsche"],
       filteredVehiclesForAll: [], // Veículos filtrados para o carrossel geral
       selectedBrand: "", // Marca selecionada para filtro no carrossel de marcas
