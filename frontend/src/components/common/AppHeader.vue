@@ -3,7 +3,18 @@
     <div class="header-container">
       <div class="logo">
         <router-link to="/">
-          <img class="header-logo" src="@/assets/images/icons/logo.png" alt="Logo">
+          <picture>
+            <!-- Suporte para imagens responsivas -->
+            <source srcset="@/assets/images/icons/logo-small.webp" media="(max-width: 768px)" type="image/webp" />
+            <source srcset="@/assets/images/icons/logo-medium.webp" media="(max-width: 1200px)" type="image/webp" />
+            <source srcset="@/assets/images/icons/logo.webp" type="image/webp" />
+            <img
+              class="header-logo"
+              src="@/assets/images/icons/logo.webp"
+              alt="Logo da Empresa"
+              loading="lazy"
+            />
+          </picture>
         </router-link>
       </div>
       <button class="menu-toggle" @click="toggleMenu" v-if="isMobile">
@@ -11,7 +22,7 @@
       </button>
       <nav class="nav-links-container" :class="{ open: isMenuOpen }">
         <ul class="nav-links">
-          <li><router-link to="/">Inicio</router-link></li>
+          <li><router-link to="/">Início</router-link></li>
           <li><router-link to="/view">Estoque</router-link></li>
           <li v-if="isLoggedIn && !isAdmin"><router-link to="/favorites">Favoritos</router-link></li>
           <li v-if="isAdmin"><router-link to="/admin">Painel</router-link></li>
@@ -25,6 +36,7 @@
     </div>
   </header>
 </template>
+
 
 <script>
 import "@/assets/AppHeader.css";
