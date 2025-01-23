@@ -13,12 +13,10 @@
     "sharp": "^0.33.5",
     "ws": "^8.18.0"
   },
-"scripts": {
-  "start": "node server.js",
-  "postinstall": "apt-get update && apt-get install -y libvips-dev && npm install --include=optional sharp"
-},
-
-
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "apt-get update && apt-get install -y libvips-dev && npm install --include=optional sharp"
+  },
   "name": "backend",
   "version": "1.0.0",
   "main": "server.js",
