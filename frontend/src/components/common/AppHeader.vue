@@ -1,22 +1,37 @@
 <template>
   <header class="app-header" :class="{ shrink: isScrolled }">
     <div class="header-container">
+      <!-- Logo -->
       <div class="logo">
         <router-link to="/">
           <picture>
-            <!-- Suporte para imagens responsivas -->
-            <source srcset="@/assets/images/icons/logo-small.webp" media="(max-width: 768px)" type="image/webp" />
-            <source srcset="@/assets/images/icons/logo-medium.webp" media="(max-width: 1200px)" type="image/webp" />
-            <source srcset="@/assets/images/icons/logo.webp" type="image/webp" />
+            <!-- Imagens otimizadas para diferentes tamanhos de tela -->
+            <source
+              srcset="@/assets/images/icons/logo-small.webp"
+              media="(max-width: 768px)"
+              type="image/webp"
+            />
+            <source
+              srcset="@/assets/images/icons/logo-medium.webp"
+              media="(max-width: 1200px)"
+              type="image/webp"
+            />
+            <source
+              srcset="@/assets/images/icons/logo.webp"
+              type="image/webp"
+            />
             <img
               class="header-logo"
-              src="@/assets/images/icons/logo.webp"
+              src="@/assets/images/icons/logo.png"
               alt="Logo da Empresa"
-              loading="lazy"
+              width="120"
+              height="60"
             />
           </picture>
         </router-link>
       </div>
+
+      <!-- Menu -->
       <button class="menu-toggle" @click="toggleMenu" v-if="isMobile">
         ☰
       </button>
