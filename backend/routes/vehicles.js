@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/db');
 const multer = require('multer');
-const sharp = require('sharp');
 const fs = require('fs/promises'); // Usando a versão de Promises do módulo fs
 const { authenticateToken, requireAdmin } = require("../middlewares/authMiddleware");
 const path = require("path");
@@ -27,26 +26,6 @@ const combustivelMap = {
     '3': 'Diesel',
 };
 
-// Função para tentar excluir um arquivo repetidamente
-async function tryDeleteFile(filePath, retries = 5, delay = 100) {
-    for (let attempt = 1; attempt <= retries; attempt++) {
-        try {
-            await fs.unlink(filePath); // Tenta excluir o arquivo
-            console.log(`Arquivo excluído com sucesso: ${filePath}`);
-            return;
-        } catch (err) {
-            if (err.code === 'EPERM' || err.code === 'EBUSY') {
-                console.warn(
-                    `Tentativa ${attempt} de excluir o arquivo ${filePath} falhou. Retentando em ${delay}ms...`
-                );
-                await new Promise((resolve) => setTimeout(resolve, delay)); // Aguarda antes de tentar novamente
-            } else {
-                throw err; // Lança erros que não podem ser tratados
-            }
-        }
-    }
-    console.error(`Falha ao excluir o arquivo após ${retries} tentativas: ${filePath}`);
-}
 
 router.post("/add", authenticateToken, requireAdmin, upload.array("fotos", 9), async (req, res) => {
     const {
@@ -96,26 +75,8 @@ router.post("/add", authenticateToken, requireAdmin, upload.array("fotos", 9), a
         const modelosResponse = await axios.get(`https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedMarca}/modelos`);
         const modelo = modelosResponse.data.modelos.find(m => m.codigo == selectedModelo)?.nome || "Modelo não encontrado";
 
-        // Processar as fotos recebidas
-        const fotos = [];
-        for (const file of req.files) {
-            const webpFilename = `${Date.now()}-${path.parse(file.originalname).name}.webp`;
-            const outputPath = path.join(__dirname, '../uploads', webpFilename);
-
-            try {
-                // Convertendo para WEBP
-                await sharp(file.path)
-                    .webp({ quality: 80 })
-                    .toFile(outputPath);
-
-                fotos.push(webpFilename);
-
-                // Tentar excluir o arquivo original após conversão
-                await tryDeleteFile(file.path);
-            } catch (err) {
-                console.error(`Erro ao processar o arquivo ${file.path}:`, err.message);
-            }
-        }
+        // Processar as fotos recebidas (somente salvar os nomes)
+        const fotos = req.files.map(file => file.filename);
 
         // Inserir no banco de dados
         const query = `
@@ -157,7 +118,6 @@ router.post("/add", authenticateToken, requireAdmin, upload.array("fotos", 9), a
         res.status(400).json({ error: "Erro ao processar dados do veículo." });
     }
 });
-
 
 router.get('/', (req, res) => {
     const query = 'SELECT * FROM vehicles';

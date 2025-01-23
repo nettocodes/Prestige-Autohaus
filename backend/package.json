@@ -10,12 +10,10 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.11.5",
     "nodemon": "^3.1.7",
-    "sharp": "^0.33.5",
     "ws": "^8.18.0"
   },
   "scripts": {
-    "start": "node server.js",
-    "postinstall": "apt-get update && apt-get install -y libvips-dev && npm install --include=optional sharp"
+    "start": "node server.js"
   },
   "name": "backend",
   "version": "1.0.0",
