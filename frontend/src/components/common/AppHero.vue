@@ -1,45 +1,50 @@
 <template>
-    <section class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-              <!-- Título e Subtítulo -->
-              <h1>{{ slide.title }}</h1>
-              <p>{{ slide.subtitle }}</p>
-              <!-- Botões -->
-              <div class="cta-buttons">
-                <button @click="redirectToCars" class="btn-primary">Explorar veículos</button>
-                <button @click="redirectToContact" class="btn-secondary">Entre em contato</button>
-              </div>
-            </div>
-            <!-- Imagem do Carro -->
-            <div class="hero-image-container">
-              <img :src="slide.image" alt="Carro destaque" class="hero-image" />
-            </div>
+  <section class="hero">
+    <div class="hero-container">
+      <!-- Conteúdo de texto -->
+      <div class="hero-content">
+        <h1 class="hero-title" data-aos="fade-right">{{ slide.title }}</h1>
+        <p class="hero-subtitle" data-aos="fade-right" data-aos-delay="200">{{ slide.subtitle }}</p>
+        <div class="cta-buttons" data-aos="fade-up" data-aos-delay="400">
+          <button @click="redirectToCars" class="btn-primary">Explorar veículos</button>
+          <button @click="redirectToContact" class="btn-secondary">Entre em contato</button>
         </div>
-    </section>
-  </template>
-  
-  <script>
-  import "@/assets/AppHero.css";
-  export default {
-    name: "AppHero",
-    data() {
-      return {
-        slide: {
-          image: require("@/assets/images/backgrounds/BMW-M3.webp"),
-          title: "Encontre o carro dos seus sonhos",
-          subtitle: "Qualidade, confiança e as melhores condições do mercado",
-        },
-      };
-    },
-    methods: {
-      redirectToCars() {
-        this.$router.push("/view");
+      </div>
+
+      <!-- Imagem principal -->
+      <div class="hero-image-container" data-aos="fade-left">
+        <picture>
+          <!-- Versões otimizadas -->
+          <source srcset="@/assets/images/backgrounds/BMW-M3-small.webp" media="(max-width: 768px)" type="image/webp" />
+          <source srcset="@/assets/images/backgrounds/BMW-M3-medium.webp" media="(max-width: 1200px)" type="image/webp" />
+          <source srcset="@/assets/images/backgrounds/BMW-M3.webp" type="image/webp" />
+          <img :src="slide.image" alt="Carro destaque" class="hero-image" loading="lazy" />
+        </picture>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+import "@/assets/AppHero.css";
+export default {
+  name: "AppHero",
+  data() {
+    return {
+      slide: {
+        image: require("@/assets/images/backgrounds/BMW-M3.webp"),
+        title: "Encontre o carro dos seus sonhos",
+        subtitle: "Qualidade, confiança e as melhores condições do mercado",
       },
-      redirectToContact() {
-        this.$router.push("/contato");
-      },
+    };
+  },
+  methods: {
+    redirectToCars() {
+      this.$router.push("/view");
     },
-  };
-  </script>
-  
+    redirectToContact() {
+      this.$router.push("/contato");
+    },
+  },
+};
+</script>
