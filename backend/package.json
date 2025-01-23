@@ -13,9 +13,11 @@
     "sharp": "^0.33.5",
     "ws": "^8.18.0"
   },
-  "scripts": {
-    "start": "node server.js"
-  },
+"scripts": {
+  "start": "node server.js",
+  "postinstall": "npm install --include=optional"
+},
+
   "name": "backend",
   "version": "1.0.0",
   "main": "server.js",
