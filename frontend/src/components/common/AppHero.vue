@@ -1,4 +1,6 @@
 <template>
+  <link rel="preload" as="image" href="/assets/images/backgrounds/BMW-M3.webp" type="image/webp" />
+
   <section class="hero">
     <div class="hero-container">
       <!-- Conteúdo de texto -->
@@ -14,12 +16,12 @@
       <!-- Imagem principal -->
       <div class="hero-image-container" data-aos="fade-left">
         <picture>
-          <!-- Versões otimizadas -->
           <source srcset="@/assets/images/backgrounds/BMW-M3-small.webp" media="(max-width: 768px)" type="image/webp" />
           <source srcset="@/assets/images/backgrounds/BMW-M3-medium.webp" media="(max-width: 1200px)" type="image/webp" />
           <source srcset="@/assets/images/backgrounds/BMW-M3.webp" type="image/webp" />
-          <img :src="slide.image" alt="Carro destaque" class="hero-image" loading="lazy" />
+          <img :src="slide.image" alt="Carro destaque" class="hero-image" fetchpriority="high" />
         </picture>
+
       </div>
     </div>
   </section>
