@@ -6,12 +6,13 @@
 
       <section class="brand-section">
         <div class="brand-content">
-          <header class="section-header" data-aos="fade-down">
+          <header class="section-header">
             <span class="section-title">Explore Nossas Marcas Premium</span>
             <a href="/" class="cta-link" data-aos="fade-left" data-aos-delay="200">
               Mostrar Todas as Marcas →
             </a>
           </header>
+
 
           <div class="list-brand" data-aos="fade-up" data-aos-delay="400">
             <ul>
@@ -353,10 +354,15 @@ export default {
     margin-bottom: 2rem;
   }
   .section-title {
-    font-size: 2.4rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
     color: var(--primary-color);
+    visibility: visible; /* Certifique-se de que o título não esteja escondido */
+    opacity: 1; /* Evite efeitos de opacidade em animações */
+    transition: none; /* Reduza transições desnecessárias */
   }
+
   .cta-link {
     font-size: 1.1rem;
     font-weight: 600;
@@ -792,12 +798,6 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-}
-
-.section-title {
-  font-size: 2.4rem;
-  font-weight: 700;
-  color: var(--primary-color);
 }
 
 .cta-link {
