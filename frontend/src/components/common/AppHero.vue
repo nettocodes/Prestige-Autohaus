@@ -20,6 +20,7 @@
           <source srcset="@/assets/images/backgrounds/BMW-M3-medium.webp" media="(max-width: 1200px)" type="image/webp" />
           <source srcset="@/assets/images/backgrounds/BMW-M3.webp" type="image/webp" />
           <img :src="slide.image" alt="Carro destaque" class="hero-image" fetchpriority="high" />
+
         </picture>
 
       </div>
