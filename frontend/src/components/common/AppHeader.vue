@@ -22,7 +22,7 @@
             />
             <img
               class="header-logo"
-              src="@/assets/images/icons/logo.png"
+              src="@/assets/images/icons/logo.webp"
               alt="Logo da Empresa"
               width="120"
               height="60"
