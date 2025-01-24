@@ -14,7 +14,7 @@
       </div>
 
       <!-- Imagem principal -->
-      <div class="hero-image-container" data-aos="fade-left">
+      <div class="hero-image-container">
         <picture>
           <source srcset="@/assets/images/backgrounds/BMW-M3-small.webp" media="(max-width: 768px)" type="image/webp" />
           <source srcset="@/assets/images/backgrounds/BMW-M3-medium.webp" media="(max-width: 1200px)" type="image/webp" />
