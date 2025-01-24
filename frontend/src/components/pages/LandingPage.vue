@@ -6,20 +6,25 @@
 
       <section class="brand-section">
         <div class="brand-content">
-          <!-- Cabeçalho da seção -->
-          <div class="header-brand" data-aos="fade-down">
-            <h2>Explore Nossas Marcas Premium</h2>
-            <a href="/" class="show-all-brands" data-aos="fade-left" data-aos-delay="200">
+          <header class="section-header" data-aos="fade-down">
+            <span class="section-title">Explore Nossas Marcas Premium</span>
+            <a href="/" class="cta-link" data-aos="fade-left" data-aos-delay="200">
               Mostrar Todas as Marcas →
             </a>
-          </div>
+          </header>
 
-          <!-- Lista de Marcas -->
           <div class="list-brand" data-aos="fade-up" data-aos-delay="400">
             <ul>
-              <!-- Lista manual de marcas -->
-              <li v-for="(brand, index) in selectedBrands" :key="brand" :data-aos="index % 2 === 0 ? 'fade-up' : 'fade-down'" :data-aos-delay="100 * index">
-                <router-link :to="{ path: '/view', query: { brand: brand } }" class="brand-card-link">
+              <li
+                v-for="(brand, index) in selectedBrands"
+                :key="brand"
+                :data-aos="index % 2 === 0 ? 'fade-up' : 'fade-down'"
+                :data-aos-delay="100 * index"
+              >
+                <router-link
+                  :to="{ path: '/view', query: { brand: brand } }"
+                  class="brand-card-link"
+                >
                   <div class="brand-card">
                     <img :src="getBrandImage(brand)" :alt="brand" class="logo-brand" />
                     <p>{{ brand }}</p>
@@ -31,16 +36,18 @@
         </div>
       </section>
 
-
-
       <!-- Dynamic Vehicle Carousel -->
       <section class="custom-carousel-section">
-        <div class="custom-carousel-header">
-          <h2>Explore Todos os Veículos</h2>
-          <router-link to="/view" class="custom-view-all-link">Ver Todos &rarr;</router-link>
-        </div>
+        <header class="section-header">
+          <span class="section-title">Explore Todos os Veículos</span>
+          <router-link to="/view" class="cta-link">Ver Todos &rarr;</router-link>
+        </header>
 
-        <Splide v-if="filteredVehiclesForAll.length > 0" :options="splideOptionsVehicles" class="custom-carousel">
+        <Splide
+          v-if="filteredVehiclesForAll.length > 0"
+          :options="splideOptionsVehicles"
+          class="custom-carousel"
+        >
           <SplideSlide v-for="vehicle in filteredVehiclesForAll" :key="vehicle.id">
             <div class="custom-vehicle-card">
               <div class="custom-vehicle-image">
@@ -48,29 +55,28 @@
                   <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
                     <img :src="`/api/uploads/${foto}`" alt="Foto do Veículo" />
                   </SplideSlide>
-
                 </Splide>
               </div>
               <div class="custom-vehicle-info">
-                <h3>{{ vehicle.marca || "Não informado" }}</h3>
-                <p>{{ vehicle.modelo || "Não informado" }}</p>
+                <span class="vehicle-title">{{ vehicle.marca || "Não informado" }}</span>
+                <span class="vehicle-subtitle">{{ vehicle.modelo || "Não informado" }}</span>
                 <div class="custom-vehicle-details">
                   <div class="custom-vehicle-detail-item">
                     <img src="@/assets/images/icons/odometro.svg" alt="Quilometragem" />
-                    <p class="vehicle-item-description">{{ vehicle.quilometragem ? vehicle.quilometragem.toLocaleString() + " Km" : "Não informado" }}</p>
+                    <span>{{ vehicle.quilometragem ? vehicle.quilometragem.toLocaleString() + " Km" : "Não informado" }}</span>
                   </div>
                   <div class="custom-vehicle-detail-item">
                     <img src="@/assets/images/icons/fuel.svg" alt="Combustível" />
-                    <p class="vehicle-item-description">{{ vehicle.combustivel || "Não informado" }}</p>
+                    <span>{{ vehicle.combustivel || "Não informado" }}</span>
                   </div>
                   <div class="custom-vehicle-detail-item">
                     <img src="@/assets/images/icons/transmission.svg" alt="Transmissão" />
-                    <p class="vehicle-item-description">{{ vehicle.transmissao || "Não informado" }}</p>
+                    <span>{{ vehicle.transmissao || "Não informado" }}</span>
                   </div>
                 </div>
                 <div class="custom-vehicle-bottom-item">
-                  <p class="custom-price">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</p>
-                  <button class="custom-details-btn" @click="viewDetails(vehicle.id)">Ver Detalhes</button>
+                  <span class="custom-price">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</span>
+                  <button class="cta-btn" @click="viewDetails(vehicle.id)">Ver Detalhes</button>
                 </div>
               </div>
             </div>
@@ -78,30 +84,34 @@
         </Splide>
       </section>
 
-
-
       <section class="highlight-section">
         <div class="highlight-content">
-          <!-- Vídeo com botão de play -->
           <div class="highlight-image">
-            <video id="highlight-video" poster="assets/images/car-highlight.jpg" preload="none" class="video" muted autoplay>
+            <video
+              id="highlight-video"
+              poster="assets/images/car-highlight.jpg"
+              preload="none"
+              class="video"
+              muted
+              autoplay
+            >
               <source src="@/assets/videos/back.webm" type="video/webm" />
               Seu navegador não suporta vídeos.
             </video>
           </div>
-          <!-- Texto lateral -->
           <div class="highlight-text">
-            <h2>Um Preço Justo Pelo Seu Carro</h2>
-            <p>Venda Para Nós Hoje</p>
+            <span class="section-title">Um Preço Justo Pelo Seu Carro</span>
+            <span class="highlight-subtitle">Venda Para Nós Hoje</span>
             <p>
-              Estamos comprometidos em oferecer aos nossos clientes um serviço excepcional, preços competitivos e uma ampla gama de benefícios:
+              Estamos comprometidos em oferecer aos nossos clientes um serviço
+              excepcional, preços competitivos e uma ampla gama de benefícios:
             </p>
             <ul>
-              <li> Somos o maior provedor do Brasil, com mais patrulhas em mais lugares</li>
-              <li> Você recebe assistência na estrada 24/7</li>
-              <li> Consertamos 4 de cada 5 carros na estrada</li>
+              <li>Somos o maior provedor do Brasil, com mais patrulhas em mais lugares</li>
+              <li>Você recebe assistência na estrada 24/7</li>
+              <li>Consertamos 4 de cada 5 carros na estrada</li>
             </ul>
-            <button class="cta-button">Comece Agora &rarr;</button>
+            <button class="cta-btn">Comece Agora &rarr;</button>
           </div>
         </div>
       </section>
@@ -109,10 +119,10 @@
 
       <section class="unique-brand-filter-carousel">
         <div class="unique-brand-content">
-          <div class="unique-brand-filter-header">
-            <h2>Marcas Populares</h2>
-            <router-link to="/view" class="unique-view-all-link">Ver Todas &rarr;</router-link>
-          </div>
+          <header class="section-header">
+            <span class="section-title">Marcas Populares</span>
+            <router-link to="/view" class="cta-link">Ver Todas &rarr;</router-link>
+          </header>
 
           <!-- Tabs de Marcas -->
           <div class="unique-brand-tabs">
@@ -120,8 +130,8 @@
               <SplideSlide v-for="brand in uniqueBrands" :key="brand">
                 <button
                   @click="filterByBrandForBrands(brand)"
-                  :class="{ 'unique-active-tab': selectedBrand === brand }"
-                  class="unique-brand-tab"
+                  :class="{ 'active-tab': selectedBrand === brand }"
+                  class="tab-button"
                 >
                   {{ brand }}
                 </button>
@@ -132,31 +142,30 @@
           <!-- Carousel de Veículos -->
           <Splide v-if="filteredVehiclesForBrands.length > 0" :options="splideOptionsBrands" class="unique-brand-carousel">
             <SplideSlide v-for="vehicle in filteredVehiclesForBrands" :key="vehicle.id">
-              <div class="unique-brand-vehicle-card">
-                <div class="unique-brand-vehicle-image">
-
+              <div class="vehicle-card">
+                <div class="vehicle-image">
                   <img :src="`/api/uploads/${vehicle.fotos[0]}`" alt="Foto do Veículo" />
                 </div>
-                <div class="unique-brand-vehicle-info">
-                  <h3 class="unique-brand-title">{{ vehicle.marca || "Não informado" }}</h3>
-                  <p class="unique-brand-model">{{ vehicle.modelo || "Não informado" }}</p>
-                  <div class="unique-vehicle-details">
-                    <div class="unique-vehicle-brand-item">
+                <div class="vehicle-info">
+                  <span class="vehicle-title">{{ vehicle.marca || "Não informado" }}</span>
+                  <span class="vehicle-subtitle">{{ vehicle.modelo || "Não informado" }}</span>
+                  <div class="vehicle-details-unique">
+                    <div class="vehicle-detail-item">
                       <img src="@/assets/images/icons/odometro.svg" alt="Odômetro" />
-                      <p>{{ vehicle.quilometragem ? vehicle.quilometragem.toLocaleString() + " Km" : "Não informado" }}</p>
+                      <span>{{ vehicle.quilometragem ? vehicle.quilometragem.toLocaleString() + " Km" : "Não informado" }}</span>
                     </div>
-                    <div class="unique-vehicle-brand-item">
+                    <div class="vehicle-detail-item">
                       <img src="@/assets/images/icons/fuel.svg" alt="Combustível" />
-                      <p>{{ vehicle.combustivel || "Não informado" }}</p>
+                      <span>{{ vehicle.combustivel || "Não informado" }}</span>
                     </div>
-                    <div class="unique-vehicle-brand-item">
+                    <div class="vehicle-detail-item">
                       <img src="@/assets/images/icons/transmission.svg" alt="Transmissão" />
-                      <p>{{ vehicle.transmissao || "Não informado" }}</p>
+                      <span>{{ vehicle.transmissao || "Não informado" }}</span>
                     </div>
                   </div>
-                  <div class="unique-vehicle-brand-bottom">
-                    <p class="unique-brand-price">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</p>
-                    <button class="unique-details-btn" @click="viewDetails(vehicle.id)">
+                  <div class="vehicle-bottom-item">
+                    <span class="price">R$ {{ Math.floor(vehicle.preco).toLocaleString('pt-BR') }}</span>
+                    <button class="cta-btn" @click="viewDetails(vehicle.id)">
                       Ver Detalhes <img src="@/assets/images/icons/arrow.png" alt="">
                     </button>
                   </div>
