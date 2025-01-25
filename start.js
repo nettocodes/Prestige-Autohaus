@@ -1,10 +1,11 @@
 const path = require("path");
 const express = require("express");
-const backend = require("./backend/server"); // Importa o servidor corretamente
-
+const backend = require("./backend/server");
+const compression = require("compression");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+app.use(compression());
 // Cabeçalhos de cache para arquivos estáticos
 const cacheControlOptions = {
   setHeaders: (res, filePath) => {
