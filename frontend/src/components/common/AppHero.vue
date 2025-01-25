@@ -14,11 +14,11 @@
       <!-- Imagem principal -->
       <div class="hero-image-container">
         <picture>
-          <source srcset="/assets/images/backgrounds/BMW-M3-small.webp" media="(max-width: 768px)" type="image/webp" />
-          <source srcset="/assets/images/backgrounds/BMW-M3-medium.webp" media="(max-width: 1200px)" type="image/webp" />
-          <source srcset="/assets/images/backgrounds/BMW-M3.webp" type="image/webp" />
+          <source srcset="https://prestige-autohaus-production.up.railway.app/assets/images/backgrounds/BMW-M3-small.webp" media="(max-width: 768px)" type="image/webp" />
+          <source srcset="https://prestige-autohaus-production.up.railway.app/assets/images/backgrounds/BMW-M3-medium.webp" media="(max-width: 1200px)" type="image/webp" />
+          <source srcset="https://prestige-autohaus-production.up.railway.app/assets/images/backgrounds/BMW-M3.webp" type="image/webp" />
           <img
-            src="/assets/images/backgrounds/BMW-M3.webp"
+            src="https://prestige-autohaus-production.up.railway.app/assets/images/backgrounds/BMW-M3.webp"
             alt="Carro destaque"
             class="hero-image"
             fetchpriority="high"
