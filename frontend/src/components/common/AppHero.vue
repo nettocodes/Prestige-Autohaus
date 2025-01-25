@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import "@/assets/AppHero.css";
 
 export default {
   name: "AppHero",
