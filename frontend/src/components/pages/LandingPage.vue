@@ -54,7 +54,7 @@
               <div class="custom-vehicle-image">
                 <Splide :options="splideOptionsInner">
                   <SplideSlide v-for="foto in vehicle.fotos" :key="foto">
-                    <img :src="`/api/uploads/${foto}`" alt="Foto do Veículo" />
+                    <img :src="`/api/uploads/${foto}`" alt="Foto do Veículo" loading="lazy"/>
                   </SplideSlide>
                 </Splide>
               </div>
@@ -141,7 +141,7 @@
             <SplideSlide v-for="vehicle in filteredVehiclesForBrands" :key="vehicle.id">
               <div class="vehicle-card">
                 <div class="vehicle-image">
-                  <img :src="`/api/uploads/${vehicle.fotos[0]}`" alt="Foto do Veículo" />
+                  <img :src="`/api/uploads/${vehicle.fotos[0]}`" alt="Foto do Veículo" loading="lazy"/>
                 </div>
                 <div class="vehicle-info">
                   <span class="vehicle-title">{{ vehicle.marca || "Não informado" }}</span>
