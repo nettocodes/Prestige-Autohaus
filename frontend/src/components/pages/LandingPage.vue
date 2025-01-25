@@ -203,31 +203,34 @@ export default {
       favorites: JSON.parse(localStorage.getItem("favorites")) || [], // Lista de favoritos
       splideOptionsVehicles: {
         type: "loop",
-        perPage: 4,
+        perPage: 3,
         gap: ".5rem",
-        pagination: false,
+        pagination: true,
         focus: "center",
-        autoplay: false,
+        autoplay: true,
+        interval: 4000,
         lazyLoad: "nearby",
         trimSpace: false,
+        arrows: true,
         breakpoints: {
-          768: { perPage: 2 },
-          480: { perPage: 2 },
+          1024: { perPage: 2, gap: "0.5rem" },
+          768: { perPage: 1, gap: "0.5rem" },
         },
       },
       splideOptionsBrands: {
         type: "loop",
-        perPage: 3,
-        gap: "1rem", // Espaço entre slides
+        perPage: 4,
+        gap: ".5rem",
         pagination: false,
         focus: "center",
         autoplay: true,
         lazyLoad: "nearby",
         trimSpace: true,
-        arrows: true, // Garante setas de navegação
+        arrows: true,
         breakpoints: {
-          1024: { perPage: 3, gap: "0.5rem" }, // Tablets
-          768: { perPage: 1, gap: "0.5rem" }, // Telas menores
+          1200: { perPage: 3, gap: "0.5rem" },
+          768: { perPage: 2, gap: "0.5rem" },
+          480: { perPage: 1, gap: "0.5rem" },
         },
       },
 
@@ -324,8 +327,18 @@ export default {
     },
   },
   mounted() {
-    this.fetchVehicles(); 
+    this.fetchVehicles();
+
+    // Forçar atualização do Splide após o DOM estar pronto
+    this.$nextTick(() => {
+      const splides = document.querySelectorAll(".splide");
+      splides.forEach((splideElement) => {
+        const splideInstance = new Splide(splideElement);
+        splideInstance.mount();
+      });
+    });
   },
+
   
 };
 </script>
