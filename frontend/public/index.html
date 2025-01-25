@@ -8,8 +8,11 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
     
     <!-- Pré-carregar a imagem crítica para melhorar o LCP -->
-    <link rel="preload" as="image" href="@/assets/images/backgrounds/BMW-M3.webp" type="image/webp" imagesizes="(max-width: 1200px) 100vw, 1440px" />
-    
+    <link rel="preload" as="image" href="/src/assets/images/backgrounds/BMW-M3.webp" type="image/webp" imagesizes="(max-width: 1200px) 100vw, 1440px" />
+    <link rel="preload" as="image" href="/src/assets/images/backgrounds/BMW-M3-small.webp" type="image/webp" media="(max-width: 768px)" />
+    <link rel="preload" as="image" href="/src/assets/images/backgrounds/BMW-M3-medium.webp" type="image/webp" media="(max-width: 1200px)" />
+    <link rel="preload" as="image" href="/src/assets/images/backgrounds/BMW-M3.webp" type="image/webp" media="(min-width: 1201px)" />
+
     <!-- Outros recursos críticos podem ser adicionados aqui -->
   </head>
   <body>
