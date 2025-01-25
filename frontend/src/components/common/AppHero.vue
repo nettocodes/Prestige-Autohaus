@@ -3,9 +3,9 @@
     <div class="hero-container">
       <!-- Conteúdo de texto -->
       <div class="hero-content">
-        <h1 class="hero-title" data-aos="fade-right">{{ slide.title }}</h1>
-        <p class="hero-subtitle" data-aos="fade-right" data-aos-delay="200">{{ slide.subtitle }}</p>
-        <div class="cta-buttons" data-aos="fade-up" data-aos-delay="400">
+        <h1 class="hero-title">{{ slide.title }}</h1>
+        <p class="hero-subtitle">{{ slide.subtitle }}</p>
+        <div class="cta-buttons">
           <button @click="redirectToCars" class="btn-primary">Explorar veículos</button>
           <button @click="redirectToContact" class="btn-secondary">Entre em contato</button>
         </div>
@@ -28,7 +28,6 @@
             alt="Carro destaque"
             class="hero-image"
             fetchpriority="high"
-            loading="lazy"
           />
         </picture>
 
