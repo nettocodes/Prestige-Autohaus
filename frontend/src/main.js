@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import { createRouter, createWebHistory } from "vue-router";
+import AOS from "aos";
+import "aos/dist/aos.css"; // Importa os estilos do AOS
 
 // Importando as páginas
 import AddVehicle from "@/components/pages/AddVehicle.vue";
@@ -30,6 +32,7 @@ const routes = [
   { path: "/:pathMatch(.*)*", redirect: "/" }, // Redireciona URLs inválidas para a landing page
 ];
 
+// Configurando o roteador
 const router = createRouter({
   history: createWebHistory(),
   routes,
@@ -37,6 +40,18 @@ const router = createRouter({
 
 // Criar a aplicação Vue
 const app = createApp(App);
+
+// Configurar o AOS
+AOS.init({
+  duration: 1000, // Duração das animações em ms
+  once: true, // Anima apenas na primeira vez que o elemento aparece
+  offset: 120, // Distância antes de o elemento entrar na viewport
+});
+
+// Atualizar o AOS sempre que uma nova rota for carregada
+router.afterEach(() => {
+  AOS.refresh();
+});
 
 // Usar o roteador
 app.use(router);

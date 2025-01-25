@@ -183,7 +183,6 @@ import AppHero from "@/components/common/AppHero.vue";
 import AppFooter from "@/components/common/AppFooter.vue";
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import axios from "axios";
-import AOS from "aos";
 
 export default {
   name: "LandingPage",
@@ -325,10 +324,6 @@ export default {
     },
   },
   mounted() {
-    AOS.init({
-      duration: 1000, // Duração das animações
-      once: true, // Animação ocorre apenas uma vez
-    });
     this.fetchVehicles(); 
   },
   

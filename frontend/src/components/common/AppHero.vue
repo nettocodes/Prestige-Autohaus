@@ -1,6 +1,4 @@
 <template>
-  <link rel="preload" as="image" href="/assets/images/backgrounds/BMW-M3.webp" type="image/webp" />
-
   <section class="hero">
     <div class="hero-container">
       <!-- Conteúdo de texto -->

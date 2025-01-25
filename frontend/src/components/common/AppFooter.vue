@@ -24,18 +24,13 @@
   </footer>
 </template>
 <script>
-import AOS from "aos";
-import "aos/dist/aos.css"; // Importa os estilos do AOS
-import "@/assets/AppFooter.css";
+import "aos/dist/aos.css"; // Importa os estilos AOS
+import "@/assets/AppFooter.css"; // Importa estilos personalizados, se necessário
 
 export default {
   name: "AppFooter",
   mounted() {
-    AOS.init({
-      duration: 1000, // Duração da animação em milissegundos
-      once: true, // Se true, anima apenas na primeira vez que o elemento aparece
-    });
+
   },
 };
 </script>
-
