@@ -310,12 +310,14 @@ export default {
       return this.favorites.some((fav) => fav.id === id);
     },
     filterByBrand(brand) {
-      // Define a marca selecionada no Splide
+      // Quando o Splide é usado, desativa o filtro do Select
+      this.selectedMarca = ""; // Reseta o Select de marca
       this.filteredVehicles = this.vehicles.filter((vehicle) => vehicle.marca === brand);
-      this.selectedMarca = ""; // Reseta o select de marcas
+      console.log(`Filtro Splide aplicado: ${brand}`);
     },
     applyFilters() {
       console.log("Aplicando filtros com os seguintes valores:", {
+        selectedMarca: this.selectedMarca,
         priceFilter: this.priceFilter,
         kmFilter: this.kmFilter,
         conditionFilter: this.conditionFilter,
@@ -326,6 +328,16 @@ export default {
         opcionaisFilter: this.filters.opcionais,
       });
 
+      // Prioriza o filtro do Select se estiver definido
+      if (this.selectedMarca) {
+        this.filteredVehicles = this.vehicles.filter(
+          (vehicle) => vehicle.marca === this.selectedMarca
+        );
+        console.log(`Filtro Select aplicado: ${this.selectedMarca}`);
+        return; // Sai do método, aplicando apenas o filtro do Select
+      }
+
+      // Aplica os demais filtros se nenhuma marca for selecionada no Select
       this.filteredVehicles = this.vehicles.filter((vehicle) => {
         const searchMatch = `${vehicle.marca} ${vehicle.modelo}`
           .toLowerCase()
@@ -343,7 +355,6 @@ export default {
         const colorMatch =
           !this.colorFilter || vehicle.cor.toLowerCase().includes(this.colorFilter.toLowerCase());
 
-        // Verifica se opcionais está definido e converte para string antes de aplicar o split
         const vehicleOpcionais = String(vehicle.opcionais || "")
           .split(",")
           .map((opcional) => opcional.trim().toLowerCase());
@@ -351,18 +362,9 @@ export default {
           opcional.trim().toLowerCase()
         );
 
-        // Verifica se todos os opcionais selecionados estão presentes no veículo
         const opcionaisMatch =
           selectedOpcionais.length === 0 || // Nenhum filtro de opcionais selecionado
           selectedOpcionais.every((opcional) => vehicleOpcionais.includes(opcional));
-
-        console.log("Verificando veículo:", {
-          id: vehicle.id,
-          marca: vehicle.marca,
-          opcionais: vehicleOpcionais,
-          selectedOpcionais,
-          opcionaisMatch,
-        });
 
         return (
           searchMatch &&
@@ -380,8 +382,6 @@ export default {
 
       console.log("Veículos filtrados:", this.filteredVehicles);
     },
-
-
     applyInitialFilter() {
       const brand = this.$route.query.brand;
       if (brand) {
