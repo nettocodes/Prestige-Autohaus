@@ -4,6 +4,8 @@ import App from "./App.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Importa os estilos do AOS
+import "./utils/axios"; // Configurar interceptors do Axios
+import { updateAuthState } from "./authState"; // Importar função de atualização do estado
 
 // Configuração de rotas com importação dinâmica (lazy loading)
 const routes = [
@@ -27,8 +29,17 @@ const router = createRouter({
   routes,
 });
 
+// Guard de rota simplificado - deixar verificação detalhada para os componentes
+router.beforeEach((to, from, next) => {
+  console.log(`Navegando de ${from.path} para ${to.path}`);
+  next();
+});
+
 // Criar a aplicação Vue
 const app = createApp(App);
+
+// Tornar a função updateAuthState globalmente acessível
+window.updateAuthState = updateAuthState;
 
 // Configurar o AOS
 AOS.init({

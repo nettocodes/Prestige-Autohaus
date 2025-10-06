@@ -4,15 +4,23 @@
       <router-link to="/">Home</router-link> / <router-link to="/view">Estoque</router-link> / {{ vehicle?.modelo || "Loading..." }}
     </nav>
 
-    <div class="vehicle-gallery">
-      <Splide :options="mainOptions" ref="mainCarousel">
-        <SplideSlide v-for="(foto, index) in vehicle.fotos || []" :key="index" class="splide-slide"
-          @click="openZoom(foto)">
-          <img :src="`/api/uploads/${foto}`" alt="Vehicle photo" />
-        </SplideSlide>
-      </Splide>
+    <!-- Loading state -->
+    <div v-if="!vehicle" class="loading-container">
+      <p>Carregando detalhes do veículo...</p>
     </div>
-    <div class="details-content">
+
+    <!-- Vehicle content - only show when vehicle is loaded -->
+    <div v-else>
+      <div class="vehicle-gallery">
+        <Splide :options="mainOptions" ref="mainCarousel">
+          <SplideSlide v-for="(foto, index) in vehicle.fotos || []" :key="index" class="splide-slide"
+            @click="openZoom(foto)">
+            <img :src="`/api/uploads/${foto}`" alt="Vehicle photo" />
+          </SplideSlide>
+        </Splide>
+      </div>
+      
+      <div class="details-content">
 
       <div class="car-details-content">
         <div class="details-layout">
@@ -64,7 +72,7 @@
               <div class="detail-item">
                 <span class="detail-label">Opcionais:</span>
                 <span class="detail-value">
-                  <span v-if="vehicle.opcionais.length">
+                  <span v-if="vehicle?.opcionais?.length">
                     {{ vehicle.opcionais.join(", ") }}
                   </span>
                   <span v-else>Não informado</span>
@@ -93,16 +101,17 @@
             </form>
           </div>
           <div class="contact-buttons">
-            <a :href="`https://wa.me/47997486918?text=${encodeURIComponent(`Olá, estou interessado no veículo ${vehicle.marca} ${vehicle.modelo}`)}`"
+            <a :href="`https://wa.me/47997486918?text=${encodeURIComponent(`Olá, estou interessado no veículo ${vehicle?.marca || 'Veículo'} ${vehicle?.modelo || ''}`)}`"
               target="_blank"
               class="whatsapp-btn"
-              @click="trackWhatsAppClick(vehicle.id)">
+              @click="trackWhatsAppClick(vehicle?.id)">
               <img src="@/assets/images/icons/whatsapp.png" alt="WhatsApp Icon" class="whatsapp-icon" />
               <span>WhatsApp</span>
             </a>
-            </div>
+          </div>
         </div>
-      </div>
+      </div> <!-- fim car-details-content -->
+      </div> <!-- fim details-content -->
 
 
       <!-- Modal de Zoom -->
@@ -116,7 +125,8 @@
           }"></div>
         </div>
       </div>
-    </div>
+    </div> <!-- fim da div condicional v-else -->
+
     <AppFooter />
   </div>
 </template>
@@ -238,3 +248,19 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  text-align: center;
+}
+
+.loading-container p {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 0;
+}
+</style>

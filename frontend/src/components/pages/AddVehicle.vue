@@ -198,6 +198,11 @@ export default {
       marcas: [],
       modelos: [],
       anos: [],
+      // Instância do axios para APIs externas sem interceptadores
+      externalAxios: axios.create({
+        timeout: 10000,
+        headers: { 'Content-Type': 'application/json' }
+      }),
       previewFotos: [],
       formData: {
         selectedMarca: '',
@@ -236,10 +241,23 @@ export default {
     },
     async fetchMarcas() {
       try {
-        const response = await axios.get('https://parallelum.com.br/fipe/api/v1/carros/marcas');
+        const response = await this.externalAxios.get('https://parallelum.com.br/fipe/api/v1/carros/marcas');
         this.marcas = response.data;
       } catch (error) {
-        console.error('Erro ao buscar marcas:', error);
+        console.error('Erro ao buscar marcas da FIPE:', error);
+        // Fallback com marcas estáticas caso a API da FIPE não funcione
+        this.marcas = [
+          { codigo: 1, nome: 'BMW' },
+          { codigo: 2, nome: 'Mercedes-Benz' },
+          { codigo: 3, nome: 'Audi' },
+          { codigo: 4, nome: 'Volkswagen' },
+          { codigo: 5, nome: 'Ford' },
+          { codigo: 6, nome: 'Chevrolet' },
+          { codigo: 7, nome: 'Toyota' },
+          { codigo: 8, nome: 'Honda' },
+          { codigo: 9, nome: 'Hyundai' },
+          { codigo: 10, nome: 'Nissan' }
+        ];
       }
     },
     async fetchModelos() {
@@ -249,12 +267,17 @@ export default {
           return;
         }
 
-        const response = await axios.get(
+        const response = await this.externalAxios.get(
           `https://parallelum.com.br/fipe/api/v1/carros/marcas/${this.formData.selectedMarca}/modelos`
         );
         this.modelos = response.data.modelos;
       } catch (error) {
-        console.error('Erro ao buscar modelos:', error);
+        console.error('Erro ao buscar modelos da FIPE:', error);
+        // Fallback básico
+        this.modelos = [
+          { codigo: 1, nome: 'Modelo Genérico 1' },
+          { codigo: 2, nome: 'Modelo Genérico 2' }
+        ];
       }
     },
     async fetchAnos() {
@@ -264,12 +287,20 @@ export default {
           return;
         }
 
-        const response = await axios.get(
+        const response = await this.externalAxios.get(
           `https://parallelum.com.br/fipe/api/v1/carros/marcas/${this.formData.selectedMarca}/modelos/${this.formData.selectedModelo}/anos`
         );
         this.anos = response.data;
       } catch (error) {
-        console.error('Erro ao buscar anos:', error);
+        console.error('Erro ao buscar anos da FIPE:', error);
+        // Fallback com anos comuns
+        this.anos = [
+          { codigo: '2024-1', nome: '2024' },
+          { codigo: '2023-1', nome: '2023' },
+          { codigo: '2022-1', nome: '2022' },
+          { codigo: '2021-1', nome: '2021' },
+          { codigo: '2020-1', nome: '2020' }
+        ];
       }
     },
     handleFileUpload(event) {

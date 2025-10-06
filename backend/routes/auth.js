@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
-const db = require("../db/db");
+const prisma = require("../db/prisma");
 
 // Use variáveis de ambiente para valores sensíveis
 const JWT_SECRET = process.env.JWT_SECRET || "seu_segredo_super_secreto";
@@ -16,15 +16,29 @@ router.post("/register", async (req, res) => {
     }
 
     try {
+        // Verificar se o usuário já existe
+        const existingUser = await prisma.user.findUnique({
+            where: { email }
+        });
+
+        if (existingUser) {
+            return res.status(400).json({ error: "Email já está em uso." });
+        }
+
         const passwordHash = await bcrypt.hash(password, 10);
 
-        const query = "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)";
-        db.query(query, [name, email, passwordHash], (err) => {
-            if (err) {
-                console.error("Erro ao registrar usuário:", err.message);
-                return res.status(500).json({ error: "Erro ao registrar usuário." });
+        const user = await prisma.user.create({
+            data: {
+                name,
+                email,
+                passwordHash,
+                role: 0 // Usuário comum por padrão
             }
-            res.status(201).json({ message: "Usuário registrado com sucesso." });
+        });
+
+        res.status(201).json({ 
+            message: "Usuário registrado com sucesso.",
+            user: { id: user.id, name: user.name, email: user.email, role: user.role }
         });
     } catch (err) {
         console.error("Erro no registro de usuário:", err.message);
@@ -33,26 +47,30 @@ router.post("/register", async (req, res) => {
 });
 
 // Login de Usuário
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
         return res.status(400).json({ error: "Email e senha são obrigatórios." });
     }
 
-    const query = "SELECT id, name, role, password_hash FROM users WHERE email = ?";
-    db.query(query, [email], async (err, results) => {
-        if (err) {
-            console.error("Erro ao buscar usuário:", err.message);
-            return res.status(500).json({ error: "Erro ao buscar usuário." });
-        }
+    try {
+        const user = await prisma.user.findUnique({
+            where: { email },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                passwordHash: true
+            }
+        });
 
-        if (results.length === 0) {
+        if (!user) {
             return res.status(404).json({ error: "Usuário não encontrado." });
         }
 
-        const user = results[0];
-        const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+        const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
 
         if (!isPasswordValid) {
             return res.status(401).json({ error: "Senha inválida." });
@@ -61,7 +79,7 @@ router.post("/login", (req, res) => {
         const token = jwt.sign(
             { id: user.id, name: user.name, role: user.role }, // Payload
             JWT_SECRET,
-            { expiresIn: "1h" }
+            { expiresIn: "24h" }
         );
 
         res.status(200).json({ 
@@ -69,7 +87,10 @@ router.post("/login", (req, res) => {
             token, 
             user: { id: user.id, name: user.name, role: user.role } 
         });
-    });
+    } catch (err) {
+        console.error("Erro ao fazer login:", err.message);
+        res.status(500).json({ error: "Erro ao processar login." });
+    }
 });
 
 module.exports = router;

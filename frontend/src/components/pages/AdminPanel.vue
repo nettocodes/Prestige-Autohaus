@@ -42,6 +42,18 @@ export default {
     ListVehicles,
     StatisticsPage,
   },
+  beforeRouteEnter(to, from, next) {
+    // Verificar autenticação antes de entrar na rota
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    
+    if (!token || user.role !== 1) {
+      console.warn('Acesso negado ao painel admin');
+      next('/login');
+    } else {
+      next();
+    }
+  },
   data() {
     return {
       activePanel: 'AddVehicle',
@@ -70,8 +82,28 @@ export default {
         this.showSidebar = false; // Fecha o menu em telas pequenas
       }
     },
+    checkAuthentication() {
+      const token = localStorage.getItem('token');
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      
+      if (!token) {
+        console.warn('Token não encontrado, redirecionando para login');
+        this.$router.push('/login');
+        return false;
+      }
+      
+      if (user.role !== 1) {
+        console.warn('Usuário não é admin, redirecionando para home');
+        this.$router.push('/');
+        return false;
+      }
+      
+      return true;
+    },
   },
   mounted() {
+    // Não fazer verificação duplicada aqui pois já foi feita no beforeRouteEnter
+    console.log('AdminPanel montado com sucesso');
     window.addEventListener('resize', this.handleResize);
   },
   beforeUnmount() {

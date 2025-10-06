@@ -133,11 +133,28 @@
       },
       async deleteVehicle(id) {
         try {
-          await axios.delete(`/api/vehicles/${id}`);
+          const token = localStorage.getItem('token');
+          if (!token) {
+            alert('Você precisa estar logado para excluir veículos.');
+            this.$router.push('/login');
+            return;
+          }
+
+          await axios.delete(`/api/vehicles/${id}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
           alert('Veículo excluído com sucesso!');
           this.fetchVehicles();
         } catch (error) {
           console.error('Erro ao excluir veículo:', error);
+          if (error.response?.status === 401) {
+            alert('Sessão expirada. Faça login novamente.');
+            this.$router.push('/login');
+          } else {
+            alert('Erro ao excluir veículo. Tente novamente.');
+          }
         }
       },
       openEditModal(vehicle) {
@@ -172,9 +189,17 @@
             }
           });
 
+          const token = localStorage.getItem('token');
+          if (!token) {
+            alert('Você precisa estar logado para atualizar veículos.');
+            this.$router.push('/login');
+            return;
+          }
+
           await axios.put(`/api/vehicles/${updatedVehicle.id}`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
+              'Authorization': `Bearer ${token}`
             },
           });
           alert('Veículo atualizado com sucesso!');
@@ -182,6 +207,12 @@
           this.closeModal();
         } catch (error) {
           console.error('Erro ao atualizar veículo:', error);
+          if (error.response?.status === 401) {
+            alert('Sessão expirada. Faça login novamente.');
+            this.$router.push('/login');
+          } else {
+            alert('Erro ao atualizar veículo. Tente novamente.');
+          }
         }
       },
     },

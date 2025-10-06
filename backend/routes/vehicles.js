@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db/db');
+const prisma = require('../db/prisma');
 const multer = require('multer');
 const fs = require('fs/promises'); // Usando a versão de Promises do módulo fs
 const { authenticateToken, requireAdmin } = require("../middlewares/authMiddleware");
@@ -78,175 +78,187 @@ router.post("/add", authenticateToken, requireAdmin, upload.array("fotos", 9), a
         // Processar as fotos recebidas (somente salvar os nomes)
         const fotos = req.files.map(file => file.filename);
 
-        // Inserir no banco de dados
-        const query = `
-            INSERT INTO vehicles 
-            (marca, modelo, ano, carroceria, combustivel, quilometragem, transmissao, opcionais, preco, cor, descricao, fotos, condicao, portas, drive_type, cilindros)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `;
-
-        db.query(
-            query,
-            [
+        // Inserir no banco de dados usando Prisma
+        const vehicle = await prisma.vehicle.create({
+            data: {
                 marca,
                 modelo,
-                anoProcessado,
+                ano: anoProcessado,
                 carroceria,
-                combustivelTexto,
-                parseInt(quilometragem, 10),
+                combustivel: combustivelTexto,
+                quilometragem: parseInt(quilometragem, 10),
                 transmissao,
-                opcionais || '',
-                parseFloat(preco).toFixed(2),
-                cor || 'Não especificado',
-                descricao || 'Sem descrição',
-                JSON.stringify(fotos),
+                opcionais: opcionais || '',
+                preco: parseFloat(preco),
+                cor: cor || 'Não especificado',
+                descricao: descricao || 'Sem descrição',
+                fotos: fotos,
                 condicao,
-                parseInt(portas, 10),
+                portas: parseInt(portas, 10),
                 driveType,
-                parseInt(cilindros, 10),
-            ],
-            (err) => {
-                if (err) {
-                    console.error("Erro ao inserir veículo no banco de dados:", err.message);
-                    return res.status(500).json({ error: "Erro ao adicionar veículo." });
-                }
-                res.status(201).json({ message: "Veículo adicionado com sucesso!" });
+                cilindros: parseInt(cilindros, 10),
             }
-        );
+        });
+
+        res.status(201).json({ 
+            message: "Veículo adicionado com sucesso!",
+            vehicle: {
+                id: vehicle.id,
+                marca: vehicle.marca,
+                modelo: vehicle.modelo
+            }
+        });
     } catch (error) {
         console.error("Erro ao processar dados do veículo:", error.message);
         res.status(400).json({ error: "Erro ao processar dados do veículo." });
     }
 });
 
-router.get('/', (req, res) => {
-    const query = 'SELECT * FROM vehicles';
-    db.query(query, (err, results) => {
-        if (err) {
-            console.error('Erro ao buscar veículos:', err);
-            return res.status(500).json({ error: 'Failed to fetch vehicles.' });
-        }
-
-        results.forEach((vehicle) => {
-            try {
-                vehicle.fotos = JSON.parse(vehicle.fotos); // Garante que fotos seja um array
-            } catch (e) {
-                console.error('Erro ao parsear fotos:', e);
-                vehicle.fotos = []; // Se falhar, retorne um array vazio
+router.get('/', async (req, res) => {
+    try {
+        const vehicles = await prisma.vehicle.findMany({
+            orderBy: {
+                createdAt: 'desc'
             }
-            // Normaliza os opcionais no back-end
-            vehicle.opcionais = vehicle.opcionais
-                ? vehicle.opcionais.split(',').map((o) => o.trim().toLowerCase())
-                : [];
         });
 
-        res.status(200).json(results);
-    });
+        // Processar os dados para compatibilidade com o frontend
+        const processedVehicles = vehicles.map((vehicle) => {
+            return {
+                ...vehicle,
+                fotos: Array.isArray(vehicle.fotos) ? vehicle.fotos : [],
+                opcionais: vehicle.opcionais
+                    ? vehicle.opcionais.split(',').map((o) => o.trim().toLowerCase())
+                    : [],
+                preco: Number(vehicle.preco) // Converter Decimal para Number
+            };
+        });
+
+        res.status(200).json(processedVehicles);
+    } catch (error) {
+        console.error('Erro ao buscar veículos:', error);
+        res.status(500).json({ error: 'Erro ao buscar veículos.' });
+    }
 });
-router.get('/:id', (req, res) => {
-    const { id } = req.params;
-    const query = 'SELECT * FROM vehicles WHERE id = ?';
-    db.query(query, [id], (err, results) => {
-        if (err) {
-            console.error('Erro ao buscar veículo:', err);
-            return res.status(500).json({ error: 'Erro ao buscar veículo.' });
-        }
-        if (results.length === 0) {
+router.get('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const vehicle = await prisma.vehicle.findUnique({
+            where: { id: parseInt(id) }
+        });
+
+        if (!vehicle) {
             return res.status(404).json({ error: 'Veículo não encontrado.' });
         }
-        const vehicle = results[0];
 
-        try {
-            vehicle.fotos = JSON.parse(vehicle.fotos || '[]'); // Processa fotos como array
-        } catch (e) {
-            console.error('Erro ao parsear fotos:', e);
-            vehicle.fotos = [];
-        }
-
-        try {
-            vehicle.opcionais = vehicle.opcionais
+        // Processar os dados para compatibilidade com o frontend
+        const processedVehicle = {
+            ...vehicle,
+            fotos: Array.isArray(vehicle.fotos) ? vehicle.fotos : [],
+            opcionais: vehicle.opcionais
                 ? vehicle.opcionais.split(',').map(opcional => opcional.trim())
-                : []; // Processa opcionais como array
-        } catch (e) {
-            console.error('Erro ao processar opcionais:', e);
-            vehicle.opcionais = [];
+                : [],
+            preco: Number(vehicle.preco) // Converter Decimal para Number
+        };
+
+        res.status(200).json(processedVehicle);
+    } catch (error) {
+        console.error('Erro ao buscar veículo:', error);
+        res.status(500).json({ error: 'Erro ao buscar veículo.' });
+    }
+});
+router.delete('/:id', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        // Verificar se o veículo existe
+        const vehicle = await prisma.vehicle.findUnique({
+            where: { id: parseInt(id) }
+        });
+
+        if (!vehicle) {
+            return res.status(404).json({ error: 'Veículo não encontrado.' });
         }
 
-        res.status(200).json(vehicle);
-    });
-});
-router.delete('/:id', (req, res) => {
-    const { id } = req.params;
-    const query = 'DELETE FROM vehicles WHERE id = ?';
-    db.query(query, [id], (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: 'Erro ao excluir veículo.' });
-      }
-      res.status(200).json({ message: 'Veículo excluído com sucesso!' });
-    });
-});
-router.put('/:id', upload.array('fotos', 9), (req, res) => {
-    const { id } = req.params;
-    const {
-        marca,
-        modelo,
-        ano,
-        preco,
-        descricao,
-        quilometragem,
-        carroceria,
-        transmissao,
-        portas,
-        cor,
-        cilindros,
-        fotosExistentes, // Fotos existentes devem vir no body
-    } = req.body;
+        // Deletar o veículo
+        await prisma.vehicle.delete({
+            where: { id: parseInt(id) }
+        });
 
+        res.status(200).json({ message: 'Veículo excluído com sucesso!' });
+    } catch (error) {
+        console.error('Erro ao excluir veículo:', error);
+        res.status(500).json({ error: 'Erro ao excluir veículo.' });
+    }
+});
+router.put('/:id', authenticateToken, requireAdmin, upload.array('fotos', 9), async (req, res) => {
     try {
+        const { id } = req.params;
+        const {
+            marca,
+            modelo,
+            ano,
+            preco,
+            descricao,
+            quilometragem,
+            carroceria,
+            transmissao,
+            portas,
+            cor,
+            cilindros,
+            driveType,
+            condicao,
+            opcionais,
+            fotosExistentes, // Fotos existentes devem vir no body
+        } = req.body;
+
+        // Verificar se o veículo existe
+        const vehicleExists = await prisma.vehicle.findUnique({
+            where: { id: parseInt(id) }
+        });
+
+        if (!vehicleExists) {
+            return res.status(404).json({ error: 'Veículo não encontrado.' });
+        }
+
         // Processar novas fotos
         const novasFotos = req.files ? req.files.map((file) => file.filename) : [];
         const fotosExistentesArray = fotosExistentes ? JSON.parse(fotosExistentes) : [];
         const fotosAtualizadas = [...fotosExistentesArray, ...novasFotos];
 
         // Atualizar veículo no banco de dados
-        const query = `
-            UPDATE vehicles 
-            SET 
-                marca = ?, modelo = ?, ano = ?, preco = ?, descricao = ?, 
-                quilometragem = ?, carroceria = ?, transmissao = ?, portas = ?, 
-                cor = ?, cilindros = ?,  fotos = ?
-            WHERE id = ?
-        `;
-
-        db.query(
-            query,
-            [
-                marca,
-                modelo,
-                ano,
-                preco,
-                descricao,
-                quilometragem,
-                carroceria,
-                transmissao,
-                portas,
-                cor,
-                cilindros,
-                JSON.stringify(fotosAtualizadas),
-                id,
-            ],
-            (err) => {
-                if (err) {
-                    console.error('Erro ao atualizar veículo:', err.message);
-                    return res.status(500).json({ error: 'Erro ao editar veículo.' });
-                }
-                res.status(200).json({ message: 'Veículo editado com sucesso!' });
+        const updatedVehicle = await prisma.vehicle.update({
+            where: { id: parseInt(id) },
+            data: {
+                marca: marca || vehicleExists.marca,
+                modelo: modelo || vehicleExists.modelo,
+                ano: ano ? parseInt(ano) : vehicleExists.ano,
+                preco: preco ? parseFloat(preco) : vehicleExists.preco,
+                descricao: descricao || vehicleExists.descricao,
+                quilometragem: quilometragem ? parseInt(quilometragem) : vehicleExists.quilometragem,
+                carroceria: carroceria || vehicleExists.carroceria,
+                transmissao: transmissao || vehicleExists.transmissao,
+                portas: portas ? parseInt(portas) : vehicleExists.portas,
+                cor: cor || vehicleExists.cor,
+                cilindros: cilindros ? parseInt(cilindros) : vehicleExists.cilindros,
+                driveType: driveType || vehicleExists.driveType,
+                condicao: condicao || vehicleExists.condicao,
+                opcionais: opcionais || vehicleExists.opcionais,
+                fotos: fotosAtualizadas,
             }
-        );
+        });
+
+        res.status(200).json({ 
+            message: 'Veículo editado com sucesso!',
+            vehicle: {
+                id: updatedVehicle.id,
+                marca: updatedVehicle.marca,
+                modelo: updatedVehicle.modelo
+            }
+        });
     } catch (error) {
-        console.error('Erro no servidor:', error.message);
-        res.status(500).json({ error: 'Erro no processamento dos dados do veículo.' });
+        console.error('Erro ao atualizar veículo:', error);
+        res.status(500).json({ error: 'Erro ao editar veículo.' });
     }
 });
 

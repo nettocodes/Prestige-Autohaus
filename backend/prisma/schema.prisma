@@ -1,0 +1,67 @@
+// Schema do Prisma para Prestige Autohaus
+// Documentação: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelo de Usuários
+model User {
+  id            Int      @id @default(autoincrement())
+  name          String
+  email         String   @unique
+  passwordHash  String   @map("password_hash")
+  role          Int      @default(0) // 0 = usuário comum, 1 = administrador
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+// Modelo de Veículos
+model Vehicle {
+  id            Int           @id @default(autoincrement())
+  marca         String
+  modelo        String
+  ano           Int
+  carroceria    String?
+  combustivel   String?
+  quilometragem Int?
+  transmissao   String?
+  opcionais     String?       @db.Text
+  preco         Decimal       @db.Decimal(10, 2)
+  cor           String?
+  descricao     String?       @db.Text
+  fotos         Json?
+  condicao      String?
+  portas        Int?
+  driveType     String?       @map("drive_type")
+  cilindros     Int?
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  
+  // Relacionamento com estatísticas
+  statistics    Statistic[]
+
+  @@map("vehicles")
+}
+
+// Modelo de Estatísticas
+model Statistic {
+  id        Int      @id @default(autoincrement())
+  event     String
+  vehicleId Int?     @map("vehicle_id")
+  date      DateTime @db.Date
+  time      DateTime @db.Time
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  // Relacionamento com veículo (opcional)
+  vehicle   Vehicle? @relation(fields: [vehicleId], references: [id], onDelete: SetNull)
+
+  @@map("statistics")
+}

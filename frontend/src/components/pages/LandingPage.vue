@@ -329,15 +329,6 @@ export default {
   },
   mounted() {
     this.fetchVehicles();
-
-    // Forçar atualização do Splide após o DOM estar pronto
-    this.$nextTick(() => {
-      const splides = document.querySelectorAll(".splide");
-      splides.forEach((splideElement) => {
-        const splideInstance = new Splide(splideElement);
-        splideInstance.mount();
-      });
-    });
   },
 
   

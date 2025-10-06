@@ -1,25 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db/db');
+const prisma = require('../db/prisma');
 
-// Função para obter a data formatada no padrão MySQL
+// Função para obter a data formatada
 const formatDate = (date) => date.toISOString().split('T')[0];
+const formatTime = (date) => new Date(`2000-01-01T${date.toTimeString().split(' ')[0]}`);
 
-router.get('/', (req, res) => {
-    const now = new Date();
-    const date = formatDate(now);
-    const time = formatTime(now);
+router.get('/', async (req, res) => {
+    try {
+        const now = new Date();
+        
+        await prisma.statistic.create({
+            data: {
+                event: 'access-home',
+                date: now,
+                time: formatTime(now)
+            }
+        });
 
-    const query = 'INSERT INTO statistics (event, date, time) VALUES (?, ?, ?)';
-    db.query(query, ['access-home', date, time], (err) => {
-        if (err) {
-            console.error('Erro ao registrar acesso à rota principal:', err);
-            res.status(500).json({ error: 'Erro ao registrar acesso à rota principal.' });
-        } else {
-            console.log('Acesso à rota principal registrado com sucesso.');
-            res.send('Welcome to the Vehicle Management API!');
-        }
-    });
+        console.log('Acesso à rota principal registrado com sucesso.');
+        res.send('Welcome to the Vehicle Management API!');
+    } catch (error) {
+        console.error('Erro ao registrar acesso à rota principal:', error);
+        res.status(500).json({ error: 'Erro ao registrar acesso à rota principal.' });
+    }
 });
 
 // Funções para calcular intervalos de datas
@@ -73,70 +77,97 @@ const calculateDateRanges = {
 };
 
 // Rota para filtros específicos
-router.get('/filter/:type', (req, res) => {
-    const { type } = req.params;
-
-    if (!calculateDateRanges[type]) {
-        return res.status(400).json({ error: 'Tipo de filtro inválido.' });
-    }
-
-    const { startDate, endDate } = calculateDateRanges[type]();
-
-    const query = `
-        SELECT * 
-        FROM statistics 
-        WHERE date BETWEEN ? AND ?
-    `;
-
-    db.query(query, [startDate, endDate], (err, results) => {
-        if (err) {
-            console.error('Erro ao buscar estatísticas:', err);
-            return res.status(500).json({ error: 'Erro ao buscar estatísticas.' });
+router.get('/filter/:type', async (req, res) => {
+    try {
+        const { type } = req.params;
+        
+        if (!calculateDateRanges[type]) {
+            return res.status(400).json({ error: 'Tipo de filtro inválido.' });
         }
-        res.status(200).json(results);
-    });
+
+        const { startDate, endDate } = calculateDateRanges[type]();
+        
+        const statistics = await prisma.statistic.findMany({
+            where: {
+                date: {
+                    gte: new Date(startDate),
+                    lte: new Date(endDate)
+                }
+            },
+            include: {
+                vehicle: {
+                    select: {
+                        id: true,
+                        marca: true,
+                        modelo: true,
+                        fotos: true
+                    }
+                }
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+
+        res.status(200).json(statistics);
+    } catch (error) {
+        console.error('Erro ao buscar estatísticas filtradas:', error);
+        res.status(500).json({ error: 'Erro ao buscar estatísticas filtradas.' });
+    }
 });
 
-// Rota para registrar cliques no botão de detalhes
-router.post('/details-click', (req, res) => {
-    const { vehicleId, timestamp } = req.body;
+// Rota para registrar clique no botão de detalhes
+router.post('/detail-click', async (req, res) => {
+    try {
+        const { vehicleId, timestamp } = req.body;
 
-    if (!vehicleId || !timestamp) {
-        return res.status(400).json({ error: 'Dados insuficientes.' });
-    }
-
-    const date = timestamp.split('T')[0]; // Extrair data
-    const time = timestamp.split('T')[1].split('.')[0]; // Extrair hora
-
-    const query = 'INSERT INTO statistics (event, vehicle_id, date, time) VALUES (?, ?, ?, ?)';
-    db.query(query, ['details-click', vehicleId, date, time], (err) => {
-        if (err) {
-            console.error('Erro ao registrar clique:', err);
-            return res.status(500).json({ error: 'Erro ao registrar clique.' });
+        if (!vehicleId || !timestamp) {
+            return res.status(400).json({ error: 'ID do veículo e timestamp são obrigatórios.' });
         }
+
+        const parsedTimestamp = new Date(timestamp);
+        
+        await prisma.statistic.create({
+            data: {
+                event: 'detail-click',
+                vehicleId: parseInt(vehicleId),
+                date: parsedTimestamp,
+                time: formatTime(parsedTimestamp)
+            }
+        });
+
         res.status(201).json({ message: 'Clique registrado com sucesso.' });
-    });
+    } catch (error) {
+        console.error('Erro ao registrar clique:', error);
+        res.status(500).json({ error: 'Erro ao registrar clique.' });
+    }
 });
 
-// Rota para registrar cliques no botão WhatsApp
-router.post('/whatsapp-click', (req, res) => {
-    const { vehicleId, timestamp } = req.body;
+// Rota para registrar clique no WhatsApp
+router.post('/whatsapp-click', async (req, res) => {
+    try {
+        const { vehicleId, timestamp } = req.body;
 
-    if (!vehicleId || !timestamp) {
-        return res.status(400).json({ error: 'Dados insuficientes.' });
-    }
-
-    const date = timestamp.split('T')[0]; // Extrair data
-    const time = timestamp.split('T')[1].split('.')[0]; // Extrair hora
-
-    const query = 'INSERT INTO statistics (event, vehicle_id, date, time) VALUES (?, ?, ?, ?)';
-    db.query(query, ['whatsapp-click', vehicleId, date, time], (err) => {
-        if (err) {
-            console.error('Erro ao registrar clique:', err);
-            return res.status(500).json({ error: 'Erro ao registrar clique.' });
+        if (!vehicleId || !timestamp) {
+            return res.status(400).json({ error: 'ID do veículo e timestamp são obrigatórios.' });
         }
+
+        const parsedTimestamp = new Date(timestamp);
+        
+        await prisma.statistic.create({
+            data: {
+                event: 'whatsapp-click',
+                vehicleId: parseInt(vehicleId),
+                date: parsedTimestamp,
+                time: formatTime(parsedTimestamp)
+            }
+        });
+
         res.status(201).json({ message: 'Clique registrado com sucesso.' });
-    });
+    } catch (error) {
+        console.error('Erro ao registrar clique:', error);
+        res.status(500).json({ error: 'Erro ao registrar clique.' });
+    }
 });
 
 module.exports = router;

@@ -54,9 +54,21 @@ export default {
         if (typeof updateAuthState === "function") {
           updateAuthState();
         }
+        
+        console.log('Login realizado com sucesso:', { 
+          email: user.email, 
+          role: user.role,
+          isAdmin: user.role === 1 
+        });
 
         alert("Login bem-sucedido!");
-        this.$router.push("/");
+        
+        // Redirecionar para admin se for administrador
+        if (user.role === 1) {
+          this.$router.push("/admin");
+        } else {
+          this.$router.push("/");
+        }
       } catch (err) {
         console.error("Erro ao fazer login:", err.response?.data || err.message);
         alert(err.response?.data.error || "Erro ao fazer login.");

@@ -2,11 +2,11 @@ const mysql = require('mysql2');
 
 // Configuração do banco de dados
 const dbConfig = {
-    host: 'junction.proxy.rlwy.net',
+    host: 'shortline.proxy.rlwy.net',
     user: 'root',
-    password: 'HvSjKlVKMNNoqyfislewexPKdJneNzio',
+    password: 'jZdQHGdQpvSGWFEbYDHhbqIsvHrUEpFs',
     database: 'railway',
-    port: 43166,
+    port: 48083,
 };
 
 // Criar conexão com o banco
